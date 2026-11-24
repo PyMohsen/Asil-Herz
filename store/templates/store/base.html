@@ -1,0 +1,521 @@
+{% load static store_filters %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}گالری جواهرات و حرز اصیل{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}گالری تخصصی انگشتر نقره ۹۲۵، سنگ‌های قیمتی معدنی و حرز و بازوبندهای دست‌نویس اصیل با شناسنامه و ارسال بیمه‌شده.{% endblock %}" />
+
+  <!-- Vazirmatn Font CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory: '#FAF8F5',
+            cream: '#F3EEE4',
+            sand: '#E4DAC6',
+            emerald: {
+              deep: '#0F3D3E',
+              dark: '#0A2C2D',
+              soft: '#185455',
+            },
+            gold: {
+              warm: '#C8A96A',
+              light: '#E3CFA2',
+              dark: '#9F7F42',
+            },
+            ink: '#1E2421',
+            muted: '#5D6660',
+          },
+          fontFamily: {
+            sans: ['Vazirmatn', 'Tahoma', 'sans-serif'],
+          },
+          boxShadow: {
+            luxury: '0 10px 30px -12px rgba(15, 61, 62, 0.12)',
+            card: '0 4px 20px -6px rgba(30, 36, 33, 0.08)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="{% static 'css/store.css' %}" />
+
+  {{ cart_items|json_script:"initial-cart-items" }}
+
+  <!-- Alpine.js Cart Store & Toast System -->
+  <script>
+    function toPersianDigits(val) {
+      const map = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return String(val).replace(/\d/g, (d) => map[Number(d)]);
+    }
+
+    function formatTomanJS(val) {
+      const num = Number(val) || 0;
+      return toPersianDigits(num.toLocaleString('en-US')) + ' تومان';
+    }
+
+    document.addEventListener('alpine:init', () => {
+      const initialScript = document.getElementById('initial-cart-items');
+      const initialItems = initialScript ? JSON.parse(initialScript.textContent) : [];
+
+      Alpine.store('cart', {
+        items: initialItems,
+        count: {{ cart_count|default:0 }},
+        total: {{ cart_total|default:0 }},
+        openDrawer: false,
+        toast: {
+          visible: false,
+          message: '',
+          type: 'success',
+          timeoutId: null,
+        },
+
+        get formattedCount() {
+          return toPersianDigits(this.count);
+        },
+
+        get formattedTotal() {
+          return formatTomanJS(this.total);
+        },
+
+        formatPrice(val) {
+          return formatTomanJS(val);
+        },
+
+        faDigits(val) {
+          return toPersianDigits(val);
+        },
+
+        showToast(message, type = 'success') {
+          if (this.toast.timeoutId) {
+            clearTimeout(this.toast.timeoutId);
+          }
+          this.toast.message = message;
+          this.toast.type = type;
+          this.toast.visible = true;
+          this.toast.timeoutId = setTimeout(() => {
+            this.toast.visible = false;
+          }, 4200);
+        },
+
+        hideToast() {
+          this.toast.visible = false;
+          if (this.toast.timeoutId) {
+            clearTimeout(this.toast.timeoutId);
+          }
+        },
+
+        applyPayload(data) {
+          this.items = data.cart_items || [];
+          this.count = data.cart_count || 0;
+          this.total = data.cart_total || 0;
+        },
+
+        async removeItem(itemKey, csrfToken) {
+          try {
+            const resp = await fetch('{% url "store:remove_from_cart" %}', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+              },
+              body: JSON.stringify({ item_key: itemKey }),
+            });
+            const data = await resp.json();
+            if (resp.ok && data.success) {
+              this.applyPayload(data);
+              this.showToast(data.message, 'info');
+            }
+          } catch (e) {
+            this.showToast('خطا در بروزرسانی سبد خرید.', 'error');
+          }
+        },
+      });
+    });
+  </script>
+
+  <!-- Alpine.js CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-ivory text-ink min-h-screen flex flex-col antialiased selection:bg-gold-warm/30 selection:text-emerald-deep" x-data="{ mobileMenu: false }">
+
+  <!-- Top Luxury Announcement Strip -->
+  <div class="bg-emerald-deep text-ivory/95 text-xs py-2 border-b border-gold-warm/25">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-warm"></span>
+        <span>ضمانت اصالت مادام‌العمر نقره ۹۲۵، سنگ‌های معدنی و نگارش شرعی احراز</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-4 text-gold-light/90">
+        <span>ارسال بیمه‌شده به سراسر کشور</span>
+        <span class="text-gold-warm/40">|</span>
+        <span>پشتیبانی تخصصی: ۰۲۱-۸۸۴۵۱۲۳۴</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Sticky Navbar -->
+  <header class="sticky top-0 z-40 bg-ivory/95 backdrop-blur-md border-b border-sand/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between gap-4 h-20">
+
+        <!-- Mobile Menu Toggle + Brand -->
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            @click="mobileMenu = !mobileMenu"
+            class="lg:hidden p-2 rounded-xl border border-sand text-emerald-deep hover:bg-cream transition"
+            aria-label="باز کردن منو"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16" />
+              <path x-show="mobileMenu" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <a href="{% url 'store:home' %}" class="flex items-center gap-3 group shrink-0">
+            <div class="w-11 h-11 rounded-xl bg-emerald-deep text-gold-warm flex items-center justify-center shadow-sm border border-gold-warm/40 group-hover:bg-emerald-dark transition">
+              <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polygon points="16,3 27,10 27,22 16,29 5,22 5,10" stroke="currentColor" />
+                <polygon points="16,8 22,16 16,24 10,16" fill="currentColor" fill-opacity="0.2" stroke="currentColor" />
+                <circle cx="16" cy="16" r="2" fill="currentColor" />
+              </svg>
+            </div>
+            <div>
+              <span class="block text-base sm:text-lg font-extrabold text-emerald-deep tracking-tight leading-tight">
+                گالری جواهرات و حرز اصیل
+              </span>
+              <span class="hidden sm:block text-[11px] text-muted font-medium">
+                نقره‌جات فاخر و احراز دست‌نویس سنتی
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium">
+          <a href="{% url 'store:home' %}" class="px-3 py-2 rounded-lg text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'home' %}text-emerald-deep bg-cream font-semibold{% endif %}">
+            خانه
+          </a>
+          <a href="{% url 'store:product_list' %}" class="px-3 py-2 rounded-lg text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'product_list' and not request.GET.category %}text-emerald-deep bg-cream font-semibold{% endif %}">
+            همه آثار
+          </a>
+          {% for cat in nav_categories|slice:":4" %}
+            <a
+              href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}"
+              class="px-3 py-2 rounded-lg text-ink/90 hover:text-emerald-deep hover:bg-cream transition whitespace-nowrap {% if request.GET.category == cat.slug %}text-emerald-deep bg-cream font-semibold{% endif %}"
+            >
+              {{ cat.title }}
+            </a>
+          {% endfor %}
+        </nav>
+
+        <!-- Search + Cart Action -->
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <!-- Desktop Quick Search -->
+          <form action="{% url 'store:product_list' %}" method="get" class="hidden md:flex items-center relative">
+            <input
+              type="text"
+              name="q"
+              value="{{ request.GET.q|default:'' }}"
+              placeholder="جستجوی انگشتر، عقیق، حرز..."
+              class="w-48 xl:w-60 bg-white border border-sand rounded-xl pr-3.5 pl-10 py-2 text-xs text-ink placeholder:text-muted/70 focus:outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/10 transition"
+            />
+            <button type="submit" aria-label="جستجو" class="absolute left-2.5 text-muted hover:text-emerald-deep transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+              </svg>
+            </button>
+          </form>
+
+          <!-- Cart Trigger + Mini-Cart Dropdown -->
+          <div class="relative" @keydown.escape.window="$store.cart.openDrawer = false">
+            <button
+              type="button"
+              @click="$store.cart.openDrawer = !$store.cart.openDrawer"
+              class="relative flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-emerald-deep text-ivory hover:bg-emerald-dark transition shadow-sm"
+              aria-label="سبد خرید"
+            >
+              <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span class="hidden sm:inline text-xs font-semibold">سبد خرید</span>
+              <span
+                x-text="$store.cart.formattedCount"
+                class="min-w-[1.35rem] h-[1.35rem] px-1 rounded-full bg-gold-warm text-emerald-dark text-[11px] font-bold flex items-center justify-center"
+              >{{ cart_count|fa_digits }}</span>
+            </button>
+
+            <!-- Session Mini-Cart Popover -->
+            <div
+              x-show="$store.cart.openDrawer"
+              x-cloak
+              @click.outside="$store.cart.openDrawer = false"
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0 translate-y-2"
+              x-transition:enter-end="opacity-100 translate-y-0"
+              x-transition:leave="transition ease-in duration-150"
+              x-transition:leave-start="opacity-100 translate-y-0"
+              x-transition:leave-end="opacity-0 translate-y-2"
+              class="absolute left-0 mt-3 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-sand overflow-hidden z-50"
+            >
+              <div class="px-4 py-3.5 bg-cream/70 border-b border-sand flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-sm text-emerald-deep">سبد انتخاب شما</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-deep/10 text-emerald-deep font-semibold" x-text="$store.cart.formattedCount + ' کالا'"></span>
+                </div>
+                <button type="button" @click="$store.cart.openDrawer = false" class="text-muted hover:text-ink p-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="max-h-72 overflow-y-auto divide-y divide-sand/60">
+                <template x-if="$store.cart.items.length === 0">
+                  <div class="p-8 text-center">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-cream flex items-center justify-center text-muted">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                      </svg>
+                    </div>
+                    <p class="text-sm font-medium text-ink">سبد خرید شما در حال حاضر خالی است.</p>
+                    <p class="text-xs text-muted mt-1">آثار برگزیده را از کلکسیون مشاهده و انتخاب کنید.</p>
+                  </div>
+                </template>
+
+                <template x-for="item in $store.cart.items" :key="item.key">
+                  <div class="p-3.5 flex items-center gap-3 hover:bg-ivory/60 transition">
+                    <img :src="item.image_url" :alt="item.title" class="w-14 h-14 rounded-xl object-cover border border-sand shrink-0 bg-cream" />
+                    <div class="flex-1 min-w-0">
+                      <a :href="'/products/' + encodeURIComponent(item.slug) + '/'" class="block text-xs font-bold text-ink hover:text-emerald-deep truncate" x-text="item.title"></a>
+                      <div class="text-[11px] text-muted mt-0.5 flex flex-wrap items-center gap-1.5">
+                        <span class="px-1.5 py-0.5 rounded bg-cream text-emerald-deep font-medium" x-text="item.variant"></span>
+                        <span>×</span>
+                        <span x-text="$store.cart.faDigits(item.quantity)"></span>
+                      </div>
+                      <div class="text-xs font-bold text-emerald-deep mt-1" x-text="$store.cart.formatPrice(item.subtotal)"></div>
+                    </div>
+                    <button
+                      type="button"
+                      @click="$store.cart.removeItem(item.key, '{{ csrf_token }}')"
+                      class="text-muted hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition"
+                      title="حذف از سبد"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </template>
+              </div>
+
+              <div x-show="$store.cart.items.length > 0" class="p-4 bg-ivory border-t border-sand space-y-3">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-muted font-medium">جمع کل سبد (نسخه نمایشی):</span>
+                  <span class="font-extrabold text-emerald-deep" x-text="$store.cart.formattedTotal"></span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href="{% url 'store:product_list' %}" @click="$store.cart.openDrawer = false" class="flex-1 text-center py-2.5 rounded-xl bg-emerald-deep text-ivory text-xs font-bold hover:bg-emerald-dark transition">
+                    ادامه گشت‌وگذار در گالری
+                  </a>
+                  <button
+                    type="button"
+                    @click="$store.cart.removeItem('__all__', '{{ csrf_token }}')"
+                    class="px-3 py-2.5 rounded-xl border border-sand text-xs font-semibold text-muted hover:text-red-700 hover:border-red-200 transition"
+                  >
+                    پاک کردن
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Collapsible Menu -->
+      <div x-show="mobileMenu" x-cloak x-transition class="lg:hidden pb-4 pt-2 border-t border-sand/60 space-y-3">
+        <form action="{% url 'store:product_list' %}" method="get" class="relative">
+          <input
+            type="text"
+            name="q"
+            value="{{ request.GET.q|default:'' }}"
+            placeholder="جستجو در نام اثر، سنگ یا شناسه..."
+            class="w-full bg-white border border-sand rounded-xl pr-4 pl-10 py-2.5 text-sm focus:outline-none focus:border-emerald-deep"
+          />
+          <button type="submit" aria-label="جستجو" class="absolute left-3 top-3 text-muted">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+            </svg>
+          </button>
+        </form>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <a href="{% url 'store:home' %}" class="px-3 py-2 rounded-xl bg-cream/70 text-emerald-deep font-medium">خانه</a>
+          <a href="{% url 'store:product_list' %}" class="px-3 py-2 rounded-xl bg-cream/70 text-emerald-deep font-medium">همه آثار</a>
+          {% for cat in nav_categories %}
+            <a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="px-3 py-2 rounded-xl bg-white border border-sand/70 text-ink/90 text-xs font-medium truncate">
+              {{ cat.title }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Django Messages Fallback Banner (Non-JS) -->
+  {% if messages %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+      {% for msg in messages %}
+        <div class="p-3.5 rounded-xl border {% if msg.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-emerald-deep/10 border-emerald-deep/20 text-emerald-deep{% endif %} text-sm font-medium">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Main Content -->
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Luxury Footer -->
+  <footer class="bg-emerald-dark text-ivory/90 mt-16 border-t-2 border-gold-warm/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+
+        <!-- About Brand -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-soft text-gold-warm flex items-center justify-center border border-gold-warm/40">
+              <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+                <polygon points="16,3 27,10 27,22 16,29 5,22 5,10" />
+                <polygon points="16,8 22,16 16,24 10,16" fill="currentColor" fill-opacity="0.25" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-base text-white">گالری جواهرات و حرز اصیل</h3>
+              <p class="text-xs text-gold-light/80">اصالت سنگ معدنی، عیار ۹۲۵ و احراز شرعی</p>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm leading-7 text-ivory/75">
+            مجموعه‌ای تخصصی در طراحی و ساخت انگشترهای نقره دست‌ساز با سنگ‌های قیمتی طبیعی و ارائه حرزهای معتبر دست‌نویس روی پوست آهو مطابق آداب اصیل اسلامی و ایرانی.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="font-bold text-sm text-gold-light">دسترسی سریع</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-ivory/80">
+            <li><a href="{% url 'store:home' %}" class="hover:text-gold-warm transition">صفحه اصلی</a></li>
+            <li><a href="{% url 'store:product_list' %}" class="hover:text-gold-warm transition">کلکسیون کامل آثار</a></li>
+            <li><a href="{% url 'store:product_list' %}?type=ring" class="hover:text-gold-warm transition">انگشترهای نقره و سنگ قیمتی</a></li>
+            <li><a href="{% url 'store:product_list' %}?type=hirz" class="hover:text-gold-warm transition">حرز و بازوبندهای سنتی</a></li>
+            {% for cat in nav_categories|slice:":3" %}
+              <li><a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="hover:text-gold-warm transition">{{ cat.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- Contact Details -->
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="font-bold text-sm text-gold-light">ارتباط با گالری</h4>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-ivory/80">
+            <li class="flex items-start gap-2">
+              <span class="text-gold-warm mt-0.5">•</span>
+              <span>تهران، بازار بزرگ، راسته زرگرها، سرای جواهر اصیل، حجره ۱۲</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gold-warm">•</span>
+              <span>تلفن مشاوره و سفارش: ۰۲۱-۸۸۴۵۱۲۳۴</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gold-warm">•</span>
+              <span>پاسخگویی: شنبه تا پنج‌شنبه ۹ الی ۱۸</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gold-warm">•</span>
+              <span>ایمیل: info@asil-gallery.example</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Trust Seals Placeholders -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="font-bold text-sm text-gold-light">نمادهای اعتماد</h4>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="bg-ivory/5 border border-gold-warm/25 rounded-xl p-3 text-center flex flex-col items-center justify-center gap-1.5">
+              <svg class="w-7 h-7 text-gold-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span class="text-[11px] font-medium text-ivory/85">نماد اعتماد الکترونیکی</span>
+            </div>
+            <div class="bg-ivory/5 border border-gold-warm/25 rounded-xl p-3 text-center flex flex-col items-center justify-center gap-1.5">
+              <svg class="w-7 h-7 text-gold-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span class="text-[11px] font-medium text-ivory/85">جواز اتحادیه نقره‌فروشان</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gold-divider my-8"></div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ivory/65">
+        <p>© ۱۴۰۴ تمامی حقوق مادی و معنوی متعلق به گالری جواهرات و حرز اصیل است.</p>
+        <p>نسخه نمایشی تخصصی فروشگاه انگشتر نقره و حرز سنتی</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global Alpine.js Toast Notification -->
+  <div
+    x-show="$store.cart.toast.visible"
+    x-cloak
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 translate-y-4"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 translate-y-4"
+    class="fixed bottom-5 left-5 right-5 sm:right-auto sm:w-96 z-50"
+    role="status"
+    aria-live="polite"
+  >
+    <div
+      class="flex items-start gap-3 p-4 rounded-2xl shadow-2xl border"
+      :class="$store.cart.toast.type === 'error' ? 'bg-red-950 text-white border-red-400/40' : 'bg-emerald-deep text-ivory border-gold-warm/50'"
+    >
+      <div class="w-8 h-8 rounded-xl bg-gold-warm/20 text-gold-light flex items-center justify-center shrink-0 mt-0.5">
+        <svg x-show="$store.cart.toast.type !== 'error'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <svg x-show="$store.cart.toast.type === 'error'" class="w-5 h-5 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 3l9 16H3L12 3z" />
+        </svg>
+      </div>
+      <div class="flex-1 text-xs sm:text-sm leading-6 font-medium" x-text="$store.cart.toast.message"></div>
+      <button type="button" @click="$store.cart.hideToast()" class="text-ivory/60 hover:text-white p-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

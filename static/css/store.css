@@ -1,0 +1,26 @@
+[x-cloak] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Vazirmatn', Tahoma, system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: #FAF8F5;
+  color: #1E2421;
+  font-feature-settings: "ss01";
+}
+
+.pattern-lattice {
+  background-image: radial-gradient(rgba(200, 169, 106, 0.16) 1px, transparent 1px),
+    radial-gradient(rgba(200, 169, 106, 0.1) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 106, 0.55), transparent);
+}

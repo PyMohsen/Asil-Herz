@@ -1,0 +1,492 @@
+{% extends "store/base.html" %}
+{% load store_filters %}
+
+{% block title %}{{ product.title }} | گالری جواهرات و حرز اصیل{% endblock %}
+
+{% block content %}
+  {{ gallery_images|json_script:"product-gallery-data" }}
+
+  <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10"
+    x-data="productDetailPage()"
+  >
+    <!-- Category Breadcrumb -->
+    <nav class="flex flex-wrap items-center gap-2 text-xs text-muted mb-6">
+      <a href="{% url 'store:home' %}" class="hover:text-emerald-deep transition">خانه</a>
+      <span>/</span>
+      <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="hover:text-emerald-deep transition">
+        {{ product.category.title }}
+      </a>
+      <span>/</span>
+      <span class="text-emerald-deep font-semibold">{{ product.title }}</span>
+    </nav>
+
+    <!-- Main Product Showcase + Purchase Box -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+
+      <!-- Interactive Image Gallery -->
+      <div class="lg:col-span-6 space-y-4">
+        <div class="relative aspect-[4/3] bg-white rounded-2xl border border-sand overflow-hidden shadow-luxury">
+          <img
+            :src="activeImage.url"
+            :alt="activeImage.alt"
+            class="w-full h-full object-cover transition duration-300"
+          />
+
+          {% if product.has_discount %}
+            <span class="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-700 text-white text-xs font-extrabold shadow-md">
+              {{ product.discount_percentage|fa_digits }}٪ تخفیف ویژه
+            </span>
+          {% endif %}
+        </div>
+
+        {% if gallery_images|length > 1 %}
+          <div class="grid grid-cols-4 sm:grid-cols-5 gap-3">
+            <template x-for="(img, idx) in images" :key="idx">
+              <button
+                type="button"
+                @click="activeIndex = idx"
+                class="aspect-[4/3] rounded-xl overflow-hidden border-2 transition focus:outline-none bg-white"
+                :class="activeIndex === idx ? 'border-emerald-deep ring-2 ring-gold-warm/60' : 'border-sand opacity-75 hover:opacity-100'"
+              >
+                <img :src="img.url" :alt="img.alt" class="w-full h-full object-cover" />
+              </button>
+            </template>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Purchase Box -->
+      <div class="lg:col-span-6 bg-white rounded-2xl border border-sand/90 shadow-card p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="px-3 py-1 rounded-full bg-cream text-emerald-deep font-bold border border-sand/70">
+            {{ product.category.title }}
+          </a>
+          <span class="text-muted font-mono bg-ivory px-2.5 py-1 rounded-lg border border-sand/60">
+            کد اثر: {{ product.sku }}
+          </span>
+        </div>
+
+        <div>
+          <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-ink leading-snug">
+            {{ product.title }}
+          </h1>
+          <p class="text-sm text-muted leading-7 mt-3">
+            {{ product.short_description }}
+          </p>
+        </div>
+
+        <!-- Stock & Price Bar -->
+        <div class="p-4 rounded-2xl bg-ivory border border-sand/80 flex flex-wrap items-center justify-between gap-4">
+          <div class="space-y-1">
+            {% if product.has_discount %}
+              <div class="flex items-center gap-2">
+                <span class="text-sm text-muted line-through decoration-red-400">{{ product.price|toman }}</span>
+                <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 text-[11px] font-bold">
+                  {{ product.discount_percentage|fa_digits }}٪ تخفیف
+                </span>
+              </div>
+            {% endif %}
+            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-deep">
+              {{ product.get_final_price|toman }}
+            </div>
+          </div>
+
+          <div>
+            {% if product.is_in_stock %}
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-deep/10 text-emerald-deep text-xs font-bold border border-emerald-deep/20">
+                <span class="w-2 h-2 rounded-full bg-emerald-deep"></span>
+                موجود در گالری ({{ product.stock|fa_digits }} عدد)
+              </span>
+            {% else %}
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-red-50 text-red-800 text-xs font-bold border border-red-200">
+                <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                اتمام موجودی
+              </span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Add to Cart Form with Conditional Smart Variant Selectors -->
+        <form action="{% url 'store:add_to_cart' %}" method="post" @submit.prevent="submitAddToCart($event)" class="space-y-5">
+          {% csrf_token %}
+          <input type="hidden" name="product_id" value="{{ product.id }}" />
+          <input type="hidden" name="variant" :value="selectedVariant" />
+          <input type="hidden" name="quantity" :value="quantity" />
+
+          {% if product.product_type == 'ring' %}
+            <!-- Ring Size Selector (56 to 66) -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <label class="text-sm font-bold text-ink">
+                  انتخاب سایز انگشتر: <span class="text-emerald-deep" x-text="selectedVariant"></span>
+                </label>
+                <button
+                  type="button"
+                  @click="sizeGuideOpen = true"
+                  class="inline-flex items-center gap-1.5 text-xs font-bold text-gold-dark hover:text-emerald-deep underline underline-offset-4 transition"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>راهنمای تعیین سایز انگشتر</span>
+                </button>
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                {% for opt in variant_options %}
+                  <button
+                    type="button"
+                    @click="selectedVariant = '{{ opt.value }}'"
+                    class="min-w-[2.9rem] px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border transition"
+                    :class="selectedVariant === '{{ opt.value }}'
+                      ? 'bg-emerald-deep text-ivory border-emerald-deep ring-2 ring-gold-warm/60 shadow-sm'
+                      : 'bg-ivory text-ink border-sand hover:border-emerald-deep'"
+                  >
+                    {{ opt.label }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <!-- Hirz Enclosure / Armlet Selector -->
+            <div class="space-y-3">
+              <label class="block text-sm font-bold text-ink">
+                انتخاب محفظه و نوع بسته‌بندی حرز:
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {% for opt in variant_options %}
+                  <button
+                    type="button"
+                    @click="selectedVariant = '{{ opt.value }}'"
+                    class="px-3.5 py-3 rounded-xl text-xs font-bold border text-center transition leading-5"
+                    :class="selectedVariant === '{{ opt.value }}'
+                      ? 'bg-emerald-deep text-ivory border-emerald-deep ring-2 ring-gold-warm/60 shadow-sm'
+                      : 'bg-ivory text-ink border-sand hover:border-emerald-deep'"
+                  >
+                    {{ opt.label }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Quantity + Add to Cart CTA -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+            <div class="flex items-center justify-between bg-ivory border border-sand rounded-xl px-2 py-1.5 sm:w-36">
+              <button
+                type="button"
+                @click="if (quantity < maxStock) quantity++"
+                :disabled="!inStock || quantity >= maxStock"
+                class="w-9 h-9 rounded-lg hover:bg-cream text-emerald-deep font-extrabold text-lg disabled:opacity-40 transition"
+                aria-label="افزایش تعداد"
+              >
+                +
+              </button>
+              <span class="font-extrabold text-sm text-ink" x-text="$store.cart.faDigits(quantity)">۱</span>
+              <button
+                type="button"
+                @click="if (quantity > 1) quantity--"
+                :disabled="!inStock || quantity <= 1"
+                class="w-9 h-9 rounded-lg hover:bg-cream text-emerald-deep font-extrabold text-lg disabled:opacity-40 transition"
+                aria-label="کاهش تعداد"
+              >
+                −
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              :disabled="!inStock || submitting"
+              class="flex-1 py-3.5 px-6 rounded-xl font-extrabold text-sm sm:text-base shadow-md transition flex items-center justify-center gap-2"
+              :class="inStock
+                ? 'bg-emerald-deep hover:bg-emerald-dark text-ivory cursor-pointer'
+                : 'bg-stone-300 text-stone-600 cursor-not-allowed'"
+            >
+              <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span x-show="!submitting">
+                {% if product.is_in_stock %}افزودن به سبد خرید{% else %}در حال حاضر ناموجود است{% endif %}
+              </span>
+              <span x-show="submitting" x-cloak>در حال ثبت در سبد...</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Micro Assurances -->
+        <div class="pt-4 border-t border-sand/70 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-gold-warm"></span>
+            <span>ارسال با بسته‌بندی مخملی و بیمه کامل مرسوله</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-gold-warm"></span>
+            <span>همراه با گواهی اصالت گالری جواهرات و حرز اصیل</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabbed Details Section -->
+    <section class="mt-12 bg-white rounded-2xl border border-sand/90 shadow-card overflow-hidden">
+      <div class="flex flex-wrap border-b border-sand bg-cream/60 px-4 sm:px-6 pt-3 gap-2">
+        <button
+          type="button"
+          @click="activeTab = 'description'"
+          class="px-5 py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition"
+          :class="activeTab === 'description' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
+        >
+          توضیحات و خواص
+        </button>
+        <button
+          type="button"
+          @click="activeTab = 'specs'"
+          class="px-5 py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition"
+          :class="activeTab === 'specs' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
+        >
+          مشخصات فنی
+        </button>
+        <button
+          type="button"
+          @click="activeTab = 'reviews'"
+          class="px-5 py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition"
+          :class="activeTab === 'reviews' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
+        >
+          دیدگاه خریداران ({{ reviews|length|fa_digits }})
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <!-- Tab 1: Description & Properties -->
+        <div x-show="activeTab === 'description'" class="space-y-4">
+          <h2 class="text-lg font-extrabold text-emerald-deep">معرفی تخصصی، خواص و آداب نگهداری</h2>
+          <div class="text-sm leading-8 text-ink/90 whitespace-pre-line">
+            {{ product.full_description }}
+          </div>
+        </div>
+
+        <!-- Tab 2: Technical Specifications Striped Table -->
+        <div x-show="activeTab === 'specs'" x-cloak>
+          <h2 class="text-lg font-extrabold text-emerald-deep mb-4">جدول مشخصات فنی اثر</h2>
+          {% if product.specifications.all %}
+            <div class="overflow-hidden rounded-xl border border-sand">
+              <table class="w-full text-right text-xs sm:text-sm">
+                <tbody class="divide-y divide-sand/70">
+                  {% for spec in product.specifications.all %}
+                    <tr class="{% cycle 'bg-ivory' 'bg-white' %}">
+                      <th class="w-2/5 sm:w-1/3 px-4 py-3.5 font-bold text-emerald-deep bg-cream/40">
+                        {{ spec.key }}
+                      </th>
+                      <td class="px-4 py-3.5 text-ink font-medium">
+                        {{ spec.value }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-sm text-muted">مشخصات فنی تکمیلی برای این محصول ثبت نشده است.</p>
+          {% endif %}
+        </div>
+
+        <!-- Tab 3: Customer Reviews -->
+        <div x-show="activeTab === 'reviews'" x-cloak class="space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-lg font-extrabold text-emerald-deep">تجربه و دیدگاه خریداران</h2>
+            <span class="text-xs text-muted bg-cream px-3 py-1 rounded-full border border-sand/70">
+              نظرات ثبت‌شده از خریداران پیشین
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {% for rev in reviews %}
+              <div class="p-5 rounded-2xl bg-ivory border border-sand/80 space-y-3 flex flex-col justify-between">
+                <div class="space-y-2.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <div>
+                      <div class="font-bold text-sm text-ink">{{ rev.author }}</div>
+                      <div class="text-[11px] text-muted">{{ rev.city }} • {{ rev.date }}</div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-md bg-emerald-deep/10 text-emerald-deep text-[10px] font-bold">
+                      خریدار تأییدشده
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-0.5 text-gold-warm text-sm" aria-label="امتیاز">
+                    {% for _ in "12345" %}
+                      {% if forloop.counter <= rev.rating %}★{% else %}<span class="text-sand">★</span>{% endif %}
+                    {% endfor %}
+                  </div>
+                  <p class="text-xs leading-6 text-ink/85">{{ rev.comment }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Products (Same Category, 4 cards) -->
+    {% if related_products %}
+      <section class="mt-14">
+        <div class="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold text-gold-dark">پیشنهاد مشابه در این دسته</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-emerald-deep mt-0.5">آثار مرتبط</h2>
+          </div>
+          <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="text-xs sm:text-sm font-bold text-emerald-deep hover:text-gold-dark transition">
+            مشاهده بیشتر ←
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {% for rel in related_products %}
+            {% include "store/partials/_product_card.html" with product=rel %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if product.product_type == 'ring' %}
+      <!-- Interactive Ring Size Guide Modal -->
+      <div
+        x-show="sizeGuideOpen"
+        x-cloak
+        @keydown.escape.window="sizeGuideOpen = false"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60 backdrop-blur-sm"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="size-guide-title"
+      >
+        <div
+          @click.outside="sizeGuideOpen = false"
+          x-transition
+          class="bg-white rounded-2xl border border-sand shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        >
+          <div class="sticky top-0 bg-emerald-deep text-ivory px-6 py-4 flex items-center justify-between">
+            <div>
+              <h3 id="size-guide-title" class="font-extrabold text-base sm:text-lg">راهنمای تعیین سایز انگشتر</h3>
+              <p class="text-xs text-gold-light mt-0.5">استاندارد سایزبندی رکاب نقره در ایران (سایز ۵۶ تا ۶۶)</p>
+            </div>
+            <button type="button" @click="sizeGuideOpen = false" class="p-1.5 rounded-lg hover:bg-white/10 text-ivory transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="p-6 space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs leading-6">
+              <div class="p-4 rounded-xl bg-ivory border border-sand/80">
+                <h4 class="font-bold text-emerald-deep mb-1.5">روش اول: اندازه‌گیری دور انگشت</h4>
+                <p class="text-muted">
+                  یک نوار کاغذی باریک را به‌صورت کاملاً کیپ (نه خیلی سفت و نه آزاد) دور بند انگشت مورد نظر بپیچید، محل تقاطع را علامت زده و طول آن را بر حسب میلی‌متر با خط‌کش بخوانید (معادل ستون «محیط داخلی»).
+                </p>
+              </div>
+              <div class="p-4 rounded-xl bg-ivory border border-sand/80">
+                <h4 class="font-bold text-emerald-deep mb-1.5">روش دوم: استفاده از انگشتر قبلی</h4>
+                <p class="text-muted">
+                  قطر داخلی یکی از انگشترهای خود را که دقیقاً اندازه است (بدون احتساب ضخامت رکاب) با خط‌کش اندازه‌گیری کرده و با ستون «قطر داخلی» تطبیق دهید.
+                </p>
+              </div>
+            </div>
+
+            <div class="overflow-hidden rounded-xl border border-sand">
+              <table class="w-full text-center text-xs sm:text-sm">
+                <thead class="bg-cream text-emerald-deep font-bold">
+                  <tr>
+                    <th class="py-3 px-3">سایز ایران</th>
+                    <th class="py-3 px-3">قطر داخلی (میلی‌متر)</th>
+                    <th class="py-3 px-3">محیط داخلی (میلی‌متر)</th>
+                    <th class="py-3 px-3">انتخاب سریع</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-sand/60">
+                  {% for row in ring_size_guide %}
+                    <tr class="hover:bg-ivory transition">
+                      <td class="py-2.5 px-3 font-extrabold text-emerald-deep">سایز {{ row.circumference }}</td>
+                      <td class="py-2.5 px-3 text-ink">{{ row.diameter }}</td>
+                      <td class="py-2.5 px-3 text-ink">{{ row.circumference }}</td>
+                      <td class="py-2.5 px-3">
+                        <button
+                          type="button"
+                          @click="selectedVariant = 'سایز {{ row.circumference }}'; sizeGuideOpen = false"
+                          class="px-3 py-1 rounded-lg text-xs font-bold border transition"
+                          :class="selectedVariant === 'سایز {{ row.circumference }}' ? 'bg-emerald-deep text-ivory border-emerald-deep' : 'bg-cream text-emerald-deep border-sand hover:bg-emerald-deep hover:text-ivory'"
+                        >
+                          انتخاب
+                        </button>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script>
+    function productDetailPage() {
+      const galleryScript = document.getElementById('product-gallery-data');
+      const images = galleryScript ? JSON.parse(galleryScript.textContent) : [];
+
+      return {
+        images: images,
+        activeIndex: 0,
+        selectedVariant: '{{ default_variant|escapejs }}',
+        quantity: 1,
+        maxStock: {{ product.stock|default:0 }},
+        inStock: {% if product.is_in_stock %}true{% else %}false{% endif %},
+        activeTab: 'description',
+        sizeGuideOpen: false,
+        submitting: false,
+
+        get activeImage() {
+          return this.images[this.activeIndex] || { url: '', alt: '{{ product.title|escapejs }}' };
+        },
+
+        async submitAddToCart(event) {
+          if (!this.inStock || this.submitting) return;
+          this.submitting = true;
+          const form = event.target;
+          const csrfToken = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+          try {
+            const resp = await fetch(form.action, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+              },
+              body: JSON.stringify({
+                product_id: {{ product.id }},
+                quantity: this.quantity,
+                variant: this.selectedVariant,
+              }),
+            });
+
+            const data = await resp.json();
+            if (resp.ok && data.success) {
+              Alpine.store('cart').applyPayload(data);
+              Alpine.store('cart').showToast(data.message, 'success');
+            } else {
+              Alpine.store('cart').showToast(data.message || 'خطا در افزودن محصول به سبد خرید.', 'error');
+            }
+          } catch (err) {
+            Alpine.store('cart').showToast('ارتباط با سرور برقرار نشد. لطفاً دوباره تلاش کنید.', 'error');
+          } finally {
+            this.submitting = false;
+          }
+        },
+      };
+    }
+  </script>
+{% endblock %}

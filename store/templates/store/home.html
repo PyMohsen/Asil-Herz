@@ -1,0 +1,240 @@
+{% extends "store/base.html" %}
+{% load store_filters %}
+
+{% block title %}گالری جواهرات و حرز اصیل | انگشتر نقره، سنگ قیمتی و حرز دست‌نویس{% endblock %}
+
+{% block content %}
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-emerald-deep text-ivory pattern-lattice">
+    <div class="absolute inset-0 bg-gradient-to-bl from-emerald-dark/85 via-emerald-deep/90 to-emerald-soft/75 pointer-events-none"></div>
+    <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-gold-warm/15 blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-gold-warm/10 blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <!-- Hero Text -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ivory/10 border border-gold-warm/40 text-gold-light text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-gold-warm animate-pulse"></span>
+            <span>تضمین اصالت سنگ معدنی، نقره ۹۲۵ و نگارش شرعی</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-white">
+            شکوه هنر <span class="text-gold-warm">نقره‌سازی اصیل</span> و برکت <span class="text-gold-light">احراز دست‌نویس</span>
+          </h1>
+
+          <p class="text-sm sm:text-base text-ivory/80 leading-8 max-w-2xl mx-auto lg:mx-0">
+            کلکسیونی برگزیده از انگشترهای نقره دست‌ساز با نگین‌های عقیق یمنی، فیروزه نیشابور و دُرّ نجف، در کنار حرزهای معتبر امام جواد (ع) و ابی‌دجانه با نگارش سنتی روی پوست آهو و قاب‌های نقره و چرم دست‌دوز.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
+            <a
+              href="{% url 'store:product_list' %}"
+              class="px-7 py-3.5 rounded-xl bg-gold-warm hover:bg-gold-light text-emerald-dark font-extrabold text-sm sm:text-base shadow-lg transition transform hover:-translate-y-0.5"
+            >
+              مشاهده کلکسیون آثار
+            </a>
+            <a
+              href="{% url 'store:product_list' %}?type=hirz"
+              class="px-6 py-3.5 rounded-xl bg-ivory/10 hover:bg-ivory/20 text-ivory border border-gold-warm/45 font-bold text-sm sm:text-base transition"
+            >
+              حرز و بازوبندهای سنتی
+            </a>
+          </div>
+
+          <!-- Quick Metrics -->
+          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gold-warm/20 max-w-lg mx-auto lg:mx-0">
+            <div>
+              <div class="text-xl sm:text-2xl font-extrabold text-gold-warm">۹۲۵ عیار</div>
+              <div class="text-xs text-ivory/70 mt-0.5">نقره استاندارد و بااصالت</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-extrabold text-gold-warm">پوست آهو</div>
+              <div class="text-xs text-ivory/70 mt-0.5">نگارش سنتی با رعایت آداب</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-extrabold text-gold-warm">۱۰۰٪ بیمه</div>
+              <div class="text-xs text-ivory/70 mt-0.5">ارسال امن به سراسر کشور</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Showcase Cards -->
+        <div class="lg:col-span-5">
+          <div class="grid grid-cols-2 gap-4">
+            {% if hero_ring %}
+              <a href="{{ hero_ring.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl">
+                <div class="aspect-[4/3] rounded-xl overflow-hidden bg-cream mb-3">
+                  <img src="{{ hero_ring.main_image.url }}" alt="{{ hero_ring.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                </div>
+                <span class="text-[11px] text-gold-light font-medium block">منتخب انگشترها</span>
+                <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-1 mt-0.5">{{ hero_ring.title }}</h2>
+                <div class="text-xs font-extrabold text-gold-warm mt-1.5">{{ hero_ring.get_final_price|toman }}</div>
+              </a>
+            {% endif %}
+
+            {% if hero_hirz %}
+              <a href="{{ hero_hirz.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl mt-6">
+                <div class="aspect-[4/3] rounded-xl overflow-hidden bg-cream mb-3">
+                  <img src="{{ hero_hirz.main_image.url }}" alt="{{ hero_hirz.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                </div>
+                <span class="text-[11px] text-gold-light font-medium block">منتخب احراز شرعی</span>
+                <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-1 mt-0.5">{{ hero_hirz.title }}</h2>
+                <div class="text-xs font-extrabold text-gold-warm mt-1.5">{{ hero_hirz.get_final_price|toman }}</div>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Badges Bar -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-7 relative z-10">
+    <div class="bg-white rounded-2xl border border-sand shadow-luxury p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="flex items-start gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-emerald-deep/10 text-emerald-deep flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm text-ink">ضمانت اصالت سنگ و نقره</h3>
+          <p class="text-xs text-muted mt-1 leading-5">تضمین عیار ۹۲۵ رکاب و طبیعی بودن تمام نگین‌های معدنی</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-gold-warm/15 text-gold-dark flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm text-ink">گواهی اصالت نگارش و آداب حرز</h3>
+          <p class="text-xs text-muted mt-1 leading-5">تحریر روی پوست آهوی دباغی‌شده با رعایت کامل ساعات سعد</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-emerald-deep/10 text-emerald-deep flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm text-ink">ارسال بیمه‌شده به سراسر کشور</h3>
+          <p class="text-xs text-muted mt-1 leading-5">بسته‌بندی نفیس ضدضربه همراه با بیمه کامل مرسولات</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-gold-warm/15 text-gold-dark flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm text-ink">راهنمای تعیین سایز</h3>
+          <p class="text-xs text-muted mt-1 leading-5">انتخاب دقیق سایز رکاب و امکان تنظیم سایز تخصصی پیش از ارسال</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Categories -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div>
+        <span class="text-xs font-bold text-gold-dark tracking-wide">گنجینه موضوعی</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-deep mt-1">دسته‌بندی‌های برگزیده</h2>
+      </div>
+      <a href="{% url 'store:product_list' %}" class="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-deep hover:text-gold-dark transition">
+        <span>مشاهده همه آثار</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {% for cat in categories %}
+        <a
+          href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}"
+          class="group relative bg-white rounded-2xl border border-sand/80 overflow-hidden shadow-card hover:shadow-luxury hover:border-gold-warm transition-all duration-300 flex flex-col"
+        >
+          <div class="aspect-[16/10] bg-cream overflow-hidden relative">
+            {% if cat.image %}
+              <img src="{{ cat.image.url }}" alt="{{ cat.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            {% endif %}
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-dark/70 via-transparent to-transparent"></div>
+            <span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-ivory/90 text-emerald-deep text-[11px] font-bold">
+              {{ cat.product_count|fa_digits }} اثر
+            </span>
+          </div>
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-extrabold text-base text-ink group-hover:text-emerald-deep transition">{{ cat.title }}</h3>
+              <p class="text-xs text-muted mt-1.5 leading-5 line-clamp-2">{{ cat.description }}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-sand/60 flex items-center justify-between text-xs font-bold text-emerald-deep">
+              <span>ورود به دسته‌بندی</span>
+              <span class="group-hover:-translate-x-1 transition-transform">←</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div>
+        <span class="text-xs font-bold text-gold-dark">آثار شاخص و کلکسیونی</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-deep mt-1">محصولات ویژه گالری</h2>
+      </div>
+      <a href="{% url 'store:product_list' %}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cream hover:bg-emerald-deep text-emerald-deep hover:text-ivory border border-sand text-xs sm:text-sm font-bold transition">
+        <span>کشف تمام محصولات</span>
+        <span>←</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for product in featured_products %}
+        {% include "store/partials/_product_card.html" with product=product %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Curated Dual Spotlight -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-2xl bg-emerald-deep text-ivory p-7 sm:p-8 border border-gold-warm/30 relative overflow-hidden">
+        <div class="relative z-10 space-y-3">
+          <span class="inline-block px-3 py-1 rounded-full bg-gold-warm/20 text-gold-light text-xs font-semibold">کلکسیون رکاب‌های دست‌ساز</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-white">انگشترهای نقره و سنگ‌های قیمتی</h3>
+          <p class="text-xs sm:text-sm text-ivory/80 leading-7">
+            تنوع بی‌نظیر عقیق یمنی، فیروزه شجری نیشابور، دُرّ نجف و زمرد در رکاب‌های صفوی، فیلی و شبکه با قلم‌زنی استادکاران.
+          </p>
+          <a href="{% url 'store:product_list' %}?type=ring" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gold-warm text-emerald-dark text-xs sm:text-sm font-extrabold hover:bg-gold-light transition mt-2">
+            مشاهده انگشترها
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-cream text-ink p-7 sm:p-8 border border-sand relative overflow-hidden">
+        <div class="relative z-10 space-y-3">
+          <span class="inline-block px-3 py-1 rounded-full bg-emerald-deep/10 text-emerald-deep text-xs font-semibold">کتابت اصیل و آداب کامل</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-emerald-deep">حرزهای معتبر و بازوبندهای چرمی</h3>
+          <p class="text-xs sm:text-sm text-muted leading-7">
+            نگارش دقیق حرز کبیر امام جواد (ع)، حرز ابی‌دجانه و شرف‌الشمس روی پوست آهو، قابل انتخاب با قاب نقره استوانه‌ای یا بازوبند چرم گاوی.
+          </p>
+          <a href="{% url 'store:product_list' %}?type=hirz" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-deep text-ivory text-xs sm:text-sm font-extrabold hover:bg-emerald-dark transition mt-2">
+            مشاهده حرز و بازوبندها
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
