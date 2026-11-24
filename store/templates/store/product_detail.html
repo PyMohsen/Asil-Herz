@@ -117,7 +117,7 @@
           {% if product.product_type == 'ring' %}
             <!-- Ring Size Selector (56 to 66) -->
             <div class="space-y-3">
-              <div class="flex items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
                 <label class="text-sm font-bold text-ink">
                   انتخاب سایز انگشتر: <span class="text-emerald-deep" x-text="selectedVariant"></span>
                 </label>
@@ -230,11 +230,11 @@
 
     <!-- Tabbed Details Section -->
     <section class="mt-12 bg-white rounded-2xl border border-sand/90 shadow-card overflow-hidden">
-      <div class="flex flex-wrap border-b border-sand bg-cream/60 px-4 sm:px-6 pt-3 gap-2">
+      <div class="flex items-center overflow-x-auto no-scrollbar border-b border-sand bg-cream/60 px-3 sm:px-6 pt-3 gap-1.5 sm:gap-2">
         <button
           type="button"
           @click="activeTab = 'description'"
-          class="px-5 py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition"
+          class="px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition whitespace-nowrap shrink-0"
           :class="activeTab === 'description' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
         >
           توضیحات و خواص
@@ -242,7 +242,7 @@
         <button
           type="button"
           @click="activeTab = 'specs'"
-          class="px-5 py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition"
+          class="px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition whitespace-nowrap shrink-0"
           :class="activeTab === 'specs' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
         >
           مشخصات فنی
@@ -250,14 +250,14 @@
         <button
           type="button"
           @click="activeTab = 'reviews'"
-          class="px-5 py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition"
+          class="px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition whitespace-nowrap shrink-0"
           :class="activeTab === 'reviews' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
         >
           دیدگاه خریداران ({{ reviews|length|fa_digits }})
         </button>
       </div>
 
-      <div class="p-6 sm:p-8">
+      <div class="p-5 sm:p-8">
         <!-- Tab 1: Description & Properties -->
         <div x-show="activeTab === 'description'" class="space-y-4">
           <h2 class="text-lg font-extrabold text-emerald-deep">معرفی تخصصی، خواص و آداب نگهداری</h2>
@@ -270,7 +270,7 @@
         <div x-show="activeTab === 'specs'" x-cloak>
           <h2 class="text-lg font-extrabold text-emerald-deep mb-4">جدول مشخصات فنی اثر</h2>
           {% if product.specifications.all %}
-            <div class="overflow-hidden rounded-xl border border-sand">
+            <div class="overflow-x-auto rounded-xl border border-sand">
               <table class="w-full text-right text-xs sm:text-sm">
                 <tbody class="divide-y divide-sand/70">
                   {% for spec in product.specifications.all %}
@@ -392,8 +392,8 @@
               </div>
             </div>
 
-            <div class="overflow-hidden rounded-xl border border-sand">
-              <table class="w-full text-center text-xs sm:text-sm">
+            <div class="overflow-x-auto rounded-xl border border-sand">
+              <table class="w-full min-w-[420px] text-center text-xs sm:text-sm">
                 <thead class="bg-cream text-emerald-deep font-bold">
                   <tr>
                     <th class="py-3 px-3">سایز ایران</th>

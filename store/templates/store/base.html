@@ -153,13 +153,13 @@
 <body class="bg-ivory text-ink min-h-screen flex flex-col antialiased selection:bg-gold-warm/30 selection:text-emerald-deep" x-data="{ mobileMenu: false }">
 
   <!-- Top Luxury Announcement Strip -->
-  <div class="bg-emerald-deep text-ivory/95 text-xs py-2 border-b border-gold-warm/25">
+  <div class="bg-emerald-deep text-ivory/95 text-[11px] sm:text-xs py-2 border-b border-gold-warm/25">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-warm"></span>
-        <span>ضمانت اصالت مادام‌العمر نقره ۹۲۵، سنگ‌های معدنی و نگارش شرعی احراز</span>
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-warm shrink-0"></span>
+        <span class="truncate sm:whitespace-normal">ضمانت اصالت مادام‌العمر نقره ۹۲۵، سنگ‌های معدنی و نگارش شرعی احراز</span>
       </div>
-      <div class="hidden sm:flex items-center gap-4 text-gold-light/90">
+      <div class="hidden sm:flex items-center gap-4 text-gold-light/90 shrink-0">
         <span>ارسال بیمه‌شده به سراسر کشور</span>
         <span class="text-gold-warm/40">|</span>
         <span>پشتیبانی تخصصی: ۰۲۱-۸۸۴۵۱۲۳۴</span>
@@ -169,93 +169,75 @@
 
   <!-- Main Sticky Navbar -->
   <header class="sticky top-0 z-40 bg-ivory/95 backdrop-blur-md border-b border-sand/80 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between gap-4 h-20">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <!-- Top Utility Row: Brand + Search + Cart -->
+      <div class="flex items-center justify-between gap-2 sm:gap-4 h-16 sm:h-[4.5rem]">
 
         <!-- Mobile Menu Toggle + Brand -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0 sm:shrink-0">
           <button
             type="button"
             @click="mobileMenu = !mobileMenu"
-            class="lg:hidden p-2 rounded-xl border border-sand text-emerald-deep hover:bg-cream transition"
+            class="lg:hidden p-1.5 sm:p-2 rounded-xl border border-sand text-emerald-deep hover:bg-cream transition shrink-0"
             aria-label="باز کردن منو"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16" />
               <path x-show="mobileMenu" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
-          <a href="{% url 'store:home' %}" class="flex items-center gap-3 group shrink-0">
-            <div class="w-11 h-11 rounded-xl bg-emerald-deep text-gold-warm flex items-center justify-center shadow-sm border border-gold-warm/40 group-hover:bg-emerald-dark transition">
-              <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+          <a href="{% url 'store:home' %}" class="flex items-center gap-2 sm:gap-3 group min-w-0 sm:shrink-0">
+            <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-emerald-deep text-gold-warm flex items-center justify-center shadow-sm border border-gold-warm/40 group-hover:bg-emerald-dark transition shrink-0">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
                 <polygon points="16,3 27,10 27,22 16,29 5,22 5,10" stroke="currentColor" />
                 <polygon points="16,8 22,16 16,24 10,16" fill="currentColor" fill-opacity="0.2" stroke="currentColor" />
                 <circle cx="16" cy="16" r="2" fill="currentColor" />
               </svg>
             </div>
-            <div>
-              <span class="block text-base sm:text-lg font-extrabold text-emerald-deep tracking-tight leading-tight">
+            <div class="min-w-0">
+              <span class="block text-xs min-[375px]:text-sm sm:text-base lg:text-lg font-extrabold text-emerald-deep tracking-tight leading-tight truncate sm:whitespace-nowrap">
                 گالری جواهرات و حرز اصیل
               </span>
-              <span class="hidden sm:block text-[11px] text-muted font-medium">
+              <span class="hidden sm:block text-[11px] text-muted font-medium whitespace-nowrap">
                 نقره‌جات فاخر و احراز دست‌نویس سنتی
               </span>
             </div>
           </a>
         </div>
 
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium">
-          <a href="{% url 'store:home' %}" class="px-3 py-2 rounded-lg text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'home' %}text-emerald-deep bg-cream font-semibold{% endif %}">
-            خانه
-          </a>
-          <a href="{% url 'store:product_list' %}" class="px-3 py-2 rounded-lg text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'product_list' and not request.GET.category %}text-emerald-deep bg-cream font-semibold{% endif %}">
-            همه آثار
-          </a>
-          {% for cat in nav_categories|slice:":4" %}
-            <a
-              href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}"
-              class="px-3 py-2 rounded-lg text-ink/90 hover:text-emerald-deep hover:bg-cream transition whitespace-nowrap {% if request.GET.category == cat.slug %}text-emerald-deep bg-cream font-semibold{% endif %}"
-            >
-              {{ cat.title }}
-            </a>
-          {% endfor %}
-        </nav>
+        <!-- Quick Search (Tablet & Desktop) -->
+        <form action="{% url 'store:product_list' %}" method="get" class="hidden md:flex items-center relative flex-1 max-w-xs lg:max-w-md mx-2 lg:mx-4">
+          <input
+            type="text"
+            name="q"
+            value="{{ request.GET.q|default:'' }}"
+            placeholder="جستجوی انگشتر، عقیق، حرز..."
+            class="w-full bg-white border border-sand rounded-xl pr-4 pl-10 py-2.5 text-xs sm:text-sm text-ink placeholder:text-muted/70 focus:outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/10 transition"
+          />
+          <button type="submit" aria-label="جستجو" class="absolute left-3 text-muted hover:text-emerald-deep transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+            </svg>
+          </button>
+        </form>
 
-        <!-- Search + Cart Action -->
-        <div class="flex items-center gap-2.5 sm:gap-3">
-          <!-- Desktop Quick Search -->
-          <form action="{% url 'store:product_list' %}" method="get" class="hidden md:flex items-center relative">
-            <input
-              type="text"
-              name="q"
-              value="{{ request.GET.q|default:'' }}"
-              placeholder="جستجوی انگشتر، عقیق، حرز..."
-              class="w-48 xl:w-60 bg-white border border-sand rounded-xl pr-3.5 pl-10 py-2 text-xs text-ink placeholder:text-muted/70 focus:outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/10 transition"
-            />
-            <button type="submit" aria-label="جستجو" class="absolute left-2.5 text-muted hover:text-emerald-deep transition">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-              </svg>
-            </button>
-          </form>
-
-          <!-- Cart Trigger + Mini-Cart Dropdown -->
-          <div class="relative" @keydown.escape.window="$store.cart.openDrawer = false">
+        <!-- Cart Action -->
+        <div class="flex items-center shrink-0">
+          <div class="relative shrink-0" @keydown.escape.window="$store.cart.openDrawer = false">
             <button
               type="button"
               @click="$store.cart.openDrawer = !$store.cart.openDrawer"
-              class="relative flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-emerald-deep text-ivory hover:bg-emerald-dark transition shadow-sm"
+              class="relative flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-emerald-deep text-ivory hover:bg-emerald-dark transition shadow-sm whitespace-nowrap shrink-0"
               aria-label="سبد خرید"
             >
-              <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 text-gold-light shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              <span class="hidden sm:inline text-xs font-semibold">سبد خرید</span>
+              <span class="hidden sm:inline text-xs font-semibold whitespace-nowrap">سبد خرید</span>
               <span
                 x-text="$store.cart.formattedCount"
-                class="min-w-[1.35rem] h-[1.35rem] px-1 rounded-full bg-gold-warm text-emerald-dark text-[11px] font-bold flex items-center justify-center"
+                class="min-w-[1.35rem] h-[1.35rem] px-1 rounded-full bg-gold-warm text-emerald-dark text-[11px] font-bold flex items-center justify-center shrink-0"
               >{{ cart_count|fa_digits }}</span>
             </button>
 
@@ -270,7 +252,7 @@
               x-transition:leave="transition ease-in duration-150"
               x-transition:leave-start="opacity-100 translate-y-0"
               x-transition:leave-end="opacity-0 translate-y-2"
-              class="absolute left-0 mt-3 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-sand overflow-hidden z-50"
+              class="fixed sm:absolute left-3 right-3 sm:right-auto sm:left-0 top-[4.5rem] sm:top-auto sm:mt-3 sm:w-96 bg-white rounded-2xl shadow-xl border border-sand overflow-hidden z-50"
             >
               <div class="px-4 py-3.5 bg-cream/70 border-b border-sand flex items-center justify-between">
                 <div class="flex items-center gap-2">
@@ -346,9 +328,38 @@
         </div>
       </div>
 
-      <!-- Mobile Collapsible Menu -->
-      <div x-show="mobileMenu" x-cloak x-transition class="lg:hidden pb-4 pt-2 border-t border-sand/60 space-y-3">
-        <form action="{% url 'store:product_list' %}" method="get" class="relative">
+      <!-- Desktop Navigation Row (lg+) -->
+      <nav class="hidden lg:flex items-center justify-between gap-4 border-t border-sand/60 py-2 text-sm font-medium">
+        <div class="flex items-center gap-1.5 xl:gap-2 overflow-x-auto no-scrollbar">
+          <a href="{% url 'store:home' %}" class="px-3.5 py-1.5 rounded-lg whitespace-nowrap shrink-0 text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'home' %}text-emerald-deep bg-cream font-bold{% endif %}">
+            خانه
+          </a>
+          <a href="{% url 'store:product_list' %}" class="px-3.5 py-1.5 rounded-lg whitespace-nowrap shrink-0 text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'product_list' and not request.GET.category and not request.GET.type %}text-emerald-deep bg-cream font-bold{% endif %}">
+            همه آثار
+          </a>
+          {% for cat in nav_categories|slice:":4" %}
+            <a
+              href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}"
+              class="px-3.5 py-1.5 rounded-lg whitespace-nowrap shrink-0 text-ink/90 hover:text-emerald-deep hover:bg-cream transition {% if request.GET.category == cat.slug %}text-emerald-deep bg-cream font-bold{% endif %}"
+            >
+              {{ cat.title }}
+            </a>
+          {% endfor %}
+        </div>
+
+        <div class="hidden xl:flex items-center gap-2 shrink-0 text-xs text-muted">
+          <a href="{% url 'store:product_list' %}?type=ring" class="px-2.5 py-1 rounded-full bg-cream/80 hover:bg-cream text-emerald-deep font-semibold whitespace-nowrap transition">
+            کلکسیون انگشتر
+          </a>
+          <a href="{% url 'store:product_list' %}?type=hirz" class="px-2.5 py-1 rounded-full bg-cream/80 hover:bg-cream text-gold-dark font-semibold whitespace-nowrap transition">
+            کلکسیون حرز
+          </a>
+        </div>
+      </nav>
+
+      <!-- Mobile & Tablet Collapsible Menu -->
+      <div x-show="mobileMenu" x-cloak x-transition class="lg:hidden pb-4 pt-3 border-t border-sand/60 space-y-3">
+        <form action="{% url 'store:product_list' %}" method="get" class="relative md:hidden">
           <input
             type="text"
             name="q"
@@ -362,11 +373,11 @@
             </svg>
           </button>
         </form>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <a href="{% url 'store:home' %}" class="px-3 py-2 rounded-xl bg-cream/70 text-emerald-deep font-medium">خانه</a>
-          <a href="{% url 'store:product_list' %}" class="px-3 py-2 rounded-xl bg-cream/70 text-emerald-deep font-medium">همه آثار</a>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
+          <a href="{% url 'store:home' %}" class="px-3 py-2.5 rounded-xl bg-cream/70 text-emerald-deep font-semibold text-center whitespace-nowrap">خانه</a>
+          <a href="{% url 'store:product_list' %}" class="px-3 py-2.5 rounded-xl bg-cream/70 text-emerald-deep font-semibold text-center whitespace-nowrap">همه آثار</a>
           {% for cat in nav_categories %}
-            <a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="px-3 py-2 rounded-xl bg-white border border-sand/70 text-ink/90 text-xs font-medium truncate">
+            <a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="px-3 py-2.5 rounded-xl bg-white border border-sand/70 text-ink/90 text-xs font-medium truncate text-center">
               {{ cat.title }}
             </a>
           {% endfor %}

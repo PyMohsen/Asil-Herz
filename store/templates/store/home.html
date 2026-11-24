@@ -43,25 +43,25 @@
           </div>
 
           <!-- Quick Metrics -->
-          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gold-warm/20 max-w-lg mx-auto lg:mx-0">
+          <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-6 border-t border-gold-warm/20 max-w-lg mx-auto lg:mx-0">
             <div>
-              <div class="text-xl sm:text-2xl font-extrabold text-gold-warm">۹۲۵ عیار</div>
-              <div class="text-xs text-ivory/70 mt-0.5">نقره استاندارد و بااصالت</div>
+              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">۹۲۵ عیار</div>
+              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">نقره استاندارد و بااصالت</div>
             </div>
             <div>
-              <div class="text-xl sm:text-2xl font-extrabold text-gold-warm">پوست آهو</div>
-              <div class="text-xs text-ivory/70 mt-0.5">نگارش سنتی با رعایت آداب</div>
+              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">پوست آهو</div>
+              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">نگارش سنتی با رعایت آداب</div>
             </div>
             <div>
-              <div class="text-xl sm:text-2xl font-extrabold text-gold-warm">۱۰۰٪ بیمه</div>
-              <div class="text-xs text-ivory/70 mt-0.5">ارسال امن به سراسر کشور</div>
+              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">۱۰۰٪ بیمه</div>
+              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">ارسال امن به سراسر کشور</div>
             </div>
           </div>
         </div>
 
         <!-- Hero Showcase Cards -->
         <div class="lg:col-span-5">
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-4 items-start">
             {% if hero_ring %}
               <a href="{{ hero_ring.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl">
                 <div class="aspect-[4/3] rounded-xl overflow-hidden bg-cream mb-3">
@@ -74,7 +74,7 @@
             {% endif %}
 
             {% if hero_hirz %}
-              <a href="{{ hero_hirz.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl mt-6">
+              <a href="{{ hero_hirz.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl min-[420px]:mt-6">
                 <div class="aspect-[4/3] rounded-xl overflow-hidden bg-cream mb-3">
                   <img src="{{ hero_hirz.main_image.url }}" alt="{{ hero_hirz.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 </div>

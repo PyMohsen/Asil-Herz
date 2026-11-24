@@ -57,7 +57,7 @@
 
       <!-- Filter Sidebar (Desktop sticky + Mobile collapsible) -->
       <aside
-        class="lg:col-span-3 lg:block lg:sticky lg:top-24"
+        class="lg:col-span-4 xl:col-span-3 lg:block lg:sticky lg:top-32"
         :class="mobileFiltersOpen ? 'block' : 'hidden lg:block'"
       >
         <form action="{% url 'store:product_list' %}" method="get" class="bg-white rounded-2xl border border-sand/90 shadow-card p-5 space-y-5">
@@ -121,12 +121,12 @@
                 </span>
               </label>
               {% for cat in categories %}
-                <label class="flex items-center justify-between px-3 py-2 rounded-xl cursor-pointer hover:bg-ivory transition {% if selected_category == cat.slug %}bg-emerald-deep/5 border border-emerald-deep/20{% endif %}">
-                  <span class="flex items-center gap-2 text-xs font-medium text-ink">
-                    <input type="radio" name="category" value="{{ cat.slug }}" class="accent-[#0F3D3E]" {% if selected_category == cat.slug %}checked{% endif %} />
-                    <span>{{ cat.title }}</span>
+                <label class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl cursor-pointer hover:bg-ivory transition {% if selected_category == cat.slug %}bg-emerald-deep/5 border border-emerald-deep/20{% endif %}">
+                  <span class="flex items-center gap-2 text-xs font-medium text-ink min-w-0">
+                    <input type="radio" name="category" value="{{ cat.slug }}" class="accent-[#0F3D3E] shrink-0" {% if selected_category == cat.slug %}checked{% endif %} />
+                    <span class="truncate">{{ cat.title }}</span>
                   </span>
-                  <span class="text-[11px] text-muted bg-cream px-2 py-0.5 rounded-full">{{ cat.product_count|fa_digits }}</span>
+                  <span class="text-[11px] text-muted bg-cream px-2 py-0.5 rounded-full shrink-0">{{ cat.product_count|fa_digits }}</span>
                 </label>
               {% endfor %}
             </div>
@@ -135,7 +135,7 @@
           <!-- Price Range -->
           <div class="space-y-2">
             <span class="block text-xs font-bold text-ink">محدوده قیمت (تومان)</span>
-            <div class="grid grid-cols-2 gap-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2 gap-2.5">
               <div>
                 <label for="min_price" class="block text-[11px] text-muted mb-1">حداقل قیمت</label>
                 <input
@@ -185,7 +185,7 @@
       </aside>
 
       <!-- Main Product Area -->
-      <div class="lg:col-span-9 space-y-6">
+      <div class="lg:col-span-8 xl:col-span-9 space-y-6">
 
         <!-- Sorting & Results Meta Bar -->
         <div class="bg-white rounded-2xl border border-sand/80 px-4 sm:px-5 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-sm">

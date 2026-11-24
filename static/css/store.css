@@ -11,6 +11,16 @@ body {
   background-color: #FAF8F5;
   color: #1E2421;
   font-feature-settings: "ss01";
+  overflow-x: clip;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .pattern-lattice {
