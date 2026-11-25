@@ -1,7 +1,7 @@
 {% extends "store/base.html" %}
-{% load store_filters %}
+{% load i18n store_filters %}
 
-{% block title %}گالری جواهرات و حرز اصیل | انگشتر نقره، سنگ قیمتی و حرز دست‌نویس{% endblock %}
+{% block title %}{% translate "Asil Jewelry & Hirz Gallery | Silver Rings, Gemstones & Hand-Written Hirz" %}{% endblock %}
 
 {% block content %}
   <!-- Hero Section -->
@@ -13,18 +13,18 @@
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         <!-- Hero Text -->
-        <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-start">
           <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ivory/10 border border-gold-warm/40 text-gold-light text-xs font-semibold">
             <span class="w-2 h-2 rounded-full bg-gold-warm animate-pulse"></span>
-            <span>تضمین اصالت سنگ معدنی، نقره ۹۲۵ و نگارش شرعی</span>
+            <span>{% translate "Guaranteed authenticity of natural gemstones, 925 silver & scribal compliance" %}</span>
           </div>
 
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-white">
-            شکوه هنر <span class="text-gold-warm">نقره‌سازی اصیل</span> و برکت <span class="text-gold-light">احراز دست‌نویس</span>
+            {% blocktranslate %}The Splendor of <span class="text-gold-warm">Authentic Silvercraft</span> &amp; Blessing of <span class="text-gold-light">Hand-Written Hirz</span>{% endblocktranslate %}
           </h1>
 
           <p class="text-sm sm:text-base text-ivory/80 leading-8 max-w-2xl mx-auto lg:mx-0">
-            کلکسیونی برگزیده از انگشترهای نقره دست‌ساز با نگین‌های عقیق یمنی، فیروزه نیشابور و دُرّ نجف، در کنار حرزهای معتبر امام جواد (ع) و ابی‌دجانه با نگارش سنتی روی پوست آهو و قاب‌های نقره و چرم دست‌دوز.
+            {% translate "A curated collection of handcrafted sterling silver rings set with Yemeni agate, Nishapur turquoise, and Durr-e Najaf, alongside authentic Hirz scrolls of Imam Jawad (AS) and Abi Dujana scribed on deerskin with silver cases and hand-stitched leather armlets." %}
           </p>
 
           <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
@@ -32,29 +32,29 @@
               href="{% url 'store:product_list' %}"
               class="px-7 py-3.5 rounded-xl bg-gold-warm hover:bg-gold-light text-emerald-dark font-extrabold text-sm sm:text-base shadow-lg transition transform hover:-translate-y-0.5"
             >
-              مشاهده کلکسیون آثار
+              {% translate "Explore the Collection" %}
             </a>
             <a
               href="{% url 'store:product_list' %}?type=hirz"
               class="px-6 py-3.5 rounded-xl bg-ivory/10 hover:bg-ivory/20 text-ivory border border-gold-warm/45 font-bold text-sm sm:text-base transition"
             >
-              حرز و بازوبندهای سنتی
+              {% translate "Traditional Hirz & Armlets" %}
             </a>
           </div>
 
           <!-- Quick Metrics -->
           <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-6 border-t border-gold-warm/20 max-w-lg mx-auto lg:mx-0">
             <div>
-              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">۹۲۵ عیار</div>
-              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">نقره استاندارد و بااصالت</div>
+              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">{% translate "925 Sterling" %}</div>
+              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">{% translate "Certified standard silver" %}</div>
             </div>
             <div>
-              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">پوست آهو</div>
-              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">نگارش سنتی با رعایت آداب</div>
+              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">{% translate "Deerskin" %}</div>
+              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">{% translate "Traditional scribal adherence" %}</div>
             </div>
             <div>
-              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">۱۰۰٪ بیمه</div>
-              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">ارسال امن به سراسر کشور</div>
+              <div class="text-base sm:text-2xl font-extrabold text-gold-warm">{% translate "100% Insured" %}</div>
+              <div class="text-[11px] sm:text-xs text-ivory/70 mt-0.5">{% translate "Secure nationwide delivery" %}</div>
             </div>
           </div>
         </div>
@@ -65,10 +65,10 @@
             {% if hero_ring %}
               <a href="{{ hero_ring.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl">
                 <div class="aspect-[4/3] rounded-xl overflow-hidden bg-cream mb-3">
-                  <img src="{{ hero_ring.main_image.url }}" alt="{{ hero_ring.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                  <img src="{{ hero_ring.main_image.url }}" alt="{{ hero_ring.localized_title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 </div>
-                <span class="text-[11px] text-gold-light font-medium block">منتخب انگشترها</span>
-                <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-1 mt-0.5">{{ hero_ring.title }}</h2>
+                <span class="text-[11px] text-gold-light font-medium block">{% translate "Featured Ring" %}</span>
+                <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-1 mt-0.5">{{ hero_ring.localized_title }}</h2>
                 <div class="text-xs font-extrabold text-gold-warm mt-1.5">{{ hero_ring.get_final_price|toman }}</div>
               </a>
             {% endif %}
@@ -76,10 +76,10 @@
             {% if hero_hirz %}
               <a href="{{ hero_hirz.get_absolute_url }}" class="group block bg-ivory/10 backdrop-blur-md border border-gold-warm/35 rounded-2xl p-3 hover:border-gold-warm transition shadow-2xl min-[420px]:mt-6">
                 <div class="aspect-[4/3] rounded-xl overflow-hidden bg-cream mb-3">
-                  <img src="{{ hero_hirz.main_image.url }}" alt="{{ hero_hirz.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                  <img src="{{ hero_hirz.main_image.url }}" alt="{{ hero_hirz.localized_title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 </div>
-                <span class="text-[11px] text-gold-light font-medium block">منتخب احراز شرعی</span>
-                <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-1 mt-0.5">{{ hero_hirz.title }}</h2>
+                <span class="text-[11px] text-gold-light font-medium block">{% translate "Featured Sacred Hirz" %}</span>
+                <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-1 mt-0.5">{{ hero_hirz.localized_title }}</h2>
                 <div class="text-xs font-extrabold text-gold-warm mt-1.5">{{ hero_hirz.get_final_price|toman }}</div>
               </a>
             {% endif %}
@@ -99,8 +99,8 @@
           </svg>
         </div>
         <div>
-          <h3 class="font-bold text-sm text-ink">ضمانت اصالت سنگ و نقره</h3>
-          <p class="text-xs text-muted mt-1 leading-5">تضمین عیار ۹۲۵ رکاب و طبیعی بودن تمام نگین‌های معدنی</p>
+          <h3 class="font-bold text-sm text-ink">{% translate "Gemstone & Silver Authenticity" %}</h3>
+          <p class="text-xs text-muted mt-1 leading-5">{% translate "Certified 925 sterling silver bands and natural untreated mineral gemstones" %}</p>
         </div>
       </div>
 
@@ -111,8 +111,8 @@
           </svg>
         </div>
         <div>
-          <h3 class="font-bold text-sm text-ink">گواهی اصالت نگارش و آداب حرز</h3>
-          <p class="text-xs text-muted mt-1 leading-5">تحریر روی پوست آهوی دباغی‌شده با رعایت کامل ساعات سعد</p>
+          <h3 class="font-bold text-sm text-ink">{% translate "Hirz Calligraphy & Ritual Certificate" %}</h3>
+          <p class="text-xs text-muted mt-1 leading-5">{% translate "Hand-scribed on tanned deerskin during auspicious lunar hours" %}</p>
         </div>
       </div>
 
@@ -123,8 +123,8 @@
           </svg>
         </div>
         <div>
-          <h3 class="font-bold text-sm text-ink">ارسال بیمه‌شده به سراسر کشور</h3>
-          <p class="text-xs text-muted mt-1 leading-5">بسته‌بندی نفیس ضدضربه همراه با بیمه کامل مرسولات</p>
+          <h3 class="font-bold text-sm text-ink">{% translate "Insured Nationwide Shipping" %}</h3>
+          <p class="text-xs text-muted mt-1 leading-5">{% translate "Shockproof presentation box with full transit insurance coverage" %}</p>
         </div>
       </div>
 
@@ -135,8 +135,8 @@
           </svg>
         </div>
         <div>
-          <h3 class="font-bold text-sm text-ink">راهنمای تعیین سایز</h3>
-          <p class="text-xs text-muted mt-1 leading-5">انتخاب دقیق سایز رکاب و امکان تنظیم سایز تخصصی پیش از ارسال</p>
+          <h3 class="font-bold text-sm text-ink">{% translate "Ring Sizing Guide" %}</h3>
+          <p class="text-xs text-muted mt-1 leading-5">{% translate "Accurate ring size chart and custom workshop resizing prior to dispatch" %}</p>
         </div>
       </div>
     </div>
@@ -146,12 +146,12 @@
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
       <div>
-        <span class="text-xs font-bold text-gold-dark tracking-wide">گنجینه موضوعی</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-deep mt-1">دسته‌بندی‌های برگزیده</h2>
+        <span class="text-xs font-bold text-gold-dark tracking-wide">{% translate "Curated Treasury" %}</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-deep mt-1">{% translate "Featured Categories" %}</h2>
       </div>
       <a href="{% url 'store:product_list' %}" class="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-deep hover:text-gold-dark transition">
-        <span>مشاهده همه آثار</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span>{% translate "View All Pieces" %}</span>
+        <svg class="w-4 h-4 ltr:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
       </a>
@@ -165,21 +165,21 @@
         >
           <div class="aspect-[16/10] bg-cream overflow-hidden relative">
             {% if cat.image %}
-              <img src="{{ cat.image.url }}" alt="{{ cat.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src="{{ cat.image.url }}" alt="{{ cat.localized_title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             {% endif %}
             <div class="absolute inset-0 bg-gradient-to-t from-emerald-dark/70 via-transparent to-transparent"></div>
-            <span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-ivory/90 text-emerald-deep text-[11px] font-bold">
-              {{ cat.product_count|fa_digits }} اثر
+            <span class="absolute bottom-3 start-3 px-2.5 py-1 rounded-full bg-ivory/90 text-emerald-deep text-[11px] font-bold">
+              {% blocktranslate with count=cat.product_count|fa_digits %}{{ count }} pieces{% endblocktranslate %}
             </span>
           </div>
           <div class="p-4 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-extrabold text-base text-ink group-hover:text-emerald-deep transition">{{ cat.title }}</h3>
-              <p class="text-xs text-muted mt-1.5 leading-5 line-clamp-2">{{ cat.description }}</p>
+              <h3 class="font-extrabold text-base text-ink group-hover:text-emerald-deep transition">{{ cat.localized_title }}</h3>
+              <p class="text-xs text-muted mt-1.5 leading-5 line-clamp-2">{{ cat.localized_description }}</p>
             </div>
             <div class="mt-3 pt-2.5 border-t border-sand/60 flex items-center justify-between text-xs font-bold text-emerald-deep">
-              <span>ورود به دسته‌بندی</span>
-              <span class="group-hover:-translate-x-1 transition-transform">←</span>
+              <span>{% translate "Browse Category" %}</span>
+              <span class="rtl:group-hover:-translate-x-1 ltr:group-hover:translate-x-1 transition-transform">{% if LANGUAGE_BIDI %}←{% else %}→{% endif %}</span>
             </div>
           </div>
         </a>
@@ -191,12 +191,12 @@
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
       <div>
-        <span class="text-xs font-bold text-gold-dark">آثار شاخص و کلکسیونی</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-deep mt-1">محصولات ویژه گالری</h2>
+        <span class="text-xs font-bold text-gold-dark">{% translate "Signature Collector Editions" %}</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-deep mt-1">{% translate "Featured Gallery Pieces" %}</h2>
       </div>
       <a href="{% url 'store:product_list' %}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cream hover:bg-emerald-deep text-emerald-deep hover:text-ivory border border-sand text-xs sm:text-sm font-bold transition">
-        <span>کشف تمام محصولات</span>
-        <span>←</span>
+        <span>{% translate "Discover All Products" %}</span>
+        <span>{% if LANGUAGE_BIDI %}←{% else %}→{% endif %}</span>
       </a>
     </div>
 
@@ -212,26 +212,26 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="rounded-2xl bg-emerald-deep text-ivory p-7 sm:p-8 border border-gold-warm/30 relative overflow-hidden">
         <div class="relative z-10 space-y-3">
-          <span class="inline-block px-3 py-1 rounded-full bg-gold-warm/20 text-gold-light text-xs font-semibold">کلکسیون رکاب‌های دست‌ساز</span>
-          <h3 class="text-xl sm:text-2xl font-extrabold text-white">انگشترهای نقره و سنگ‌های قیمتی</h3>
+          <span class="inline-block px-3 py-1 rounded-full bg-gold-warm/20 text-gold-light text-xs font-semibold">{% translate "Handcrafted Silver Settings" %}</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-white">{% translate "Silver Rings & Precious Gemstones" %}</h3>
           <p class="text-xs sm:text-sm text-ivory/80 leading-7">
-            تنوع بی‌نظیر عقیق یمنی، فیروزه شجری نیشابور، دُرّ نجف و زمرد در رکاب‌های صفوی، فیلی و شبکه با قلم‌زنی استادکاران.
+            {% translate "An extraordinary selection of Yemeni agate, Nishapur dendritic turquoise, Durr-e Najaf, and emerald mounted in Safavid, Fili, and lattice bands engraved by master artisans." %}
           </p>
           <a href="{% url 'store:product_list' %}?type=ring" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gold-warm text-emerald-dark text-xs sm:text-sm font-extrabold hover:bg-gold-light transition mt-2">
-            مشاهده انگشترها
+            {% translate "View Silver Rings" %}
           </a>
         </div>
       </div>
 
       <div class="rounded-2xl bg-cream text-ink p-7 sm:p-8 border border-sand relative overflow-hidden">
         <div class="relative z-10 space-y-3">
-          <span class="inline-block px-3 py-1 rounded-full bg-emerald-deep/10 text-emerald-deep text-xs font-semibold">کتابت اصیل و آداب کامل</span>
-          <h3 class="text-xl sm:text-2xl font-extrabold text-emerald-deep">حرزهای معتبر و بازوبندهای چرمی</h3>
+          <span class="inline-block px-3 py-1 rounded-full bg-emerald-deep/10 text-emerald-deep text-xs font-semibold">{% translate "Authentic Calligraphy & Etiquette" %}</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-emerald-deep">{% translate "Sacred Hirz Scrolls & Leather Armlets" %}</h3>
           <p class="text-xs sm:text-sm text-muted leading-7">
-            نگارش دقیق حرز کبیر امام جواد (ع)، حرز ابی‌دجانه و شرف‌الشمس روی پوست آهو، قابل انتخاب با قاب نقره استوانه‌ای یا بازوبند چرم گاوی.
+            {% translate "Authentic transcription of the Grand Hirz of Imam Jawad (AS), Hirz Abi Dujana, and Sharaf-ol-Shams on deerskin parchment, customizable with cylindrical silver cases or cowhide armlets." %}
           </p>
           <a href="{% url 'store:product_list' %}?type=hirz" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-deep text-ivory text-xs sm:text-sm font-extrabold hover:bg-emerald-dark transition mt-2">
-            مشاهده حرز و بازوبندها
+            {% translate "View Hirz & Armlets" %}
           </a>
         </div>
       </div>

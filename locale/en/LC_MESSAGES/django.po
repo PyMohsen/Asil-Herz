@@ -1,0 +1,1044 @@
+# Bilingual translation catalog for Asil Jewelry & Hirz Gallery.
+msgid ""
+msgstr ""
+"Project-Id-Version: Asil Gallery\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Language: en\\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+
+#: store\views.py:359
+#, python-format
+msgid "\"%(title)s\" (%(variant)s) has been added to your cart."
+msgstr "\"%(title)s\" (%(variant)s) has been added to your cart."
+
+#: store\views.py:409
+#, python-format
+msgid "\"%(title)s\" was removed from your cart."
+msgstr "\"%(title)s\" was removed from your cart."
+
+#: store\templates\store\home.html
+#, python-format
+msgid "%(count)s pieces"
+msgstr "%(count)s pieces"
+
+#: store\templates\store\partials\_product_card.html
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "%(percent)s%% OFF"
+msgstr "%(percent)s%% OFF"
+
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "%(percent)s%% Special Offer"
+msgstr "%(percent)s%% Special Offer"
+
+msgid "100% Insured"
+msgstr "100% Insured"
+
+#: store\templates\store\home.html
+#, python-format
+msgid "100%% Insured"
+msgstr "100% Insured"
+
+#: store\views.py:66
+msgid "2025/09/10"
+msgstr "2025/09/10"
+
+#: store\views.py:96
+msgid "2025/09/15"
+msgstr "2025/09/15"
+
+#: store\views.py:56
+msgid "2025/10/18"
+msgstr "2025/10/18"
+
+#: store\views.py:87
+msgid "2025/10/22"
+msgstr "2025/10/22"
+
+#: store\views.py:46
+msgid "2025/11/03"
+msgstr "2025/11/03"
+
+#: store\views.py:77
+msgid "2025/11/09"
+msgstr "2025/11/09"
+
+#: store\templates\store\home.html
+msgid "925 Sterling"
+msgstr "925 Sterling"
+
+#: store\templates\store\home.html
+msgid "A curated collection of handcrafted sterling silver rings set with Yemeni agate, Nishapur turquoise, and Durr-e Najaf, alongside authentic Hirz scrolls of Imam Jawad (AS) and Abi Dujana scribed on deerskin with silver cases and hand-stitched leather armlets."
+msgstr "A curated collection of handcrafted sterling silver rings set with Yemeni agate, Nishapur turquoise, and Durr-e Najaf, alongside authentic Hirz scrolls of Imam Jawad (AS) and Abi Dujana scribed on deerskin with silver cases and hand-stitched leather armlets."
+
+#: store\templates\store\base.html
+msgid "A specialist house dedicated to crafting handcrafted 925 sterling silver rings with natural gemstones and offering authentic hand-written Hirz scrolls on deerskin according to classical Persian and Islamic tradition."
+msgstr "A specialist house dedicated to crafting handcrafted 925 sterling silver rings with natural gemstones and offering authentic hand-written Hirz scrolls on deerskin according to classical Persian and Islamic tradition."
+
+#: store\templates\store\home.html
+msgid "Accurate ring size chart and custom workshop resizing prior to dispatch"
+msgstr "Accurate ring size chart and custom workshop resizing prior to dispatch"
+
+#: store\templates\store\product_detail.html
+msgid "Add to Cart"
+msgstr "Add to Cart"
+
+#: store\templates\store\product_detail.html
+msgid "Adding to cart..."
+msgstr "Adding to cart..."
+
+#: store\templates\store\product_list.html
+msgid "Advanced Filters"
+msgstr "Advanced Filters"
+
+#: store\views.py:94
+msgid "Ali-Akbar Mousavi"
+msgstr "Ali-Akbar Mousavi"
+
+#: store\templates\store\product_list.html
+msgid "All"
+msgstr "All"
+
+#: store\templates\store\product_list.html
+msgid "All Categories"
+msgstr "All Categories"
+
+#: store\templates\store\base.html
+msgid "All Pieces"
+msgstr "All Pieces"
+
+#: store\views.py:354
+#, python-format
+msgid "All available stock of \"%(title)s\" (%(stock)s units) is already in your cart."
+msgstr "All available stock of \"%(title)s\" (%(stock)s units) is already in your cart."
+
+#: store\models.py:218
+msgid "Alt text"
+msgstr "Alt text"
+
+#: store\models.py:223
+msgid "Alt text (English)"
+msgstr "Alt text (English)"
+
+#: store\views.py:44
+msgid "Amirhossein Rezaei"
+msgstr "Amirhossein Rezaei"
+
+#: store\templates\store\home.html
+msgid "An extraordinary selection of Yemeni agate, Nishapur dendritic turquoise, Durr-e Najaf, and emerald mounted in Safavid, Fili, and lattice bands engraved by master artisans."
+msgstr "An extraordinary selection of Yemeni agate, Nishapur dendritic turquoise, Durr-e Najaf, and emerald mounted in Safavid, Fili, and lattice bands engraved by master artisans."
+
+#: store\templates\store\product_list.html
+msgid "Apply Filters"
+msgstr "Apply Filters"
+
+#: store\templates\store\base.html
+#: store\templates\store\product_detail.html
+msgid "Asil Jewelry & Hirz Gallery"
+msgstr "Asil Jewelry & Hirz Gallery"
+
+#: store\admin.py:8
+msgid "Asil Jewelry & Hirz Gallery Admin"
+msgstr "Asil Jewelry & Hirz Gallery Admin"
+
+#: store\templates\store\home.html
+msgid "Asil Jewelry & Hirz Gallery | Silver Rings, Gemstones & Hand-Written Hirz"
+msgstr "Asil Jewelry & Hirz Gallery | Silver Rings, Gemstones & Hand-Written Hirz"
+
+#: store\templates\store\home.html
+msgid "Authentic Calligraphy & Etiquette"
+msgstr "Authentic Calligraphy & Etiquette"
+
+#: store\templates\store\base.html
+msgid "Authentic mineral gemstones, 925 silver & scribal Hirz"
+msgstr "Authentic mineral gemstones, 925 silver & scribal Hirz"
+
+#: store\templates\store\home.html
+msgid "Authentic transcription of the Grand Hirz of Imam Jawad (AS), Hirz Abi Dujana, and Sharaf-ol-Shams on deerskin parchment, customizable with cylindrical silver cases or cowhide armlets."
+msgstr "Authentic transcription of the Grand Hirz of Imam Jawad (AS), Hirz Abi Dujana, and Sharaf-ol-Shams on deerskin parchment, customizable with cylindrical silver cases or cowhide armlets."
+
+#: store\templates\store\home.html
+msgid "Browse Category"
+msgstr "Browse Category"
+
+#: store\templates\store\base.html
+msgid "Browse the collection to discover and select pieces."
+msgstr "Browse the collection to discover and select pieces."
+
+#: store\templates\store\base.html
+msgid "Cart"
+msgstr "Cart"
+
+#: store\templates\store\base.html
+msgid "Cart Total (Demo):"
+msgstr "Cart Total (Demo):"
+
+#: store\models.py:64
+msgid "Categories"
+msgstr "Categories"
+
+#: store\models.py:110
+#: store\models.py:63
+#: store\templates\store\product_list.html
+msgid "Category"
+msgstr "Category"
+
+#: store\models.py:53
+msgid "Category image"
+msgstr "Category image"
+
+#: store\models.py:34
+msgid "Category title"
+msgstr "Category title"
+
+#: store\models.py:39
+msgid "Category title (English)"
+msgstr "Category title (English)"
+
+#: store\templates\store\home.html
+msgid "Certified 925 sterling silver bands and natural untreated mineral gemstones"
+msgstr "Certified 925 sterling silver bands and natural untreated mineral gemstones"
+
+#: store\templates\store\home.html
+msgid "Certified standard silver"
+msgstr "Certified standard silver"
+
+#: store\templates\store\base.html
+msgid "Clear"
+msgstr "Clear"
+
+#: store\templates\store\product_list.html
+msgid "Clear Filters"
+msgstr "Clear Filters"
+
+#: store\templates\store\base.html
+#: store\templates\store\product_detail.html
+msgid "Close"
+msgstr "Close"
+
+#: store\templates\store\product_list.html
+msgid "Collection"
+msgstr "Collection"
+
+#: store\templates\store\base.html
+msgid "Consultation & Orders:"
+msgstr "Consultation & Orders:"
+
+#: store\templates\store\base.html
+msgid "Contact Gallery"
+msgstr "Contact Gallery"
+
+#: store\templates\store\base.html
+msgid "Continue Exploring Gallery"
+msgstr "Continue Exploring Gallery"
+
+#: store\admin.py:92
+msgid "Core Product Info"
+msgstr "Core Product Info"
+
+#: store\templates\store\product_detail.html
+msgid "Could not connect to the server. Please try again."
+msgstr "Could not connect to the server. Please try again."
+
+#: store\templates\store\product_detail.html
+msgid "Craftsmanship Overview, Properties & Care"
+msgstr "Craftsmanship Overview, Properties & Care"
+
+#: store\models.py:140
+msgid "Created at"
+msgstr "Created at"
+
+#: store\templates\store\home.html
+msgid "Curated Treasury"
+msgstr "Curated Treasury"
+
+#: store\templates\store\product_detail.html
+msgid "Currently Out of Stock"
+msgstr "Currently Out of Stock"
+
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "Customer Reviews (%(count)s)"
+msgstr "Customer Reviews (%(count)s)"
+
+#: store\cart.py:14
+msgid "Cylindrical silver case"
+msgstr "Cylindrical silver case"
+
+#: store\templates\store\product_detail.html
+msgid "Decrease quantity"
+msgstr "Decrease quantity"
+
+#: store\templates\store\home.html
+msgid "Deerskin"
+msgstr "Deerskin"
+
+#: store\models.py:55
+msgid "Description"
+msgstr "Description"
+
+#: store\templates\store\product_detail.html
+msgid "Description & Properties"
+msgstr "Description & Properties"
+
+#: store\models.py:59
+msgid "Description (English)"
+msgstr "Description (English)"
+
+#: store\admin.py:116
+msgid "Descriptions & Main Image"
+msgstr "Descriptions & Main Image"
+
+#: store\models.py:123
+msgid "Discounted price (Toman)"
+msgstr "Discounted price (Toman)"
+
+#: store\models.py:170
+msgid "Discounted price must be greater than zero."
+msgstr "Discounted price must be greater than zero."
+
+#: store\models.py:173
+msgid "Discounted price must be less than the original price."
+msgstr "Discounted price must be less than the original price."
+
+#: store\templates\store\home.html
+msgid "Discover All Products"
+msgstr "Discover All Products"
+
+#: store\templates\store\base.html
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: store\templates\store\base.html
+msgid "E-Trust Certified"
+msgstr "E-Trust Certified"
+
+#: store\templates\store\base.html
+msgid "Email:"
+msgstr "Email:"
+
+#: config\settings.py:115
+msgid "English"
+msgstr "English"
+
+#: store\admin.py:48
+msgid "English Content"
+msgstr "English Content"
+
+#: store\templates\store\product_detail.html
+msgid "Error adding product to your cart."
+msgstr "Error adding product to your cart."
+
+#: store\templates\store\base.html
+msgid "Error updating your shopping cart."
+msgstr "Error updating your shopping cart."
+
+#: store\templates\store\home.html
+msgid "Explore the Collection"
+msgstr "Explore the Collection"
+
+#: store\views.py:85
+msgid "Fatemeh Nouri"
+msgstr "Fatemeh Nouri"
+
+#: store\templates\store\home.html
+msgid "Featured Categories"
+msgstr "Featured Categories"
+
+#: store\templates\store\home.html
+msgid "Featured Gallery Pieces"
+msgstr "Featured Gallery Pieces"
+
+#: store\templates\store\home.html
+msgid "Featured Ring"
+msgstr "Featured Ring"
+
+#: store\templates\store\home.html
+msgid "Featured Sacred Hirz"
+msgstr "Featured Sacred Hirz"
+
+#: store\models.py:139
+msgid "Featured product"
+msgstr "Featured product"
+
+#: store\templates\store\product_list.html
+msgid "Filters"
+msgstr "Filters"
+
+#: store\admin.py:144
+msgid "Final price"
+msgstr "Final price"
+
+#: store\templates\store\base.html
+msgid "Fine sterling silver & traditional hand-written Hirz"
+msgstr "Fine sterling silver & traditional hand-written Hirz"
+
+#: store\templates\store\base.html
+msgid "Full Collection"
+msgstr "Full Collection"
+
+#: store\models.py:132
+msgid "Full description & properties"
+msgstr "Full description & properties"
+
+#: store\models.py:136
+msgid "Full description & properties (English)"
+msgstr "Full description & properties (English)"
+
+#: store\templates\store\product_list.html
+msgid "Gallery Collection"
+msgstr "Gallery Collection"
+
+#: store\models.py:217
+msgid "Gallery image"
+msgstr "Gallery image"
+
+#: store\templates\store\home.html
+msgid "Gemstone & Silver Authenticity"
+msgstr "Gemstone & Silver Authenticity"
+
+#: store\templates\store\home.html
+msgid "Guaranteed authenticity of natural gemstones, 925 silver & scribal compliance"
+msgstr "Guaranteed authenticity of natural gemstones, 925 silver & scribal compliance"
+
+#: store\templates\store\product_list.html
+msgid "Hand-Written Hirz & Leather Armlets"
+msgstr "Hand-Written Hirz & Leather Armlets"
+
+#: store\templates\store\home.html
+msgid "Hand-scribed on tanned deerskin during auspicious lunar hours"
+msgstr "Hand-scribed on tanned deerskin during auspicious lunar hours"
+
+#: store\cart.py:15
+msgid "Hand-stitched leather armlet"
+msgstr "Hand-stitched leather armlet"
+
+#: store\templates\store\home.html
+msgid "Handcrafted Silver Settings"
+msgstr "Handcrafted Silver Settings"
+
+#: store\templates\store\product_list.html
+msgid "Highest price"
+msgstr "Highest price"
+
+#: store\templates\store\product_list.html
+msgid "Hirz"
+msgstr "Hirz"
+
+#: store\templates\store\partials\_product_card.html
+msgid "Hirz & Armlet"
+msgstr "Hirz & Armlet"
+
+#: store\templates\store\home.html
+msgid "Hirz Calligraphy & Ritual Certificate"
+msgstr "Hirz Calligraphy & Ritual Certificate"
+
+#: store\templates\store\base.html
+msgid "Hirz Collection"
+msgstr "Hirz Collection"
+
+#: store\templates\store\base.html
+#: store\templates\store\product_detail.html
+#: store\templates\store\product_list.html
+msgid "Home"
+msgstr "Home"
+
+#: store\templates\store\base.html
+msgid "Home Page"
+msgstr "Home Page"
+
+#: store\templates\store\base.html
+msgid "Hours: Saturday – Thursday, 9:00 AM – 6:00 PM"
+msgstr "Hours: Saturday – Thursday, 9:00 AM – 6:00 PM"
+
+#: store\models.py:104
+#: store\models.py:47
+msgid "If left blank, automatically generated from the title."
+msgstr "If left blank, automatically generated from the title."
+
+#: store\admin.py:131
+#: store\admin.py:55
+msgid "Image"
+msgstr "Image"
+
+#: store\models.py:239
+#, python-format
+msgid "Image of %(title)s"
+msgstr "Image of %(title)s"
+
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "In stock (%(count)s available)"
+msgstr "In stock (%(count)s available)"
+
+#: store\templates\store\product_list.html
+msgid "In stock only"
+msgstr "In stock only"
+
+#: store\templates\store\product_detail.html
+msgid "Includes Asil Gallery authenticity certificate"
+msgstr "Includes Asil Gallery authenticity certificate"
+
+#: store\templates\store\product_detail.html
+msgid "Increase quantity"
+msgstr "Increase quantity"
+
+#: store\templates\store\product_detail.html
+msgid "Inner Circumference (mm)"
+msgstr "Inner Circumference (mm)"
+
+#: store\templates\store\product_detail.html
+msgid "Inner Diameter (mm)"
+msgstr "Inner Diameter (mm)"
+
+#: store\templates\store\home.html
+msgid "Insured Nationwide Shipping"
+msgstr "Insured Nationwide Shipping"
+
+#: store\templates\store\base.html
+msgid "Insured nationwide shipping"
+msgstr "Insured nationwide shipping"
+
+#: store\views.py:310
+msgid "Invalid product ID."
+msgstr "Invalid product ID."
+
+#: store\views.py:303
+msgid "Invalid request."
+msgstr "Invalid request."
+
+#: store\templates\store\product_detail.html
+msgid "Iranian Size"
+msgstr "Iranian Size"
+
+#: store\templates\store\product_detail.html
+msgid "Iranian standard silver ring sizing (Sizes 56 to 66)"
+msgstr "Iranian standard silver ring sizing (Sizes 56 to 66)"
+
+#: store\views.py:65
+msgid "Isfahan"
+msgstr "Isfahan"
+
+#: store\views.py:411
+msgid "Item not found in cart."
+msgstr "Item not found in cart."
+
+#: store\templates\store\product_list.html
+msgid "Keyword Search"
+msgstr "Keyword Search"
+
+#: store\templates\store\base.html
+msgid "Lifetime authenticity guarantee for 925 silver, natural gemstones, and authentic scribal Hirz"
+msgstr "Lifetime authenticity guarantee for 925 silver, natural gemstones, and authentic scribal Hirz"
+
+#: store\templates\store\product_list.html
+msgid "Lowest price"
+msgstr "Lowest price"
+
+#: store\views.py:58
+msgid "Luxury packaging and fast insured shipping made the purchase completely worry-free. The color and clarity of the gemstone in natural daylight are extraordinary."
+msgstr "Luxury packaging and fast insured shipping made the purchase completely worry-free. The color and clarity of the gemstone in natural daylight are extraordinary."
+
+#: store\models.py:138
+msgid "Main image"
+msgstr "Main image"
+
+#: store\views.py:55
+msgid "Mashhad"
+msgstr "Mashhad"
+
+#: store\templates\store\product_list.html
+msgid "Max Price"
+msgstr "Max Price"
+
+#: store\templates\store\product_detail.html
+msgid "Measure the inner diameter of a well-fitting ring (excluding the thickness of the silver band) with a ruler and match it to the \"Inner Diameter\" column."
+msgstr "Measure the inner diameter of a well-fitting ring (excluding the thickness of the silver band) with a ruler and match it to the \"Inner Diameter\" column."
+
+#: store\views.py:54
+msgid "Mehdi Karimi"
+msgstr "Mehdi Karimi"
+
+#: store\templates\store\product_detail.html
+msgid "Method 1: Measure Your Finger"
+msgstr "Method 1: Measure Your Finger"
+
+#: store\templates\store\product_detail.html
+msgid "Method 2: Measure an Existing Ring"
+msgstr "Method 2: Measure an Existing Ring"
+
+#: store\templates\store\product_list.html
+msgid "Min Price"
+msgstr "Min Price"
+
+#: store\templates\store\product_list.html
+msgid "Newest"
+msgstr "Newest"
+
+#: store\templates\store\product_list.html
+msgid "Next"
+msgstr "Next"
+
+#: store\templates\store\product_detail.html
+msgid "No additional technical specifications have been recorded for this piece."
+msgstr "No additional technical specifications have been recorded for this piece."
+
+#: store\templates\store\product_list.html
+msgid "No pieces matched your selected filters"
+msgstr "No pieces matched your selected filters"
+
+#: store\templates\store\base.html
+msgid "No. 12, Saray-e Javaher-e Asil, Goldsmiths' Row, Grand Bazaar, Tehran"
+msgstr "No. 12, Saray-e Javaher-e Asil, Goldsmiths' Row, Grand Bazaar, Tehran"
+
+#: store\templates\store\partials\_product_card.html
+#, python-format
+msgid "Only %(stock)s left"
+msgstr "Only %(stock)s left"
+
+#: store\templates\store\base.html
+msgid "Open navigation menu"
+msgstr "Open navigation menu"
+
+#: store\views.py:68
+msgid "Ordered as a gift; the silver weight feels very balanced and the finishing of the band is truly artisanal."
+msgstr "Ordered as a gift; the silver weight feels very balanced and the finishing of the band is truly artisanal."
+
+#: store\admin.py:140
+msgid "Original price"
+msgstr "Original price"
+
+#: store\models.py:119
+msgid "Original price (Toman)"
+msgstr "Original price (Toman)"
+
+#: store\templates\store\partials\_product_card.html
+#: store\templates\store\product_detail.html
+msgid "Out of stock"
+msgstr "Out of stock"
+
+#: config\settings.py:114
+msgid "Persian"
+msgstr "Persian"
+
+#: store\admin.py:42
+msgid "Persian Content"
+msgstr "Persian Content"
+
+#: store\templates\store\product_list.html
+msgid "Please adjust the price range or search keyword, or reset all filters."
+msgstr "Please adjust the price range or search keyword, or reset all filters."
+
+#: store\admin.py:19
+msgid "Preview"
+msgstr "Preview"
+
+#: store\templates\store\product_list.html
+msgid "Previous"
+msgstr "Previous"
+
+#: store\templates\store\product_list.html
+msgid "Price Range (Toman)"
+msgstr "Price Range (Toman)"
+
+#: store\admin.py:106
+msgid "Pricing & Inventory"
+msgstr "Pricing & Inventory"
+
+#: store\models.py:143
+#: store\models.py:215
+#: store\models.py:249
+msgid "Product"
+msgstr "Product"
+
+#: store\templates\store\product_list.html
+msgid "Product Collection | Asil Jewelry & Hirz Gallery"
+msgstr "Product Collection | Asil Jewelry & Hirz Gallery"
+
+#: store\models.py:118
+msgid "Product SKU"
+msgstr "Product SKU"
+
+#: store\templates\store\product_list.html
+msgid "Product Type"
+msgstr "Product Type"
+
+#: store\admin.py:64
+msgid "Product count"
+msgstr "Product count"
+
+#: store\models.py:227
+msgid "Product gallery image"
+msgstr "Product gallery image"
+
+#: store\models.py:228
+msgid "Product gallery images"
+msgstr "Product gallery images"
+
+#: store\templates\store\product_list.html
+msgid "Product pagination"
+msgstr "Product pagination"
+
+#: store\models.py:91
+msgid "Product title"
+msgstr "Product title"
+
+#: store\models.py:96
+msgid "Product title (English)"
+msgstr "Product title (English)"
+
+#: store\models.py:116
+msgid "Product type"
+msgstr "Product type"
+
+#: store\models.py:144
+msgid "Products"
+msgstr "Products"
+
+#: store\admin.py:10
+msgid "Products & Categories Management Dashboard"
+msgstr "Products & Categories Management Dashboard"
+
+#: store\views.py:76
+msgid "Qom"
+msgstr "Qom"
+
+#: store\templates\store\base.html
+msgid "Quick Links"
+msgstr "Quick Links"
+
+#: store\templates\store\product_detail.html
+msgid "Quick Select"
+msgstr "Quick Select"
+
+#: store\templates\store\product_detail.html
+msgid "Rating"
+msgstr "Rating"
+
+#: store\templates\store\product_detail.html
+msgid "Related Pieces"
+msgstr "Related Pieces"
+
+#: store\templates\store\base.html
+msgid "Remove from cart"
+msgstr "Remove from cart"
+
+#: store\templates\store\product_detail.html
+msgid "Reviews submitted by previous buyers"
+msgstr "Reviews submitted by previous buyers"
+
+#: store\templates\store\product_list.html
+msgid "Ring"
+msgstr "Ring"
+
+#: store\templates\store\base.html
+msgid "Ring Collection"
+msgstr "Ring Collection"
+
+#: store\templates\store\product_detail.html
+msgid "Ring Size Guide"
+msgstr "Ring Size Guide"
+
+#: store\templates\store\home.html
+msgid "Ring Sizing Guide"
+msgstr "Ring Sizing Guide"
+
+#: store\templates\store\product_detail.html
+msgid "SKU:"
+msgstr "SKU:"
+
+#: store\templates\store\home.html
+msgid "Sacred Hirz Scrolls & Leather Armlets"
+msgstr "Sacred Hirz Scrolls & Leather Armlets"
+
+#: store\templates\store\base.html
+msgid "Search"
+msgstr "Search"
+
+#: store\templates\store\base.html
+msgid "Search by title, gemstone, or SKU..."
+msgstr "Search by title, gemstone, or SKU..."
+
+#: store\templates\store\base.html
+msgid "Search rings, agate, Hirz..."
+msgstr "Search rings, agate, Hirz..."
+
+#: store\templates\store\home.html
+msgid "Secure nationwide delivery"
+msgstr "Secure nationwide delivery"
+
+#: store\templates\store\product_detail.html
+msgid "Select"
+msgstr "Select"
+
+#: store\templates\store\product_detail.html
+msgid "Select Hirz Enclosure & Packaging:"
+msgstr "Select Hirz Enclosure & Packaging:"
+
+#: store\templates\store\product_detail.html
+msgid "Select Ring Size:"
+msgstr "Select Ring Size:"
+
+#: store\views.py:75
+msgid "Seyed Mohammad Hosseini"
+msgstr "Seyed Mohammad Hosseini"
+
+#: store\templates\store\product_detail.html
+msgid "Ships in velvet presentation box with full insurance"
+msgstr "Ships in velvet presentation box with full insurance"
+
+#: store\views.py:86
+msgid "Shiraz"
+msgstr "Shiraz"
+
+#: store\templates\store\home.html
+msgid "Shockproof presentation box with full transit insurance coverage"
+msgstr "Shockproof presentation box with full transit insurance coverage"
+
+#: store\templates\store\base.html
+msgid "Shopping cart"
+msgstr "Shopping cart"
+
+#: store\models.py:126
+msgid "Short description"
+msgstr "Short description"
+
+#: store\models.py:130
+msgid "Short description (English)"
+msgstr "Short description (English)"
+
+#: store\templates\store\product_list.html
+#, python-format
+msgid "Showing <strong class=\"text-emerald-deep font-extrabold\">%(count)s</strong> matching pieces"
+msgstr "Showing <strong class=\"text-emerald-deep font-extrabold\">%(count)s</strong> matching pieces"
+
+#: store\templates\store\home.html
+msgid "Signature Collector Editions"
+msgstr "Signature Collector Editions"
+
+#: store\templates\store\partials\_product_card.html
+msgid "Silver Ring"
+msgstr "Silver Ring"
+
+#: store\templates\store\base.html
+msgid "Silver Rings & Gemstones"
+msgstr "Silver Rings & Gemstones"
+
+#: store\templates\store\home.html
+#: store\templates\store\product_list.html
+msgid "Silver Rings & Precious Gemstones"
+msgstr "Silver Rings & Precious Gemstones"
+
+#: store\models.py:88
+msgid "Silver ring & gemstone"
+msgstr "Silver ring & gemstone"
+
+#: store\templates\store\base.html
+msgid "Silversmiths Guild License"
+msgstr "Silversmiths Guild License"
+
+#: store\templates\store\product_detail.html
+msgid "Similar Suggestions in This Category"
+msgstr "Similar Suggestions in This Category"
+
+#: store\cart.py:36
+#, python-format
+msgid "Size %(size)s"
+msgstr "Size %(size)s"
+
+#: store\models.py:103
+#: store\models.py:46
+msgid "Slug (URL)"
+msgstr "Slug (URL)"
+
+#: store\templates\store\product_list.html
+msgid "Sort by:"
+msgstr "Sort by:"
+
+#: store\templates\store\base.html
+msgid "Specialist demo storefront for silver rings & traditional Hirz"
+msgstr "Specialist demo storefront for silver rings & traditional Hirz"
+
+#: store\templates\store\base.html
+msgid "Specialist gallery of 925 sterling silver rings, natural mineral gemstones, and authentic hand-written Hirz & armlets with certificate and insured delivery."
+msgstr "Specialist gallery of 925 sterling silver rings, natural mineral gemstones, and authentic hand-written Hirz & armlets with certificate and insured delivery."
+
+#: store\templates\store\base.html
+msgid "Specialist support:"
+msgstr "Specialist support:"
+
+#: store\models.py:251
+msgid "Specification name"
+msgstr "Specification name"
+
+#: store\models.py:256
+msgid "Specification name (English)"
+msgstr "Specification name (English)"
+
+#: store\models.py:258
+msgid "Specification value"
+msgstr "Specification value"
+
+#: store\models.py:263
+msgid "Specification value (English)"
+msgstr "Specification value (English)"
+
+#: store\models.py:125
+msgid "Stock quantity"
+msgstr "Stock quantity"
+
+#: store\admin.py:9
+msgid "Store Administration"
+msgstr "Store Administration"
+
+#: store\views.py:95
+msgid "Tabriz"
+msgstr "Tabriz"
+
+#: store\templates\store\product_detail.html
+msgid "Technical Specifications"
+msgstr "Technical Specifications"
+
+#: store\templates\store\product_detail.html
+msgid "Technical Specifications Table"
+msgstr "Technical Specifications Table"
+
+#: store\models.py:267
+msgid "Technical specification"
+msgstr "Technical specification"
+
+#: store\models.py:268
+msgid "Technical specifications"
+msgstr "Technical specifications"
+
+#: store\views.py:45
+msgid "Tehran"
+msgstr "Tehran"
+
+#: store\templates\store\home.html
+msgid "The Splendor of <span class=\"text-gold-warm\">Authentic Silvercraft</span> &amp; Blessing of <span class=\"text-gold-light\">Hand-Written Hirz</span>"
+msgstr "The Splendor of <span class=\"text-gold-warm\">Authentic Silvercraft</span> &amp; Blessing of <span class=\"text-gold-light\">Hand-Written Hirz</span>"
+
+#: store\views.py:79
+msgid "The fine legible calligraphy on deerskin parchment together with the verified ritual compliance certificate was truly reassuring. The cylindrical silver case seals tightly."
+msgstr "The fine legible calligraphy on deerskin parchment together with the verified ritual compliance certificate was truly reassuring. The cylindrical silver case seals tightly."
+
+#: store\views.py:48
+msgid "The gemstone cut and hand-engraving on the silver band were remarkably refined and clean. The sizing matched the site guide accurately, and the authenticity certificate arrived with the package."
+msgstr "The gemstone cut and hand-engraving on the silver band were remarkably refined and clean. The sizing matched the site guide accurately, and the authenticity certificate arrived with the package."
+
+#: store\views.py:89
+msgid "The hand-stitched leather armlet is very soft, neatly sewn, and sturdy, feeling comfortable and light on the arm."
+msgstr "The hand-stitched leather armlet is very soft, neatly sewn, and sturdy, feeling comfortable and light on the arm."
+
+#: store\views.py:98
+msgid "The respectful presentation, thorough care instructions, and quality of the silver and leather are exemplary."
+msgstr "The respectful presentation, thorough care instructions, and quality of the silver and leather are exemplary."
+
+#: store\templates\store\product_list.html
+msgid "Title, gemstone, SKU..."
+msgstr "Title, gemstone, SKU..."
+
+#: store\templates\store\base.html
+#: store\templatetags\store_filters.py:48
+msgid "Toman"
+msgstr "Toman"
+
+#: store\templates\store\base.html
+#: store\templates\store\home.html
+msgid "Traditional Hirz & Armlets"
+msgstr "Traditional Hirz & Armlets"
+
+#: store\models.py:89
+msgid "Traditional Hirz & armlet"
+msgstr "Traditional Hirz & armlet"
+
+#: store\templates\store\home.html
+msgid "Traditional scribal adherence"
+msgstr "Traditional scribal adherence"
+
+#: store\templates\store\base.html
+msgid "Trust Badges"
+msgstr "Trust Badges"
+
+#: store\views.py:315
+msgid "Unfortunately, this item is currently out of stock."
+msgstr "Unfortunately, this item is currently out of stock."
+
+#: store\cart.py:16
+msgid "Unframed / rolled scroll"
+msgstr "Unframed / rolled scroll"
+
+#: store\templates\store\product_detail.html
+msgid "Verified Buyer"
+msgstr "Verified Buyer"
+
+#: store\templates\store\product_detail.html
+msgid "Verified Buyer Experiences"
+msgstr "Verified Buyer Experiences"
+
+#: store\templates\store\home.html
+msgid "View All Pieces"
+msgstr "View All Pieces"
+
+#: store\templates\store\product_list.html
+msgid "View All Products"
+msgstr "View All Products"
+
+#: store\templates\store\partials\_product_card.html
+msgid "View Details"
+msgstr "View Details"
+
+#: store\templates\store\home.html
+msgid "View Hirz & Armlets"
+msgstr "View Hirz & Armlets"
+
+#: store\templates\store\product_detail.html
+msgid "View More"
+msgstr "View More"
+
+#: store\templates\store\home.html
+msgid "View Silver Rings"
+msgstr "View Silver Rings"
+
+#: store\templates\store\product_detail.html
+msgid "Wrap a narrow strip of paper snugly (neither too tight nor loose) around the base of your finger, mark the overlap, and measure the length in millimeters with a ruler (corresponding to \"Inner Circumference\")."
+msgstr "Wrap a narrow strip of paper snugly (neither too tight nor loose) around the base of your finger, mark the overlap, and measure the length in millimeters with a ruler (corresponding to \"Inner Circumference\")."
+
+#: store\templates\store\base.html
+msgid "Your Selection"
+msgstr "Your Selection"
+
+#: store\views.py:401
+msgid "Your cart has been cleared."
+msgstr "Your cart has been cleared."
+
+#: store\templates\store\base.html
+msgid "Your shopping cart is currently empty."
+msgstr "Your shopping cart is currently empty."
+
+#: store\views.py:64
+msgid "Zahra Sharifi"
+msgstr "Zahra Sharifi"
+
+#: store\templates\store\product_list.html
+msgid "e.g. 1,000,000"
+msgstr "e.g. 1,000,000"
+
+#: store\templates\store\product_list.html
+msgid "e.g. 5,000,000"
+msgstr "e.g. 5,000,000"
+
+#: store\templates\store\base.html
+msgid "items"
+msgstr "items"
+
+#: store\admin.py:148
+msgid "off"
+msgstr "off"
+
+#: store\templates\store\base.html
+msgid "© 2025–2026 Asil Jewelry & Hirz Gallery. All rights reserved."
+msgstr "© 2025–2026 Asil Jewelry & Hirz Gallery. All rights reserved."

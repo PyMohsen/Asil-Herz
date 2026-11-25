@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.utils.translation import get_language, gettext_lazy as _
 
 
 def _build_unique_slug(instance, source_text: str, field_name: str = 'slug') -> str:
@@ -17,33 +18,62 @@ def _build_unique_slug(instance, source_text: str, field_name: str = 'slug') -> 
     return candidate
 
 
+def _localized_attr(obj, field_name: str) -> str:
+    """Return English field value when English is active, falling back to primary field."""
+    lang = (get_language() or 'fa').split('-')[0]
+    if lang == 'en':
+        en_value = getattr(obj, f'{field_name}_en', '')
+        if en_value:
+            return en_value
+    return getattr(obj, field_name, '')
+
+
 class Category(models.Model):
     """Product category for rings, gemstones, and traditional Hirz artifacts."""
 
-    title = models.CharField(max_length=150, verbose_name='عنوان دسته‌بندی')
+    title = models.CharField(max_length=150, verbose_name=_('Category title'))
+    title_en = models.CharField(
+        max_length=150,
+        blank=True,
+        default='',
+        verbose_name=_('Category title (English)'),
+    )
     slug = models.SlugField(
         max_length=180,
         unique=True,
         allow_unicode=True,
         blank=True,
-        verbose_name='نامک (URL)',
-        help_text='در صورت خالی بودن، به‌صورت خودکار از عنوان ساخته می‌شود.',
+        verbose_name=_('Slug (URL)'),
+        help_text=_('If left blank, automatically generated from the title.'),
     )
     image = models.ImageField(
         upload_to='categories/',
         blank=True,
         null=True,
-        verbose_name='تصویر دسته‌بندی',
+        verbose_name=_('Category image'),
     )
-    description = models.TextField(blank=True, verbose_name='توضیحات')
+    description = models.TextField(blank=True, verbose_name=_('Description'))
+    description_en = models.TextField(
+        blank=True,
+        default='',
+        verbose_name=_('Description (English)'),
+    )
 
     class Meta:
-        verbose_name = 'دسته‌بندی'
-        verbose_name_plural = 'دسته‌بندی‌ها'
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
         ordering = ['id']
 
+    @property
+    def localized_title(self) -> str:
+        return _localized_attr(self, 'title')
+
+    @property
+    def localized_description(self) -> str:
+        return _localized_attr(self, 'description')
+
     def __str__(self) -> str:
-        return self.title
+        return self.localized_title
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -55,64 +85,92 @@ class Product(models.Model):
     """Silver rings, natural gemstones, and traditional scribal Hirz products."""
 
     class ProductType(models.TextChoices):
-        RING = 'ring', 'انگشتر نقره و سنگ قیمتی'
-        HIRZ = 'hirz', 'حرز و بازوبند سنتی'
+        RING = 'ring', _('Silver ring & gemstone')
+        HIRZ = 'hirz', _('Traditional Hirz & armlet')
 
-    title = models.CharField(max_length=220, verbose_name='عنوان محصول')
+    title = models.CharField(max_length=220, verbose_name=_('Product title'))
+    title_en = models.CharField(
+        max_length=220,
+        blank=True,
+        default='',
+        verbose_name=_('Product title (English)'),
+    )
     slug = models.SlugField(
         max_length=240,
         unique=True,
         allow_unicode=True,
         blank=True,
-        verbose_name='نامک (URL)',
-        help_text='در صورت خالی بودن، به‌صورت خودکار از عنوان ساخته می‌شود.',
+        verbose_name=_('Slug (URL)'),
+        help_text=_('If left blank, automatically generated from the title.'),
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
         related_name='products',
-        verbose_name='دسته‌بندی',
+        verbose_name=_('Category'),
     )
     product_type = models.CharField(
         max_length=16,
         choices=ProductType.choices,
         default=ProductType.RING,
-        verbose_name='نوع محصول',
+        verbose_name=_('Product type'),
     )
-    sku = models.CharField(max_length=50, unique=True, verbose_name='شناسه کالا (SKU)')
-    price = models.PositiveIntegerField(verbose_name='قیمت اصلی (تومان)')
+    sku = models.CharField(max_length=50, unique=True, verbose_name=_('Product SKU'))
+    price = models.PositiveIntegerField(verbose_name=_('Original price (Toman)'))
     discount_price = models.PositiveIntegerField(
         null=True,
         blank=True,
-        verbose_name='قیمت با تخفیف (تومان)',
+        verbose_name=_('Discounted price (Toman)'),
     )
-    stock = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
-    short_description = models.TextField(verbose_name='معرفی کوتاه')
-    full_description = models.TextField(verbose_name='توضیحات کامل و خواص')
-    main_image = models.ImageField(upload_to='products/main/', verbose_name='تصویر اصلی')
-    is_featured = models.BooleanField(default=False, verbose_name='محصول ویژه')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
+    stock = models.PositiveIntegerField(default=0, verbose_name=_('Stock quantity'))
+    short_description = models.TextField(verbose_name=_('Short description'))
+    short_description_en = models.TextField(
+        blank=True,
+        default='',
+        verbose_name=_('Short description (English)'),
+    )
+    full_description = models.TextField(verbose_name=_('Full description & properties'))
+    full_description_en = models.TextField(
+        blank=True,
+        default='',
+        verbose_name=_('Full description & properties (English)'),
+    )
+    main_image = models.ImageField(upload_to='products/main/', verbose_name=_('Main image'))
+    is_featured = models.BooleanField(default=False, verbose_name=_('Featured product'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
 
     class Meta:
-        verbose_name = 'محصول'
-        verbose_name_plural = 'محصولات'
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['product_type', 'is_featured']),
             models.Index(fields=['category', 'created_at']),
         ]
 
+    @property
+    def localized_title(self) -> str:
+        return _localized_attr(self, 'title')
+
+    @property
+    def localized_short_description(self) -> str:
+        return _localized_attr(self, 'short_description')
+
+    @property
+    def localized_full_description(self) -> str:
+        return _localized_attr(self, 'full_description')
+
     def __str__(self) -> str:
-        return self.title
+        return self.localized_title
 
     def clean(self):
         super().clean()
         if self.discount_price is not None:
             if self.discount_price == 0:
-                raise ValidationError({'discount_price': 'قیمت با تخفیف باید بیشتر از صفر باشد.'})
+                raise ValidationError({'discount_price': _('Discounted price must be greater than zero.')})
             if self.price and self.discount_price >= self.price:
                 raise ValidationError(
-                    {'discount_price': 'قیمت با تخفیف باید کمتر از قیمت اصلی محصول باشد.'}
+                    {'discount_price': _('Discounted price must be less than the original price.')}
                 )
 
     def save(self, *args, **kwargs):
@@ -154,18 +212,31 @@ class ProductImage(models.Model):
         Product,
         on_delete=models.CASCADE,
         related_name='images',
-        verbose_name='محصول',
+        verbose_name=_('Product'),
     )
-    image = models.ImageField(upload_to='products/gallery/', verbose_name='تصویر گالری')
-    alt_text = models.CharField(max_length=200, blank=True, verbose_name='متن جایگزین')
+    image = models.ImageField(upload_to='products/gallery/', verbose_name=_('Gallery image'))
+    alt_text = models.CharField(max_length=200, blank=True, verbose_name=_('Alt text'))
+    alt_text_en = models.CharField(
+        max_length=200,
+        blank=True,
+        default='',
+        verbose_name=_('Alt text (English)'),
+    )
 
     class Meta:
-        verbose_name = 'تصویر گالری محصول'
-        verbose_name_plural = 'تصاویر گالری محصول'
+        verbose_name = _('Product gallery image')
+        verbose_name_plural = _('Product gallery images')
         ordering = ['id']
 
+    @property
+    def localized_alt_text(self) -> str:
+        lang = (get_language() or 'fa').split('-')[0]
+        if lang == 'en':
+            return self.alt_text_en or self.product.localized_title
+        return self.alt_text or self.product.localized_title
+
     def __str__(self) -> str:
-        return self.alt_text or f'تصویر {self.product.title}'
+        return self.localized_alt_text or _('Image of %(title)s') % {'title': self.product.localized_title}
 
 
 class ProductSpecification(models.Model):
@@ -175,15 +246,35 @@ class ProductSpecification(models.Model):
         Product,
         on_delete=models.CASCADE,
         related_name='specifications',
-        verbose_name='محصول',
+        verbose_name=_('Product'),
     )
-    key = models.CharField(max_length=120, verbose_name='عنوان مشخصه')
-    value = models.CharField(max_length=255, verbose_name='مقدار مشخصه')
+    key = models.CharField(max_length=120, verbose_name=_('Specification name'))
+    key_en = models.CharField(
+        max_length=120,
+        blank=True,
+        default='',
+        verbose_name=_('Specification name (English)'),
+    )
+    value = models.CharField(max_length=255, verbose_name=_('Specification value'))
+    value_en = models.CharField(
+        max_length=255,
+        blank=True,
+        default='',
+        verbose_name=_('Specification value (English)'),
+    )
 
     class Meta:
-        verbose_name = 'مشخصه فنی'
-        verbose_name_plural = 'مشخصات فنی'
+        verbose_name = _('Technical specification')
+        verbose_name_plural = _('Technical specifications')
         ordering = ['id']
 
+    @property
+    def localized_key(self) -> str:
+        return _localized_attr(self, 'key')
+
+    @property
+    def localized_value(self) -> str:
+        return _localized_attr(self, 'value')
+
     def __str__(self) -> str:
-        return f'{self.key}: {self.value}'
+        return f'{self.localized_key}: {self.localized_value}'

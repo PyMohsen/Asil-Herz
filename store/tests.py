@@ -1,8 +1,10 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import translation
 
 from .models import Category, Product
 from .templatetags.store_filters import comma_fa, fa_digits, toman
@@ -15,15 +17,23 @@ class TemplateFiltersTests(TestCase):
         self.assertEqual(fa_digits('56-66'), '۵۶-۶۶')
         self.assertEqual(toman(None), '')
 
+    def test_english_price_and_digit_filters(self):
+        with translation.override('en'):
+            self.assertEqual(toman(2450000), '2,450,000 Toman')
+            self.assertEqual(comma_fa(1850000), '1,850,000')
+            self.assertEqual(fa_digits('۵۶-۶۶'), '56-66')
+            self.assertEqual(toman(None), '')
+
 
 class ProductModelTests(TestCase):
     def setUp(self):
-        self.category = Category.objects.create(title='انگشتر آزمایشی')
+        self.category = Category.objects.create(title='انگشتر آزمایشی', title_en='Test Rings')
         self.dummy_image = SimpleUploadedFile('test.jpg', b'JPEGDATA', content_type='image/jpeg')
 
     def test_discount_properties_and_unicode_slug(self):
         product = Product.objects.create(
             title='انگشتر عقیق آزمایشی',
+            title_en='Test Agate Ring',
             category=self.category,
             product_type=Product.ProductType.RING,
             sku='TST-001',
@@ -31,6 +41,7 @@ class ProductModelTests(TestCase):
             discount_price=1500000,
             stock=3,
             short_description='توضیح کوتاه',
+            short_description_en='Short summary',
             full_description='توضیح کامل',
             main_image=self.dummy_image,
         )
@@ -38,6 +49,12 @@ class ProductModelTests(TestCase):
         self.assertTrue(product.has_discount)
         self.assertEqual(product.get_final_price, 1500000)
         self.assertEqual(product.discount_percentage, 25)
+
+        with translation.override('en'):
+            self.assertEqual(product.localized_title, 'Test Agate Ring')
+            self.assertEqual(product.localized_short_description, 'Short summary')
+            # Falls back cleanly when full_description_en is empty
+            self.assertEqual(product.localized_full_description, 'توضیح کامل')
 
     def test_invalid_discount_price_raises_validation_error(self):
         product = Product(
@@ -69,6 +86,8 @@ class StorefrontIntegrationTests(TestCase):
         self.assertContains(resp, 'ضمانت اصالت سنگ و نقره')
         self.assertContains(resp, 'گواهی اصالت نگارش و آداب حرز')
         self.assertContains(resp, 'Vazirmatn')
+        self.assertContains(resp, 'id="language-switcher-btn"')
+        self.assertContains(resp, 'value="en"')
 
     def test_catalog_filters_sorting_and_pagination(self):
         base_url = reverse('store:product_list')
@@ -149,3 +168,119 @@ class StorefrontIntegrationTests(TestCase):
         )
         self.assertEqual(resp.status_code, 400)
         self.assertFalse(resp.json()['success'])
+
+
+class BilingualStorefrontTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command('seed_demo')
+
+    def setUp(self):
+        super().setUp()
+        translation.activate(settings.LANGUAGE_CODE)
+
+    def tearDown(self):
+        translation.activate(settings.LANGUAGE_CODE)
+        super().tearDown()
+
+    def test_english_home_page_renders_ltr_and_translated_content(self):
+        with translation.override('en'):
+            en_home_url = reverse('store:home')
+        self.assertEqual(en_home_url, '/en/')
+
+        resp = self.client.get(en_home_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'lang="en" dir="ltr"')
+        self.assertContains(resp, 'Asil Jewelry & Hirz Gallery')
+        self.assertContains(resp, 'Gemstone & Silver Authenticity')
+        self.assertContains(resp, 'Hirz Calligraphy & Ritual Certificate')
+        self.assertContains(resp, "Men&#x27;s Silver Rings")
+        self.assertContains(resp, 'Toman')
+        self.assertContains(resp, 'id="language-switcher-btn"')
+        self.assertContains(resp, 'value="fa"')
+        self.assertContains(resp, 'action="/en/i18n/setlang/"')
+
+    def test_language_switcher_redirects_preserving_path_and_query(self):
+        # Switch Persian -> English on filtered catalog URL
+        resp_en = self.client.post(
+            reverse('set_language'),
+            data={'language': 'en', 'next': '/products/?type=hirz'},
+        )
+        self.assertEqual(resp_en.status_code, 302)
+        self.assertEqual(resp_en['Location'], '/en/products/?type=hirz')
+        self.assertEqual(self.client.cookies['django_language'].value, 'en')
+
+        # Switch English -> Persian on filtered catalog URL (using English page's form action)
+        with translation.override('en'):
+            en_set_lang_url = reverse('set_language')
+        self.assertEqual(en_set_lang_url, '/en/i18n/setlang/')
+        resp_fa = self.client.post(
+            en_set_lang_url,
+            data={'language': 'fa', 'next': '/en/products/?type=hirz'},
+        )
+        self.assertEqual(resp_fa.status_code, 302)
+        self.assertEqual(resp_fa['Location'], '/products/?type=hirz')
+        self.assertEqual(self.client.cookies['django_language'].value, 'fa')
+
+    def test_english_catalog_search_and_detail_variants(self):
+        with translation.override('en'):
+            en_list_url = reverse('store:product_list')
+
+        search_resp = self.client.get(en_list_url, {'q': 'turquoise'})
+        self.assertEqual(search_resp.status_code, 200)
+        self.assertGreaterEqual(search_resp.context['total_count'], 2)
+        self.assertContains(search_resp, 'Nishapur')
+
+        ring = Product.objects.filter(product_type=Product.ProductType.RING).first()
+        with translation.override('en'):
+            en_ring_url = ring.get_absolute_url()
+        ring_resp = self.client.get(en_ring_url)
+        self.assertEqual(ring_resp.status_code, 200)
+        self.assertContains(ring_resp, 'Ring Size Guide')
+        self.assertContains(ring_resp, 'Size 56')
+        self.assertContains(ring_resp, 'Size 66')
+        self.assertContains(ring_resp, ring.title_en)
+
+        hirz = Product.objects.filter(product_type=Product.ProductType.HIRZ).first()
+        with translation.override('en'):
+            en_hirz_url = hirz.get_absolute_url()
+        hirz_resp = self.client.get(en_hirz_url)
+        self.assertEqual(hirz_resp.status_code, 200)
+        self.assertContains(hirz_resp, 'Cylindrical silver case')
+        self.assertContains(hirz_resp, 'Hand-stitched leather armlet')
+        self.assertContains(hirz_resp, 'Unframed / rolled scroll')
+        self.assertNotContains(hirz_resp, 'id="size-guide-title"')
+
+    def test_bilingual_session_cart_cross_language_display(self):
+        ring = Product.objects.filter(product_type=Product.ProductType.RING, stock__gt=0).first()
+        hirz = Product.objects.filter(product_type=Product.ProductType.HIRZ, stock__gt=0).first()
+
+        # Add ring while browsing in Persian
+        self.client.post(
+            reverse('store:add_to_cart'),
+            data={'product_id': ring.id, 'quantity': 1, 'variant': 'سایز ۶۰'},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+        )
+
+        # Inspect cart context while browsing in English
+        with translation.override('en'):
+            en_home_url = reverse('store:home')
+            en_add_url = reverse('store:add_to_cart')
+        en_home_resp = self.client.get(en_home_url)
+        cart_items = en_home_resp.context['cart_items']
+        self.assertEqual(len(cart_items), 1)
+        self.assertEqual(cart_items[0]['title'], ring.title_en)
+        self.assertEqual(cart_items[0]['variant'], 'Size 60')
+        self.assertTrue(cart_items[0]['url'].startswith('/en/products/'))
+
+        # Add Hirz in English
+        en_resp = self.client.post(
+            en_add_url,
+            data={'product_id': hirz.id, 'quantity': 1, 'variant': 'Hand-stitched leather armlet'},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+        )
+        self.assertEqual(en_resp.status_code, 200)
+        payload = en_resp.json()
+        self.assertTrue(payload['success'])
+        self.assertIn('has been added to your cart', payload['message'])
+        self.assertEqual(payload['cart_count'], 2)

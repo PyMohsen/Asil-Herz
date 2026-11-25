@@ -1,16 +1,16 @@
-{% load static store_filters %}
+{% load i18n static store_filters %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}گالری جواهرات و حرز اصیل{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}گالری تخصصی انگشتر نقره ۹۲۵، سنگ‌های قیمتی معدنی و حرز و بازوبندهای دست‌نویس اصیل با شناسنامه و ارسال بیمه‌شده.{% endblock %}" />
+  <title>{% block title %}{% translate "Asil Jewelry & Hirz Gallery" %}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% translate "Specialist gallery of 925 sterling silver rings, natural mineral gemstones, and authentic hand-written Hirz & armlets with certificate and insured delivery." %}{% endblock %}" />
 
-  <!-- Vazirmatn Font CDN -->
+  <!-- Fonts CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
 
   <!-- Tailwind CSS CDN -->
@@ -37,7 +37,7 @@
             muted: '#5D6660',
           },
           fontFamily: {
-            sans: ['Vazirmatn', 'Tahoma', 'sans-serif'],
+            sans: {% if LANGUAGE_BIDI %}['Vazirmatn', 'Tahoma', 'sans-serif']{% else %}['Plus Jakarta Sans', 'Vazirmatn', 'sans-serif']{% endif %},
           },
           boxShadow: {
             luxury: '0 10px 30px -12px rgba(15, 61, 62, 0.12)',
@@ -54,14 +54,25 @@
 
   <!-- Alpine.js Cart Store & Toast System -->
   <script>
+    const STORE_I18N = {
+      isPersian: {{ LANGUAGE_BIDI|yesno:'true,false' }},
+      toman: '{% translate "Toman"|escapejs %}',
+      itemsUnit: '{% translate "items"|escapejs %}',
+      cartUpdateError: '{% translate "Error updating your shopping cart."|escapejs %}',
+      productFallbackBaseUrl: '{% url "store:product_list" %}',
+    };
+
     function toPersianDigits(val) {
+      if (!STORE_I18N.isPersian) {
+        return String(val);
+      }
       const map = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
       return String(val).replace(/\d/g, (d) => map[Number(d)]);
     }
 
     function formatTomanJS(val) {
       const num = Number(val) || 0;
-      return toPersianDigits(num.toLocaleString('en-US')) + ' تومان';
+      return toPersianDigits(num.toLocaleString('en-US')) + ' ' + STORE_I18N.toman;
     }
 
     document.addEventListener('alpine:init', () => {
@@ -139,7 +150,7 @@
               this.showToast(data.message, 'info');
             }
           } catch (e) {
-            this.showToast('خطا در بروزرسانی سبد خرید.', 'error');
+            this.showToast(STORE_I18N.cartUpdateError, 'error');
           }
         },
       });
@@ -157,12 +168,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2 min-w-0">
         <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-warm shrink-0"></span>
-        <span class="truncate sm:whitespace-normal">ضمانت اصالت مادام‌العمر نقره ۹۲۵، سنگ‌های معدنی و نگارش شرعی احراز</span>
+        <span class="truncate sm:whitespace-normal">{% translate "Lifetime authenticity guarantee for 925 silver, natural gemstones, and authentic scribal Hirz" %}</span>
       </div>
       <div class="hidden sm:flex items-center gap-4 text-gold-light/90 shrink-0">
-        <span>ارسال بیمه‌شده به سراسر کشور</span>
+        <span>{% translate "Insured nationwide shipping" %}</span>
         <span class="text-gold-warm/40">|</span>
-        <span>پشتیبانی تخصصی: ۰۲۱-۸۸۴۵۱۲۳۴</span>
+        <span>
+          {% translate "Specialist support:" %}
+          <span dir="ltr">{% if LANGUAGE_BIDI %}۰۲۱-۸۸۴۵۱۲۳۴{% else %}+98 21 8845 1234{% endif %}</span>
+        </span>
       </div>
     </div>
   </div>
@@ -170,7 +184,7 @@
   <!-- Main Sticky Navbar -->
   <header class="sticky top-0 z-40 bg-ivory/95 backdrop-blur-md border-b border-sand/80 shadow-sm">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <!-- Top Utility Row: Brand + Search + Cart -->
+      <!-- Top Utility Row: Brand + Search + Language Switcher + Cart -->
       <div class="flex items-center justify-between gap-2 sm:gap-4 h-16 sm:h-[4.5rem]">
 
         <!-- Mobile Menu Toggle + Brand -->
@@ -179,7 +193,7 @@
             type="button"
             @click="mobileMenu = !mobileMenu"
             class="lg:hidden p-1.5 sm:p-2 rounded-xl border border-sand text-emerald-deep hover:bg-cream transition shrink-0"
-            aria-label="باز کردن منو"
+            aria-label="{% translate 'Open navigation menu' %}"
           >
             <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16" />
@@ -197,10 +211,10 @@
             </div>
             <div class="min-w-0">
               <span class="block text-xs min-[375px]:text-sm sm:text-base lg:text-lg font-extrabold text-emerald-deep tracking-tight leading-tight truncate sm:whitespace-nowrap">
-                گالری جواهرات و حرز اصیل
+                {% translate "Asil Jewelry & Hirz Gallery" %}
               </span>
               <span class="hidden sm:block text-[11px] text-muted font-medium whitespace-nowrap">
-                نقره‌جات فاخر و احراز دست‌نویس سنتی
+                {% translate "Fine sterling silver & traditional hand-written Hirz" %}
               </span>
             </div>
           </a>
@@ -212,29 +226,56 @@
             type="text"
             name="q"
             value="{{ request.GET.q|default:'' }}"
-            placeholder="جستجوی انگشتر، عقیق، حرز..."
-            class="w-full bg-white border border-sand rounded-xl pr-4 pl-10 py-2.5 text-xs sm:text-sm text-ink placeholder:text-muted/70 focus:outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/10 transition"
+            placeholder="{% translate 'Search rings, agate, Hirz...' %}"
+            class="w-full bg-white border border-sand rounded-xl ps-4 pe-10 py-2.5 text-xs sm:text-sm text-ink placeholder:text-muted/70 focus:outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/10 transition"
           />
-          <button type="submit" aria-label="جستجو" class="absolute left-3 text-muted hover:text-emerald-deep transition">
+          <button type="submit" aria-label="{% translate 'Search' %}" class="absolute end-3 text-muted hover:text-emerald-deep transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
             </svg>
           </button>
         </form>
 
-        <!-- Cart Action -->
-        <div class="flex items-center shrink-0">
+        <!-- Language Switcher + Cart Action -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          {% get_current_language as CURRENT_LANG %}
+          {% get_available_languages as AVAILABLE_LANGUAGES %}
+          {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+          <form action="{% url 'set_language' %}" method="post" class="shrink-0">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+            {% for lang in languages %}
+              {% if lang.code != CURRENT_LANG %}
+                <button
+                  type="submit"
+                  name="language"
+                  value="{{ lang.code }}"
+                  id="language-switcher-btn"
+                  aria-label="{% if lang.code == 'en' %}Switch language to English{% else %}تغییر زبان به فارسی{% endif %}"
+                  title="{% if lang.code == 'en' %}Switch to English{% else %}تغییر زبان به فارسی{% endif %}"
+                  class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-sand bg-cream/70 hover:bg-cream hover:border-gold-warm text-emerald-deep text-xs font-bold transition whitespace-nowrap shrink-0 shadow-sm"
+                >
+                  <svg class="w-4 h-4 text-gold-dark shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                  <span class="sm:hidden">{% if lang.code == 'en' %}EN{% else %}فا{% endif %}</span>
+                  <span class="hidden sm:inline">{{ lang.name_local }}</span>
+                </button>
+              {% endif %}
+            {% endfor %}
+          </form>
+
           <div class="relative shrink-0" @keydown.escape.window="$store.cart.openDrawer = false">
             <button
               type="button"
               @click="$store.cart.openDrawer = !$store.cart.openDrawer"
               class="relative flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-emerald-deep text-ivory hover:bg-emerald-dark transition shadow-sm whitespace-nowrap shrink-0"
-              aria-label="سبد خرید"
+              aria-label="{% translate 'Shopping cart' %}"
             >
               <svg class="w-5 h-5 text-gold-light shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              <span class="hidden sm:inline text-xs font-semibold whitespace-nowrap">سبد خرید</span>
+              <span class="hidden sm:inline text-xs font-semibold whitespace-nowrap">{% translate "Cart" %}</span>
               <span
                 x-text="$store.cart.formattedCount"
                 class="min-w-[1.35rem] h-[1.35rem] px-1 rounded-full bg-gold-warm text-emerald-dark text-[11px] font-bold flex items-center justify-center shrink-0"
@@ -252,14 +293,14 @@
               x-transition:leave="transition ease-in duration-150"
               x-transition:leave-start="opacity-100 translate-y-0"
               x-transition:leave-end="opacity-0 translate-y-2"
-              class="fixed sm:absolute left-3 right-3 sm:right-auto sm:left-0 top-[4.5rem] sm:top-auto sm:mt-3 sm:w-96 bg-white rounded-2xl shadow-xl border border-sand overflow-hidden z-50"
+              class="fixed sm:absolute inset-x-3 sm:inset-x-auto sm:end-0 top-[4.5rem] sm:top-auto sm:mt-3 sm:w-96 bg-white rounded-2xl shadow-xl border border-sand overflow-hidden z-50"
             >
               <div class="px-4 py-3.5 bg-cream/70 border-b border-sand flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  <span class="font-bold text-sm text-emerald-deep">سبد انتخاب شما</span>
-                  <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-deep/10 text-emerald-deep font-semibold" x-text="$store.cart.formattedCount + ' کالا'"></span>
+                  <span class="font-bold text-sm text-emerald-deep">{% translate "Your Selection" %}</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-deep/10 text-emerald-deep font-semibold" x-text="$store.cart.formattedCount + ' ' + STORE_I18N.itemsUnit"></span>
                 </div>
-                <button type="button" @click="$store.cart.openDrawer = false" class="text-muted hover:text-ink p-1">
+                <button type="button" @click="$store.cart.openDrawer = false" class="text-muted hover:text-ink p-1" aria-label="{% translate 'Close' %}">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -274,8 +315,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                       </svg>
                     </div>
-                    <p class="text-sm font-medium text-ink">سبد خرید شما در حال حاضر خالی است.</p>
-                    <p class="text-xs text-muted mt-1">آثار برگزیده را از کلکسیون مشاهده و انتخاب کنید.</p>
+                    <p class="text-sm font-medium text-ink">{% translate "Your shopping cart is currently empty." %}</p>
+                    <p class="text-xs text-muted mt-1">{% translate "Browse the collection to discover and select pieces." %}</p>
                   </div>
                 </template>
 
@@ -283,7 +324,7 @@
                   <div class="p-3.5 flex items-center gap-3 hover:bg-ivory/60 transition">
                     <img :src="item.image_url" :alt="item.title" class="w-14 h-14 rounded-xl object-cover border border-sand shrink-0 bg-cream" />
                     <div class="flex-1 min-w-0">
-                      <a :href="'/products/' + encodeURIComponent(item.slug) + '/'" class="block text-xs font-bold text-ink hover:text-emerald-deep truncate" x-text="item.title"></a>
+                      <a :href="item.url || (STORE_I18N.productFallbackBaseUrl + encodeURIComponent(item.slug) + '/')" class="block text-xs font-bold text-ink hover:text-emerald-deep truncate" x-text="item.title"></a>
                       <div class="text-[11px] text-muted mt-0.5 flex flex-wrap items-center gap-1.5">
                         <span class="px-1.5 py-0.5 rounded bg-cream text-emerald-deep font-medium" x-text="item.variant"></span>
                         <span>×</span>
@@ -295,7 +336,7 @@
                       type="button"
                       @click="$store.cart.removeItem(item.key, '{{ csrf_token }}')"
                       class="text-muted hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition"
-                      title="حذف از سبد"
+                      title="{% translate 'Remove from cart' %}"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -307,19 +348,19 @@
 
               <div x-show="$store.cart.items.length > 0" class="p-4 bg-ivory border-t border-sand space-y-3">
                 <div class="flex items-center justify-between text-sm">
-                  <span class="text-muted font-medium">جمع کل سبد (نسخه نمایشی):</span>
+                  <span class="text-muted font-medium">{% translate "Cart Total (Demo):" %}</span>
                   <span class="font-extrabold text-emerald-deep" x-text="$store.cart.formattedTotal"></span>
                 </div>
                 <div class="flex items-center gap-2">
                   <a href="{% url 'store:product_list' %}" @click="$store.cart.openDrawer = false" class="flex-1 text-center py-2.5 rounded-xl bg-emerald-deep text-ivory text-xs font-bold hover:bg-emerald-dark transition">
-                    ادامه گشت‌وگذار در گالری
+                    {% translate "Continue Exploring Gallery" %}
                   </a>
                   <button
                     type="button"
                     @click="$store.cart.removeItem('__all__', '{{ csrf_token }}')"
                     class="px-3 py-2.5 rounded-xl border border-sand text-xs font-semibold text-muted hover:text-red-700 hover:border-red-200 transition"
                   >
-                    پاک کردن
+                    {% translate "Clear" %}
                   </button>
                 </div>
               </div>
@@ -332,27 +373,27 @@
       <nav class="hidden lg:flex items-center justify-between gap-4 border-t border-sand/60 py-2 text-sm font-medium">
         <div class="flex items-center gap-1.5 xl:gap-2 overflow-x-auto no-scrollbar">
           <a href="{% url 'store:home' %}" class="px-3.5 py-1.5 rounded-lg whitespace-nowrap shrink-0 text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'home' %}text-emerald-deep bg-cream font-bold{% endif %}">
-            خانه
+            {% translate "Home" %}
           </a>
           <a href="{% url 'store:product_list' %}" class="px-3.5 py-1.5 rounded-lg whitespace-nowrap shrink-0 text-ink hover:text-emerald-deep hover:bg-cream transition {% if request.resolver_match.url_name == 'product_list' and not request.GET.category and not request.GET.type %}text-emerald-deep bg-cream font-bold{% endif %}">
-            همه آثار
+            {% translate "All Pieces" %}
           </a>
           {% for cat in nav_categories|slice:":4" %}
             <a
               href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}"
               class="px-3.5 py-1.5 rounded-lg whitespace-nowrap shrink-0 text-ink/90 hover:text-emerald-deep hover:bg-cream transition {% if request.GET.category == cat.slug %}text-emerald-deep bg-cream font-bold{% endif %}"
             >
-              {{ cat.title }}
+              {{ cat.localized_title }}
             </a>
           {% endfor %}
         </div>
 
         <div class="hidden xl:flex items-center gap-2 shrink-0 text-xs text-muted">
           <a href="{% url 'store:product_list' %}?type=ring" class="px-2.5 py-1 rounded-full bg-cream/80 hover:bg-cream text-emerald-deep font-semibold whitespace-nowrap transition">
-            کلکسیون انگشتر
+            {% translate "Ring Collection" %}
           </a>
           <a href="{% url 'store:product_list' %}?type=hirz" class="px-2.5 py-1 rounded-full bg-cream/80 hover:bg-cream text-gold-dark font-semibold whitespace-nowrap transition">
-            کلکسیون حرز
+            {% translate "Hirz Collection" %}
           </a>
         </div>
       </nav>
@@ -364,21 +405,21 @@
             type="text"
             name="q"
             value="{{ request.GET.q|default:'' }}"
-            placeholder="جستجو در نام اثر، سنگ یا شناسه..."
-            class="w-full bg-white border border-sand rounded-xl pr-4 pl-10 py-2.5 text-sm focus:outline-none focus:border-emerald-deep"
+            placeholder="{% translate 'Search by title, gemstone, or SKU...' %}"
+            class="w-full bg-white border border-sand rounded-xl ps-4 pe-10 py-2.5 text-sm focus:outline-none focus:border-emerald-deep"
           />
-          <button type="submit" aria-label="جستجو" class="absolute left-3 top-3 text-muted">
+          <button type="submit" aria-label="{% translate 'Search' %}" class="absolute end-3 top-3 text-muted">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
             </svg>
           </button>
         </form>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
-          <a href="{% url 'store:home' %}" class="px-3 py-2.5 rounded-xl bg-cream/70 text-emerald-deep font-semibold text-center whitespace-nowrap">خانه</a>
-          <a href="{% url 'store:product_list' %}" class="px-3 py-2.5 rounded-xl bg-cream/70 text-emerald-deep font-semibold text-center whitespace-nowrap">همه آثار</a>
+          <a href="{% url 'store:home' %}" class="px-3 py-2.5 rounded-xl bg-cream/70 text-emerald-deep font-semibold text-center whitespace-nowrap">{% translate "Home" %}</a>
+          <a href="{% url 'store:product_list' %}" class="px-3 py-2.5 rounded-xl bg-cream/70 text-emerald-deep font-semibold text-center whitespace-nowrap">{% translate "All Pieces" %}</a>
           {% for cat in nav_categories %}
             <a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="px-3 py-2.5 rounded-xl bg-white border border-sand/70 text-ink/90 text-xs font-medium truncate text-center">
-              {{ cat.title }}
+              {{ cat.localized_title }}
             </a>
           {% endfor %}
         </div>
@@ -417,67 +458,73 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-extrabold text-base text-white">گالری جواهرات و حرز اصیل</h3>
-              <p class="text-xs text-gold-light/80">اصالت سنگ معدنی، عیار ۹۲۵ و احراز شرعی</p>
+              <h3 class="font-extrabold text-base text-white">{% translate "Asil Jewelry & Hirz Gallery" %}</h3>
+              <p class="text-xs text-gold-light/80">{% translate "Authentic mineral gemstones, 925 silver & scribal Hirz" %}</p>
             </div>
           </div>
           <p class="text-xs sm:text-sm leading-7 text-ivory/75">
-            مجموعه‌ای تخصصی در طراحی و ساخت انگشترهای نقره دست‌ساز با سنگ‌های قیمتی طبیعی و ارائه حرزهای معتبر دست‌نویس روی پوست آهو مطابق آداب اصیل اسلامی و ایرانی.
+            {% translate "A specialist house dedicated to crafting handcrafted 925 sterling silver rings with natural gemstones and offering authentic hand-written Hirz scrolls on deerskin according to classical Persian and Islamic tradition." %}
           </p>
         </div>
 
         <!-- Quick Links -->
         <div class="lg:col-span-3 space-y-3">
-          <h4 class="font-bold text-sm text-gold-light">دسترسی سریع</h4>
+          <h4 class="font-bold text-sm text-gold-light">{% translate "Quick Links" %}</h4>
           <ul class="space-y-2 text-xs sm:text-sm text-ivory/80">
-            <li><a href="{% url 'store:home' %}" class="hover:text-gold-warm transition">صفحه اصلی</a></li>
-            <li><a href="{% url 'store:product_list' %}" class="hover:text-gold-warm transition">کلکسیون کامل آثار</a></li>
-            <li><a href="{% url 'store:product_list' %}?type=ring" class="hover:text-gold-warm transition">انگشترهای نقره و سنگ قیمتی</a></li>
-            <li><a href="{% url 'store:product_list' %}?type=hirz" class="hover:text-gold-warm transition">حرز و بازوبندهای سنتی</a></li>
+            <li><a href="{% url 'store:home' %}" class="hover:text-gold-warm transition">{% translate "Home Page" %}</a></li>
+            <li><a href="{% url 'store:product_list' %}" class="hover:text-gold-warm transition">{% translate "Full Collection" %}</a></li>
+            <li><a href="{% url 'store:product_list' %}?type=ring" class="hover:text-gold-warm transition">{% translate "Silver Rings & Gemstones" %}</a></li>
+            <li><a href="{% url 'store:product_list' %}?type=hirz" class="hover:text-gold-warm transition">{% translate "Traditional Hirz & Armlets" %}</a></li>
             {% for cat in nav_categories|slice:":3" %}
-              <li><a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="hover:text-gold-warm transition">{{ cat.title }}</a></li>
+              <li><a href="{% url 'store:product_list' %}?category={{ cat.slug|urlencode }}" class="hover:text-gold-warm transition">{{ cat.localized_title }}</a></li>
             {% endfor %}
           </ul>
         </div>
 
         <!-- Contact Details -->
         <div class="lg:col-span-3 space-y-3">
-          <h4 class="font-bold text-sm text-gold-light">ارتباط با گالری</h4>
+          <h4 class="font-bold text-sm text-gold-light">{% translate "Contact Gallery" %}</h4>
           <ul class="space-y-2.5 text-xs sm:text-sm text-ivory/80">
             <li class="flex items-start gap-2">
               <span class="text-gold-warm mt-0.5">•</span>
-              <span>تهران، بازار بزرگ، راسته زرگرها، سرای جواهر اصیل، حجره ۱۲</span>
+              <span>{% translate "No. 12, Saray-e Javaher-e Asil, Goldsmiths' Row, Grand Bazaar, Tehran" %}</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="text-gold-warm">•</span>
-              <span>تلفن مشاوره و سفارش: ۰۲۱-۸۸۴۵۱۲۳۴</span>
+              <span>
+                {% translate "Consultation & Orders:" %}
+                <span dir="ltr">{% if LANGUAGE_BIDI %}۰۲۱-۸۸۴۵۱۲۳۴{% else %}+98 21 8845 1234{% endif %}</span>
+              </span>
             </li>
             <li class="flex items-center gap-2">
               <span class="text-gold-warm">•</span>
-              <span>پاسخگویی: شنبه تا پنج‌شنبه ۹ الی ۱۸</span>
+              <span>{% translate "Hours: Saturday – Thursday, 9:00 AM – 6:00 PM" %}</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="text-gold-warm">•</span>
-              <span>ایمیل: info@asil-gallery.example</span>
+              <span>
+                {% translate "Email:" %}
+                <span dir="ltr">info@asil-gallery.example</span>
+              </span>
             </li>
           </ul>
         </div>
 
         <!-- Trust Seals Placeholders -->
         <div class="lg:col-span-2 space-y-3">
-          <h4 class="font-bold text-sm text-gold-light">نمادهای اعتماد</h4>
+          <h4 class="font-bold text-sm text-gold-light">{% translate "Trust Badges" %}</h4>
           <div class="grid grid-cols-2 gap-2.5">
             <div class="bg-ivory/5 border border-gold-warm/25 rounded-xl p-3 text-center flex flex-col items-center justify-center gap-1.5">
               <svg class="w-7 h-7 text-gold-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              <span class="text-[11px] font-medium text-ivory/85">نماد اعتماد الکترونیکی</span>
+              <span class="text-[11px] font-medium text-ivory/85">{% translate "E-Trust Certified" %}</span>
             </div>
             <div class="bg-ivory/5 border border-gold-warm/25 rounded-xl p-3 text-center flex flex-col items-center justify-center gap-1.5">
               <svg class="w-7 h-7 text-gold-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
-              <span class="text-[11px] font-medium text-ivory/85">جواز اتحادیه نقره‌فروشان</span>
+              <span class="text-[11px] font-medium text-ivory/85">{% translate "Silversmiths Guild License" %}</span>
             </div>
           </div>
         </div>
@@ -486,8 +533,8 @@
       <div class="gold-divider my-8"></div>
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ivory/65">
-        <p>© ۱۴۰۴ تمامی حقوق مادی و معنوی متعلق به گالری جواهرات و حرز اصیل است.</p>
-        <p>نسخه نمایشی تخصصی فروشگاه انگشتر نقره و حرز سنتی</p>
+        <p>{% translate "© 2025–2026 Asil Jewelry & Hirz Gallery. All rights reserved." %}</p>
+        <p>{% translate "Specialist demo storefront for silver rings & traditional Hirz" %}</p>
       </div>
     </div>
   </footer>
@@ -502,7 +549,7 @@
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100 translate-y-0"
     x-transition:leave-end="opacity-0 translate-y-4"
-    class="fixed bottom-5 left-5 right-5 sm:right-auto sm:w-96 z-50"
+    class="fixed bottom-5 inset-x-5 sm:inset-x-auto sm:end-5 sm:w-96 z-50"
     role="status"
     aria-live="polite"
   >
@@ -519,7 +566,7 @@
         </svg>
       </div>
       <div class="flex-1 text-xs sm:text-sm leading-6 font-medium" x-text="$store.cart.toast.message"></div>
-      <button type="button" @click="$store.cart.hideToast()" class="text-ivory/60 hover:text-white p-1">
+      <button type="button" @click="$store.cart.hideToast()" class="text-ivory/60 hover:text-white p-1" aria-label="{% translate 'Dismiss' %}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>

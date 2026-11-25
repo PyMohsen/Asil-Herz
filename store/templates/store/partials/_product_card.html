@@ -1,28 +1,28 @@
-{% load store_filters %}
+{% load i18n store_filters %}
 <article class="group bg-white rounded-2xl border border-sand/80 overflow-hidden shadow-card hover:shadow-luxury hover:border-gold-warm/70 transition-all duration-300 flex flex-col">
   <a href="{{ product.get_absolute_url }}" class="relative block aspect-[4/3] bg-cream overflow-hidden">
     {% if product.main_image %}
       <img
         src="{{ product.main_image.url }}"
-        alt="{{ product.title }}"
+        alt="{{ product.localized_title }}"
         loading="lazy"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
       />
     {% endif %}
 
     <!-- Top Badges -->
-    <div class="absolute top-3 right-3 left-3 flex items-center justify-between gap-2 pointer-events-none">
+    <div class="absolute top-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none">
       <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold backdrop-blur-md bg-ivory/90 text-emerald-deep border border-sand/70">
-        {% if product.product_type == 'ring' %}انگشتر نقره{% else %}حرز و بازوبند{% endif %}
+        {% if product.product_type == 'ring' %}{% translate "Silver Ring" %}{% else %}{% translate "Hirz & Armlet" %}{% endif %}
       </span>
 
       {% if not product.is_in_stock %}
         <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-800/85 text-white">
-          ناموجود
+          {% translate "Out of stock" %}
         </span>
       {% elif product.has_discount %}
         <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-700 text-white shadow-sm">
-          {{ product.discount_percentage|fa_digits }}٪ تخفیف
+          {% blocktranslate with percent=product.discount_percentage|fa_digits %}{{ percent }}% OFF{% endblocktranslate %}
         </span>
       {% endif %}
     </div>
@@ -32,19 +32,19 @@
     <div class="space-y-2">
       <div class="flex items-center justify-between gap-2 text-xs">
         <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="text-gold-dark hover:text-emerald-deep font-medium truncate">
-          {{ product.category.title }}
+          {{ product.category.localized_title }}
         </a>
         <span class="text-[11px] text-muted/80 font-mono">{{ product.sku }}</span>
       </div>
 
       <h3 class="font-bold text-sm sm:text-base text-ink leading-snug line-clamp-2 min-h-[2.75rem]">
         <a href="{{ product.get_absolute_url }}" class="hover:text-emerald-deep transition">
-          {{ product.title }}
+          {{ product.localized_title }}
         </a>
       </h3>
 
       <p class="text-xs text-muted line-clamp-2 leading-5">
-        {{ product.short_description }}
+        {{ product.localized_short_description }}
       </p>
     </div>
 
@@ -62,7 +62,7 @@
         </div>
         {% if product.is_in_stock and product.stock <= 3 %}
           <span class="text-[11px] font-medium text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/70">
-            تنها {{ product.stock|fa_digits }} عدد
+            {% blocktranslate with stock=product.stock|fa_digits %}Only {{ stock }} left{% endblocktranslate %}
           </span>
         {% endif %}
       </div>
@@ -71,7 +71,7 @@
         href="{{ product.get_absolute_url }}"
         class="block w-full text-center py-2.5 px-4 rounded-xl bg-cream hover:bg-emerald-deep text-emerald-deep hover:text-ivory font-bold text-xs sm:text-sm border border-sand hover:border-emerald-deep transition-colors duration-200"
       >
-        مشاهده جزئیات
+        {% translate "View Details" %}
       </a>
     </div>
   </div>

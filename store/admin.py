@@ -1,21 +1,22 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from .models import Category, Product, ProductImage, ProductSpecification
-from .templatetags.store_filters import fa_digits, toman
+from .templatetags.store_filters import fa_digits, is_persian_locale, toman
 
-admin.site.site_header = 'پنل مدیریت گالری جواهرات و حرز اصیل'
-admin.site.site_title = 'مدیریت فروشگاه'
-admin.site.index_title = 'داشبورد مدیریت محصولات و دسته‌بندی‌ها'
+admin.site.site_header = _('Asil Jewelry & Hirz Gallery Admin')
+admin.site.site_title = _('Store Administration')
+admin.site.index_title = _('Products & Categories Management Dashboard')
 
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 2
-    fields = ('image', 'preview', 'alt_text')
+    fields = ('image', 'preview', 'alt_text', 'alt_text_en')
     readonly_fields = ('preview',)
 
-    @admin.display(description='پیش‌نمایش')
+    @admin.display(description=_('Preview'))
     def preview(self, obj):
         if obj.image:
             return format_html(
@@ -28,16 +29,30 @@ class ProductImageInline(admin.TabularInline):
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
     extra = 3
-    fields = ('key', 'value')
+    fields = ('key', 'key_en', 'value', 'value_en')
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('thumbnail', 'title', 'slug', 'product_count')
-    search_fields = ('title', 'description')
+    list_display = ('thumbnail', 'title', 'title_en', 'slug', 'product_count')
+    search_fields = ('title', 'title_en', 'description', 'description_en')
     readonly_fields = ('thumbnail',)
+    fieldsets = (
+        (
+            _('Persian Content'),
+            {
+                'fields': ('title', 'slug', 'description', 'image', 'thumbnail'),
+            },
+        ),
+        (
+            _('English Content'),
+            {
+                'fields': ('title_en', 'description_en'),
+            },
+        ),
+    )
 
-    @admin.display(description='تصویر')
+    @admin.display(description=_('Image'))
     def thumbnail(self, obj):
         if obj.image:
             return format_html(
@@ -46,7 +61,7 @@ class CategoryAdmin(admin.ModelAdmin):
             )
         return '—'
 
-    @admin.display(description='تعداد محصولات')
+    @admin.display(description=_('Product count'))
     def product_count(self, obj):
         return fa_digits(obj.products.count())
 
@@ -57,6 +72,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'thumbnail',
         'title',
+        'title_en',
         'sku',
         'category',
         'product_type',
@@ -68,15 +84,16 @@ class ProductAdmin(admin.ModelAdmin):
     )
     list_display_links = ('thumbnail', 'title')
     list_filter = ('category', 'product_type', 'is_featured', 'created_at')
-    search_fields = ('title', 'sku', 'short_description')
+    search_fields = ('title', 'title_en', 'sku', 'short_description', 'short_description_en')
     list_editable = ('stock', 'is_featured')
     readonly_fields = ('created_at', 'thumbnail')
     fieldsets = (
         (
-            'اطلاعات اصلی اثر',
+            _('Core Product Info'),
             {
                 'fields': (
                     'title',
+                    'title_en',
                     'slug',
                     'category',
                     'product_type',
@@ -86,7 +103,7 @@ class ProductAdmin(admin.ModelAdmin):
             },
         ),
         (
-            'قیمت‌گذاری و موجودی',
+            _('Pricing & Inventory'),
             {
                 'fields': (
                     'price',
@@ -96,11 +113,13 @@ class ProductAdmin(admin.ModelAdmin):
             },
         ),
         (
-            'توضیحات و تصویر اصلی',
+            _('Descriptions & Main Image'),
             {
                 'fields': (
                     'short_description',
+                    'short_description_en',
                     'full_description',
+                    'full_description_en',
                     'main_image',
                     'thumbnail',
                     'created_at',
@@ -109,7 +128,7 @@ class ProductAdmin(admin.ModelAdmin):
         ),
     )
 
-    @admin.display(description='تصویر')
+    @admin.display(description=_('Image'))
     def thumbnail(self, obj):
         if obj.main_image:
             return format_html(
@@ -118,16 +137,18 @@ class ProductAdmin(admin.ModelAdmin):
             )
         return '—'
 
-    @admin.display(description='قیمت اصلی', ordering='price')
+    @admin.display(description=_('Original price'), ordering='price')
     def formatted_price(self, obj):
         return toman(obj.price)
 
-    @admin.display(description='قیمت نهایی')
+    @admin.display(description=_('Final price'))
     def formatted_final_price(self, obj):
         if obj.has_discount:
+            pct = fa_digits(obj.discount_percentage)
+            badge = f'({pct}٪ {_("off")})' if is_persian_locale() else f'({pct}% {_("off")})'
             return format_html(
-                '<strong style="color:#0F3D3E;">{}</strong> <span style="color:#991b1b;font-size:11px;">({}٪ تخفیف)</span>',
+                '<strong style="color:#0F3D3E;">{}</strong> <span style="color:#991b1b;font-size:11px;">{}</span>',
                 toman(obj.get_final_price),
-                fa_digits(obj.discount_percentage),
+                badge,
             )
         return toman(obj.get_final_price)

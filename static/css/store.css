@@ -7,11 +7,19 @@ html {
   font-family: 'Vazirmatn', Tahoma, system-ui, -apple-system, sans-serif;
 }
 
+html[dir="ltr"] {
+  font-family: 'Plus Jakarta Sans', 'Vazirmatn', system-ui, -apple-system, sans-serif;
+}
+
 body {
   background-color: #FAF8F5;
   color: #1E2421;
   font-feature-settings: "ss01";
   overflow-x: clip;
+}
+
+html[dir="ltr"] body {
+  font-feature-settings: normal;
 }
 
 .no-scrollbar::-webkit-scrollbar {

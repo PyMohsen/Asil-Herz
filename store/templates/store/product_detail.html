@@ -1,7 +1,7 @@
 {% extends "store/base.html" %}
-{% load store_filters %}
+{% load i18n store_filters %}
 
-{% block title %}{{ product.title }} | گالری جواهرات و حرز اصیل{% endblock %}
+{% block title %}{{ product.localized_title }} | {% translate "Asil Jewelry & Hirz Gallery" %}{% endblock %}
 
 {% block content %}
   {{ gallery_images|json_script:"product-gallery-data" }}
@@ -12,13 +12,13 @@
   >
     <!-- Category Breadcrumb -->
     <nav class="flex flex-wrap items-center gap-2 text-xs text-muted mb-6">
-      <a href="{% url 'store:home' %}" class="hover:text-emerald-deep transition">خانه</a>
+      <a href="{% url 'store:home' %}" class="hover:text-emerald-deep transition">{% translate "Home" %}</a>
       <span>/</span>
       <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="hover:text-emerald-deep transition">
-        {{ product.category.title }}
+        {{ product.category.localized_title }}
       </a>
       <span>/</span>
-      <span class="text-emerald-deep font-semibold">{{ product.title }}</span>
+      <span class="text-emerald-deep font-semibold">{{ product.localized_title }}</span>
     </nav>
 
     <!-- Main Product Showcase + Purchase Box -->
@@ -34,8 +34,8 @@
           />
 
           {% if product.has_discount %}
-            <span class="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-700 text-white text-xs font-extrabold shadow-md">
-              {{ product.discount_percentage|fa_digits }}٪ تخفیف ویژه
+            <span class="absolute top-4 start-4 px-3 py-1 rounded-full bg-amber-700 text-white text-xs font-extrabold shadow-md">
+              {% blocktranslate with percent=product.discount_percentage|fa_digits %}{{ percent }}% Special Offer{% endblocktranslate %}
             </span>
           {% endif %}
         </div>
@@ -60,19 +60,19 @@
       <div class="lg:col-span-6 bg-white rounded-2xl border border-sand/90 shadow-card p-6 sm:p-8 space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="px-3 py-1 rounded-full bg-cream text-emerald-deep font-bold border border-sand/70">
-            {{ product.category.title }}
+            {{ product.category.localized_title }}
           </a>
           <span class="text-muted font-mono bg-ivory px-2.5 py-1 rounded-lg border border-sand/60">
-            کد اثر: {{ product.sku }}
+            {% translate "SKU:" %} {{ product.sku }}
           </span>
         </div>
 
         <div>
           <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-ink leading-snug">
-            {{ product.title }}
+            {{ product.localized_title }}
           </h1>
           <p class="text-sm text-muted leading-7 mt-3">
-            {{ product.short_description }}
+            {{ product.localized_short_description }}
           </p>
         </div>
 
@@ -83,7 +83,7 @@
               <div class="flex items-center gap-2">
                 <span class="text-sm text-muted line-through decoration-red-400">{{ product.price|toman }}</span>
                 <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 text-[11px] font-bold">
-                  {{ product.discount_percentage|fa_digits }}٪ تخفیف
+                  {% blocktranslate with percent=product.discount_percentage|fa_digits %}{{ percent }}% OFF{% endblocktranslate %}
                 </span>
               </div>
             {% endif %}
@@ -96,12 +96,12 @@
             {% if product.is_in_stock %}
               <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-deep/10 text-emerald-deep text-xs font-bold border border-emerald-deep/20">
                 <span class="w-2 h-2 rounded-full bg-emerald-deep"></span>
-                موجود در گالری ({{ product.stock|fa_digits }} عدد)
+                {% blocktranslate with count=product.stock|fa_digits %}In stock ({{ count }} available){% endblocktranslate %}
               </span>
             {% else %}
               <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-red-50 text-red-800 text-xs font-bold border border-red-200">
                 <span class="w-2 h-2 rounded-full bg-red-600"></span>
-                اتمام موجودی
+                {% translate "Out of stock" %}
               </span>
             {% endif %}
           </div>
@@ -119,7 +119,7 @@
             <div class="space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <label class="text-sm font-bold text-ink">
-                  انتخاب سایز انگشتر: <span class="text-emerald-deep" x-text="selectedVariant"></span>
+                  {% translate "Select Ring Size:" %} <span class="text-emerald-deep" x-text="selectedVariant"></span>
                 </label>
                 <button
                   type="button"
@@ -129,7 +129,7 @@
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>راهنمای تعیین سایز انگشتر</span>
+                  <span>{% translate "Ring Size Guide" %}</span>
                 </button>
               </div>
 
@@ -137,9 +137,9 @@
                 {% for opt in variant_options %}
                   <button
                     type="button"
-                    @click="selectedVariant = '{{ opt.value }}'"
+                    @click="selectedVariant = '{{ opt.value|escapejs }}'"
                     class="min-w-[2.9rem] px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border transition"
-                    :class="selectedVariant === '{{ opt.value }}'
+                    :class="selectedVariant === '{{ opt.value|escapejs }}'
                       ? 'bg-emerald-deep text-ivory border-emerald-deep ring-2 ring-gold-warm/60 shadow-sm'
                       : 'bg-ivory text-ink border-sand hover:border-emerald-deep'"
                   >
@@ -152,15 +152,15 @@
             <!-- Hirz Enclosure / Armlet Selector -->
             <div class="space-y-3">
               <label class="block text-sm font-bold text-ink">
-                انتخاب محفظه و نوع بسته‌بندی حرز:
+                {% translate "Select Hirz Enclosure & Packaging:" %}
               </label>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {% for opt in variant_options %}
                   <button
                     type="button"
-                    @click="selectedVariant = '{{ opt.value }}'"
+                    @click="selectedVariant = '{{ opt.value|escapejs }}'"
                     class="px-3.5 py-3 rounded-xl text-xs font-bold border text-center transition leading-5"
-                    :class="selectedVariant === '{{ opt.value }}'
+                    :class="selectedVariant === '{{ opt.value|escapejs }}'
                       ? 'bg-emerald-deep text-ivory border-emerald-deep ring-2 ring-gold-warm/60 shadow-sm'
                       : 'bg-ivory text-ink border-sand hover:border-emerald-deep'"
                   >
@@ -179,17 +179,17 @@
                 @click="if (quantity < maxStock) quantity++"
                 :disabled="!inStock || quantity >= maxStock"
                 class="w-9 h-9 rounded-lg hover:bg-cream text-emerald-deep font-extrabold text-lg disabled:opacity-40 transition"
-                aria-label="افزایش تعداد"
+                aria-label="{% translate 'Increase quantity' %}"
               >
                 +
               </button>
-              <span class="font-extrabold text-sm text-ink" x-text="$store.cart.faDigits(quantity)">۱</span>
+              <span class="font-extrabold text-sm text-ink" x-text="$store.cart.faDigits(quantity)">{{ 1|fa_digits }}</span>
               <button
                 type="button"
                 @click="if (quantity > 1) quantity--"
                 :disabled="!inStock || quantity <= 1"
                 class="w-9 h-9 rounded-lg hover:bg-cream text-emerald-deep font-extrabold text-lg disabled:opacity-40 transition"
-                aria-label="کاهش تعداد"
+                aria-label="{% translate 'Decrease quantity' %}"
               >
                 −
               </button>
@@ -207,9 +207,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               <span x-show="!submitting">
-                {% if product.is_in_stock %}افزودن به سبد خرید{% else %}در حال حاضر ناموجود است{% endif %}
+                {% if product.is_in_stock %}{% translate "Add to Cart" %}{% else %}{% translate "Currently Out of Stock" %}{% endif %}
               </span>
-              <span x-show="submitting" x-cloak>در حال ثبت در سبد...</span>
+              <span x-show="submitting" x-cloak>{% translate "Adding to cart..." %}</span>
             </button>
           </div>
         </form>
@@ -218,11 +218,11 @@
         <div class="pt-4 border-t border-sand/70 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-gold-warm"></span>
-            <span>ارسال با بسته‌بندی مخملی و بیمه کامل مرسوله</span>
+            <span>{% translate "Ships in velvet presentation box with full insurance" %}</span>
           </div>
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-gold-warm"></span>
-            <span>همراه با گواهی اصالت گالری جواهرات و حرز اصیل</span>
+            <span>{% translate "Includes Asil Gallery authenticity certificate" %}</span>
           </div>
         </div>
       </div>
@@ -237,7 +237,7 @@
           class="px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition whitespace-nowrap shrink-0"
           :class="activeTab === 'description' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
         >
-          توضیحات و خواص
+          {% translate "Description & Properties" %}
         </button>
         <button
           type="button"
@@ -245,7 +245,7 @@
           class="px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition whitespace-nowrap shrink-0"
           :class="activeTab === 'specs' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
         >
-          مشخصات فنی
+          {% translate "Technical Specifications" %}
         </button>
         <button
           type="button"
@@ -253,33 +253,33 @@
           class="px-3.5 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold rounded-t-xl border-b-2 transition whitespace-nowrap shrink-0"
           :class="activeTab === 'reviews' ? 'bg-white text-emerald-deep border-emerald-deep' : 'text-muted border-transparent hover:text-ink'"
         >
-          دیدگاه خریداران ({{ reviews|length|fa_digits }})
+          {% blocktranslate with count=reviews|length|fa_digits %}Customer Reviews ({{ count }}){% endblocktranslate %}
         </button>
       </div>
 
       <div class="p-5 sm:p-8">
         <!-- Tab 1: Description & Properties -->
         <div x-show="activeTab === 'description'" class="space-y-4">
-          <h2 class="text-lg font-extrabold text-emerald-deep">معرفی تخصصی، خواص و آداب نگهداری</h2>
+          <h2 class="text-lg font-extrabold text-emerald-deep">{% translate "Craftsmanship Overview, Properties & Care" %}</h2>
           <div class="text-sm leading-8 text-ink/90 whitespace-pre-line">
-            {{ product.full_description }}
+            {{ product.localized_full_description }}
           </div>
         </div>
 
         <!-- Tab 2: Technical Specifications Striped Table -->
         <div x-show="activeTab === 'specs'" x-cloak>
-          <h2 class="text-lg font-extrabold text-emerald-deep mb-4">جدول مشخصات فنی اثر</h2>
+          <h2 class="text-lg font-extrabold text-emerald-deep mb-4">{% translate "Technical Specifications Table" %}</h2>
           {% if product.specifications.all %}
             <div class="overflow-x-auto rounded-xl border border-sand">
-              <table class="w-full text-right text-xs sm:text-sm">
+              <table class="w-full text-start text-xs sm:text-sm">
                 <tbody class="divide-y divide-sand/70">
                   {% for spec in product.specifications.all %}
                     <tr class="{% cycle 'bg-ivory' 'bg-white' %}">
                       <th class="w-2/5 sm:w-1/3 px-4 py-3.5 font-bold text-emerald-deep bg-cream/40">
-                        {{ spec.key }}
+                        {{ spec.localized_key }}
                       </th>
                       <td class="px-4 py-3.5 text-ink font-medium">
-                        {{ spec.value }}
+                        {{ spec.localized_value }}
                       </td>
                     </tr>
                   {% endfor %}
@@ -287,16 +287,16 @@
               </table>
             </div>
           {% else %}
-            <p class="text-sm text-muted">مشخصات فنی تکمیلی برای این محصول ثبت نشده است.</p>
+            <p class="text-sm text-muted">{% translate "No additional technical specifications have been recorded for this piece." %}</p>
           {% endif %}
         </div>
 
         <!-- Tab 3: Customer Reviews -->
         <div x-show="activeTab === 'reviews'" x-cloak class="space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <h2 class="text-lg font-extrabold text-emerald-deep">تجربه و دیدگاه خریداران</h2>
+            <h2 class="text-lg font-extrabold text-emerald-deep">{% translate "Verified Buyer Experiences" %}</h2>
             <span class="text-xs text-muted bg-cream px-3 py-1 rounded-full border border-sand/70">
-              نظرات ثبت‌شده از خریداران پیشین
+              {% translate "Reviews submitted by previous buyers" %}
             </span>
           </div>
 
@@ -310,10 +310,10 @@
                       <div class="text-[11px] text-muted">{{ rev.city }} • {{ rev.date }}</div>
                     </div>
                     <span class="px-2 py-0.5 rounded-md bg-emerald-deep/10 text-emerald-deep text-[10px] font-bold">
-                      خریدار تأییدشده
+                      {% translate "Verified Buyer" %}
                     </span>
                   </div>
-                  <div class="flex items-center gap-0.5 text-gold-warm text-sm" aria-label="امتیاز">
+                  <div class="flex items-center gap-0.5 text-gold-warm text-sm" aria-label="{% translate 'Rating' %}">
                     {% for _ in "12345" %}
                       {% if forloop.counter <= rev.rating %}★{% else %}<span class="text-sand">★</span>{% endif %}
                     {% endfor %}
@@ -332,11 +332,11 @@
       <section class="mt-14">
         <div class="flex items-center justify-between gap-4 mb-6">
           <div>
-            <span class="text-xs font-bold text-gold-dark">پیشنهاد مشابه در این دسته</span>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-emerald-deep mt-0.5">آثار مرتبط</h2>
+            <span class="text-xs font-bold text-gold-dark">{% translate "Similar Suggestions in This Category" %}</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-emerald-deep mt-0.5">{% translate "Related Pieces" %}</h2>
           </div>
           <a href="{% url 'store:product_list' %}?category={{ product.category.slug|urlencode }}" class="text-xs sm:text-sm font-bold text-emerald-deep hover:text-gold-dark transition">
-            مشاهده بیشتر ←
+            {% translate "View More" %} {% if LANGUAGE_BIDI %}←{% else %}→{% endif %}
           </a>
         </div>
 
@@ -366,10 +366,10 @@
         >
           <div class="sticky top-0 bg-emerald-deep text-ivory px-6 py-4 flex items-center justify-between">
             <div>
-              <h3 id="size-guide-title" class="font-extrabold text-base sm:text-lg">راهنمای تعیین سایز انگشتر</h3>
-              <p class="text-xs text-gold-light mt-0.5">استاندارد سایزبندی رکاب نقره در ایران (سایز ۵۶ تا ۶۶)</p>
+              <h3 id="size-guide-title" class="font-extrabold text-base sm:text-lg">{% translate "Ring Size Guide" %}</h3>
+              <p class="text-xs text-gold-light mt-0.5">{% translate "Iranian standard silver ring sizing (Sizes 56 to 66)" %}</p>
             </div>
-            <button type="button" @click="sizeGuideOpen = false" class="p-1.5 rounded-lg hover:bg-white/10 text-ivory transition">
+            <button type="button" @click="sizeGuideOpen = false" class="p-1.5 rounded-lg hover:bg-white/10 text-ivory transition" aria-label="{% translate 'Close' %}">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -379,15 +379,15 @@
           <div class="p-6 space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs leading-6">
               <div class="p-4 rounded-xl bg-ivory border border-sand/80">
-                <h4 class="font-bold text-emerald-deep mb-1.5">روش اول: اندازه‌گیری دور انگشت</h4>
+                <h4 class="font-bold text-emerald-deep mb-1.5">{% translate "Method 1: Measure Your Finger" %}</h4>
                 <p class="text-muted">
-                  یک نوار کاغذی باریک را به‌صورت کاملاً کیپ (نه خیلی سفت و نه آزاد) دور بند انگشت مورد نظر بپیچید، محل تقاطع را علامت زده و طول آن را بر حسب میلی‌متر با خط‌کش بخوانید (معادل ستون «محیط داخلی»).
+                  {% translate 'Wrap a narrow strip of paper snugly (neither too tight nor loose) around the base of your finger, mark the overlap, and measure the length in millimeters with a ruler (corresponding to "Inner Circumference").' %}
                 </p>
               </div>
               <div class="p-4 rounded-xl bg-ivory border border-sand/80">
-                <h4 class="font-bold text-emerald-deep mb-1.5">روش دوم: استفاده از انگشتر قبلی</h4>
+                <h4 class="font-bold text-emerald-deep mb-1.5">{% translate "Method 2: Measure an Existing Ring" %}</h4>
                 <p class="text-muted">
-                  قطر داخلی یکی از انگشترهای خود را که دقیقاً اندازه است (بدون احتساب ضخامت رکاب) با خط‌کش اندازه‌گیری کرده و با ستون «قطر داخلی» تطبیق دهید.
+                  {% translate 'Measure the inner diameter of a well-fitting ring (excluding the thickness of the silver band) with a ruler and match it to the "Inner Diameter" column.' %}
                 </p>
               </div>
             </div>
@@ -396,26 +396,26 @@
               <table class="w-full min-w-[420px] text-center text-xs sm:text-sm">
                 <thead class="bg-cream text-emerald-deep font-bold">
                   <tr>
-                    <th class="py-3 px-3">سایز ایران</th>
-                    <th class="py-3 px-3">قطر داخلی (میلی‌متر)</th>
-                    <th class="py-3 px-3">محیط داخلی (میلی‌متر)</th>
-                    <th class="py-3 px-3">انتخاب سریع</th>
+                    <th class="py-3 px-3">{% translate "Iranian Size" %}</th>
+                    <th class="py-3 px-3">{% translate "Inner Diameter (mm)" %}</th>
+                    <th class="py-3 px-3">{% translate "Inner Circumference (mm)" %}</th>
+                    <th class="py-3 px-3">{% translate "Quick Select" %}</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-sand/60">
                   {% for row in ring_size_guide %}
                     <tr class="hover:bg-ivory transition">
-                      <td class="py-2.5 px-3 font-extrabold text-emerald-deep">سایز {{ row.circumference }}</td>
+                      <td class="py-2.5 px-3 font-extrabold text-emerald-deep">{{ row.variant_value }}</td>
                       <td class="py-2.5 px-3 text-ink">{{ row.diameter }}</td>
                       <td class="py-2.5 px-3 text-ink">{{ row.circumference }}</td>
                       <td class="py-2.5 px-3">
                         <button
                           type="button"
-                          @click="selectedVariant = 'سایز {{ row.circumference }}'; sizeGuideOpen = false"
+                          @click="selectedVariant = '{{ row.variant_value|escapejs }}'; sizeGuideOpen = false"
                           class="px-3 py-1 rounded-lg text-xs font-bold border transition"
-                          :class="selectedVariant === 'سایز {{ row.circumference }}' ? 'bg-emerald-deep text-ivory border-emerald-deep' : 'bg-cream text-emerald-deep border-sand hover:bg-emerald-deep hover:text-ivory'"
+                          :class="selectedVariant === '{{ row.variant_value|escapejs }}' ? 'bg-emerald-deep text-ivory border-emerald-deep' : 'bg-cream text-emerald-deep border-sand hover:bg-emerald-deep hover:text-ivory'"
                         >
-                          انتخاب
+                          {% translate "Select" %}
                         </button>
                       </td>
                     </tr>
@@ -448,7 +448,7 @@
         submitting: false,
 
         get activeImage() {
-          return this.images[this.activeIndex] || { url: '', alt: '{{ product.title|escapejs }}' };
+          return this.images[this.activeIndex] || { url: '', alt: '{{ product.localized_title|escapejs }}' };
         },
 
         async submitAddToCart(event) {
@@ -478,10 +478,10 @@
               Alpine.store('cart').applyPayload(data);
               Alpine.store('cart').showToast(data.message, 'success');
             } else {
-              Alpine.store('cart').showToast(data.message || 'خطا در افزودن محصول به سبد خرید.', 'error');
+              Alpine.store('cart').showToast(data.message || '{% translate "Error adding product to your cart."|escapejs %}', 'error');
             }
           } catch (err) {
-            Alpine.store('cart').showToast('ارتباط با سرور برقرار نشد. لطفاً دوباره تلاش کنید.', 'error');
+            Alpine.store('cart').showToast('{% translate "Could not connect to the server. Please try again."|escapejs %}', 'error');
           } finally {
             this.submitting = false;
           }

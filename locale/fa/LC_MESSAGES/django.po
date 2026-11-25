@@ -1,0 +1,1044 @@
+# Bilingual translation catalog for Asil Jewelry & Hirz Gallery.
+msgid ""
+msgstr ""
+"Project-Id-Version: Asil Gallery\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Language: fa\\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\\n"
+
+#: store\views.py:359
+#, python-format
+msgid "\"%(title)s\" (%(variant)s) has been added to your cart."
+msgstr "«%(title)s» (%(variant)s) به سبد خرید اضافه شد."
+
+#: store\views.py:409
+#, python-format
+msgid "\"%(title)s\" was removed from your cart."
+msgstr "«%(title)s» از سبد خرید حذف شد."
+
+#: store\templates\store\home.html
+#, python-format
+msgid "%(count)s pieces"
+msgstr "%(count)s اثر"
+
+#: store\templates\store\partials\_product_card.html
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "%(percent)s%% OFF"
+msgstr "%(percent)s٪ تخفیف"
+
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "%(percent)s%% Special Offer"
+msgstr "%(percent)s٪ تخفیف ویژه"
+
+msgid "100% Insured"
+msgstr "۱۰۰٪ بیمه"
+
+#: store\templates\store\home.html
+#, python-format
+msgid "100%% Insured"
+msgstr "۱۰۰٪ بیمه"
+
+#: store\views.py:66
+msgid "2025/09/10"
+msgstr "۱۴۰۴/۰۶/۱۹"
+
+#: store\views.py:96
+msgid "2025/09/15"
+msgstr "۱۴۰۴/۰۶/۲۴"
+
+#: store\views.py:56
+msgid "2025/10/18"
+msgstr "۱۴۰۴/۰۷/۲۶"
+
+#: store\views.py:87
+msgid "2025/10/22"
+msgstr "۱۴۰۴/۰۷/۳۰"
+
+#: store\views.py:46
+msgid "2025/11/03"
+msgstr "۱۴۰۴/۰۸/۱۲"
+
+#: store\views.py:77
+msgid "2025/11/09"
+msgstr "۱۴۰۴/۰۸/۱۸"
+
+#: store\templates\store\home.html
+msgid "925 Sterling"
+msgstr "۹۲۵ عیار"
+
+#: store\templates\store\home.html
+msgid "A curated collection of handcrafted sterling silver rings set with Yemeni agate, Nishapur turquoise, and Durr-e Najaf, alongside authentic Hirz scrolls of Imam Jawad (AS) and Abi Dujana scribed on deerskin with silver cases and hand-stitched leather armlets."
+msgstr "کلکسیونی برگزیده از انگشترهای نقره دست‌ساز با نگین‌های عقیق یمنی، فیروزه نیشابور و دُرّ نجف، در کنار حرزهای معتبر امام جواد (ع) و ابی‌دجانه با نگارش سنتی روی پوست آهو و قاب‌های نقره و چرم دست‌دوز."
+
+#: store\templates\store\base.html
+msgid "A specialist house dedicated to crafting handcrafted 925 sterling silver rings with natural gemstones and offering authentic hand-written Hirz scrolls on deerskin according to classical Persian and Islamic tradition."
+msgstr "مجموعه‌ای تخصصی در طراحی و ساخت انگشترهای نقره دست‌ساز با سنگ‌های قیمتی طبیعی و ارائه حرزهای معتبر دست‌نویس روی پوست آهو مطابق آداب اصیل اسلامی و ایرانی."
+
+#: store\templates\store\home.html
+msgid "Accurate ring size chart and custom workshop resizing prior to dispatch"
+msgstr "انتخاب دقیق سایز رکاب و امکان تنظیم سایز تخصصی پیش از ارسال"
+
+#: store\templates\store\product_detail.html
+msgid "Add to Cart"
+msgstr "افزودن به سبد خرید"
+
+#: store\templates\store\product_detail.html
+msgid "Adding to cart..."
+msgstr "در حال ثبت در سبد..."
+
+#: store\templates\store\product_list.html
+msgid "Advanced Filters"
+msgstr "فیلتر پیشرفته"
+
+#: store\views.py:94
+msgid "Ali-Akbar Mousavi"
+msgstr "علی‌اکبر موسوی"
+
+#: store\templates\store\product_list.html
+msgid "All"
+msgstr "همه"
+
+#: store\templates\store\product_list.html
+msgid "All Categories"
+msgstr "همه دسته‌بندی‌ها"
+
+#: store\templates\store\base.html
+msgid "All Pieces"
+msgstr "همه آثار"
+
+#: store\views.py:354
+#, python-format
+msgid "All available stock of \"%(title)s\" (%(stock)s units) is already in your cart."
+msgstr "حداکثر موجودی «%(title)s» (%(stock)s عدد) هم‌اکنون در سبد خرید شماست."
+
+#: store\models.py:218
+msgid "Alt text"
+msgstr "متن جایگزین"
+
+#: store\models.py:223
+msgid "Alt text (English)"
+msgstr "متن جایگزین (انگلیسی)"
+
+#: store\views.py:44
+msgid "Amirhossein Rezaei"
+msgstr "امیرحسین رضایی"
+
+#: store\templates\store\home.html
+msgid "An extraordinary selection of Yemeni agate, Nishapur dendritic turquoise, Durr-e Najaf, and emerald mounted in Safavid, Fili, and lattice bands engraved by master artisans."
+msgstr "تنوع بی‌نظیر عقیق یمنی، فیروزه شجری نیشابور، دُرّ نجف و زمرد در رکاب‌های صفوی، فیلی و شبکه با قلم‌زنی استادکاران."
+
+#: store\templates\store\product_list.html
+msgid "Apply Filters"
+msgstr "اعمال فیلترها"
+
+#: store\templates\store\base.html
+#: store\templates\store\product_detail.html
+msgid "Asil Jewelry & Hirz Gallery"
+msgstr "گالری جواهرات و حرز اصیل"
+
+#: store\admin.py:8
+msgid "Asil Jewelry & Hirz Gallery Admin"
+msgstr "پنل مدیریت گالری جواهرات و حرز اصیل"
+
+#: store\templates\store\home.html
+msgid "Asil Jewelry & Hirz Gallery | Silver Rings, Gemstones & Hand-Written Hirz"
+msgstr "گالری جواهرات و حرز اصیل | انگشتر نقره، سنگ قیمتی و حرز دست‌نویس"
+
+#: store\templates\store\home.html
+msgid "Authentic Calligraphy & Etiquette"
+msgstr "کتابت اصیل و آداب کامل"
+
+#: store\templates\store\base.html
+msgid "Authentic mineral gemstones, 925 silver & scribal Hirz"
+msgstr "اصالت سنگ معدنی، عیار ۹۲۵ و احراز شرعی"
+
+#: store\templates\store\home.html
+msgid "Authentic transcription of the Grand Hirz of Imam Jawad (AS), Hirz Abi Dujana, and Sharaf-ol-Shams on deerskin parchment, customizable with cylindrical silver cases or cowhide armlets."
+msgstr "نگارش دقیق حرز کبیر امام جواد (ع)، حرز ابی‌دجانه و شرف‌الشمس روی پوست آهو، قابل انتخاب با قاب نقره استوانه‌ای یا بازوبند چرم گاوی."
+
+#: store\templates\store\home.html
+msgid "Browse Category"
+msgstr "ورود به دسته‌بندی"
+
+#: store\templates\store\base.html
+msgid "Browse the collection to discover and select pieces."
+msgstr "آثار برگزیده را از کلکسیون مشاهده و انتخاب کنید."
+
+#: store\templates\store\base.html
+msgid "Cart"
+msgstr "سبد خرید"
+
+#: store\templates\store\base.html
+msgid "Cart Total (Demo):"
+msgstr "جمع کل سبد (نسخه نمایشی):"
+
+#: store\models.py:64
+msgid "Categories"
+msgstr "دسته‌بندی‌ها"
+
+#: store\models.py:110
+#: store\models.py:63
+#: store\templates\store\product_list.html
+msgid "Category"
+msgstr "دسته‌بندی"
+
+#: store\models.py:53
+msgid "Category image"
+msgstr "تصویر دسته‌بندی"
+
+#: store\models.py:34
+msgid "Category title"
+msgstr "عنوان دسته‌بندی"
+
+#: store\models.py:39
+msgid "Category title (English)"
+msgstr "عنوان دسته‌بندی (انگلیسی)"
+
+#: store\templates\store\home.html
+msgid "Certified 925 sterling silver bands and natural untreated mineral gemstones"
+msgstr "تضمین عیار ۹۲۵ رکاب و طبیعی بودن تمام نگین‌های معدنی"
+
+#: store\templates\store\home.html
+msgid "Certified standard silver"
+msgstr "نقره استاندارد و بااصالت"
+
+#: store\templates\store\base.html
+msgid "Clear"
+msgstr "پاک کردن"
+
+#: store\templates\store\product_list.html
+msgid "Clear Filters"
+msgstr "حذف فیلترها"
+
+#: store\templates\store\base.html
+#: store\templates\store\product_detail.html
+msgid "Close"
+msgstr "بستن"
+
+#: store\templates\store\product_list.html
+msgid "Collection"
+msgstr "کلکسیون آثار"
+
+#: store\templates\store\base.html
+msgid "Consultation & Orders:"
+msgstr "تلفن مشاوره و سفارش:"
+
+#: store\templates\store\base.html
+msgid "Contact Gallery"
+msgstr "ارتباط با گالری"
+
+#: store\templates\store\base.html
+msgid "Continue Exploring Gallery"
+msgstr "ادامه گشت‌وگذار در گالری"
+
+#: store\admin.py:92
+msgid "Core Product Info"
+msgstr "اطلاعات اصلی اثر"
+
+#: store\templates\store\product_detail.html
+msgid "Could not connect to the server. Please try again."
+msgstr "ارتباط با سرور برقرار نشد. لطفاً دوباره تلاش کنید."
+
+#: store\templates\store\product_detail.html
+msgid "Craftsmanship Overview, Properties & Care"
+msgstr "معرفی تخصصی، خواص و آداب نگهداری"
+
+#: store\models.py:140
+msgid "Created at"
+msgstr "تاریخ ثبت"
+
+#: store\templates\store\home.html
+msgid "Curated Treasury"
+msgstr "گنجینه موضوعی"
+
+#: store\templates\store\product_detail.html
+msgid "Currently Out of Stock"
+msgstr "در حال حاضر ناموجود است"
+
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "Customer Reviews (%(count)s)"
+msgstr "دیدگاه خریداران (%(count)s)"
+
+#: store\cart.py:14
+msgid "Cylindrical silver case"
+msgstr "قاب نقره استوانه‌ای"
+
+#: store\templates\store\product_detail.html
+msgid "Decrease quantity"
+msgstr "کاهش تعداد"
+
+#: store\templates\store\home.html
+msgid "Deerskin"
+msgstr "پوست آهو"
+
+#: store\models.py:55
+msgid "Description"
+msgstr "توضیحات"
+
+#: store\templates\store\product_detail.html
+msgid "Description & Properties"
+msgstr "توضیحات و خواص"
+
+#: store\models.py:59
+msgid "Description (English)"
+msgstr "توضیحات (انگلیسی)"
+
+#: store\admin.py:116
+msgid "Descriptions & Main Image"
+msgstr "توضیحات و تصویر اصلی"
+
+#: store\models.py:123
+msgid "Discounted price (Toman)"
+msgstr "قیمت با تخفیف (تومان)"
+
+#: store\models.py:170
+msgid "Discounted price must be greater than zero."
+msgstr "قیمت با تخفیف باید بیشتر از صفر باشد."
+
+#: store\models.py:173
+msgid "Discounted price must be less than the original price."
+msgstr "قیمت با تخفیف باید کمتر از قیمت اصلی محصول باشد."
+
+#: store\templates\store\home.html
+msgid "Discover All Products"
+msgstr "کشف تمام محصولات"
+
+#: store\templates\store\base.html
+msgid "Dismiss"
+msgstr "بستن اعلان"
+
+#: store\templates\store\base.html
+msgid "E-Trust Certified"
+msgstr "نماد اعتماد الکترونیکی"
+
+#: store\templates\store\base.html
+msgid "Email:"
+msgstr "ایمیل:"
+
+#: config\settings.py:115
+msgid "English"
+msgstr "انگلیسی"
+
+#: store\admin.py:48
+msgid "English Content"
+msgstr "محتوای انگلیسی"
+
+#: store\templates\store\product_detail.html
+msgid "Error adding product to your cart."
+msgstr "خطا در افزودن محصول به سبد خرید."
+
+#: store\templates\store\base.html
+msgid "Error updating your shopping cart."
+msgstr "خطا در بروزرسانی سبد خرید."
+
+#: store\templates\store\home.html
+msgid "Explore the Collection"
+msgstr "مشاهده کلکسیون آثار"
+
+#: store\views.py:85
+msgid "Fatemeh Nouri"
+msgstr "فاطمه نوری"
+
+#: store\templates\store\home.html
+msgid "Featured Categories"
+msgstr "دسته‌بندی‌های برگزیده"
+
+#: store\templates\store\home.html
+msgid "Featured Gallery Pieces"
+msgstr "محصولات ویژه گالری"
+
+#: store\templates\store\home.html
+msgid "Featured Ring"
+msgstr "منتخب انگشترها"
+
+#: store\templates\store\home.html
+msgid "Featured Sacred Hirz"
+msgstr "منتخب احراز شرعی"
+
+#: store\models.py:139
+msgid "Featured product"
+msgstr "محصول ویژه"
+
+#: store\templates\store\product_list.html
+msgid "Filters"
+msgstr "فیلترها"
+
+#: store\admin.py:144
+msgid "Final price"
+msgstr "قیمت نهایی"
+
+#: store\templates\store\base.html
+msgid "Fine sterling silver & traditional hand-written Hirz"
+msgstr "نقره‌جات فاخر و احراز دست‌نویس سنتی"
+
+#: store\templates\store\base.html
+msgid "Full Collection"
+msgstr "کلکسیون کامل آثار"
+
+#: store\models.py:132
+msgid "Full description & properties"
+msgstr "توضیحات کامل و خواص"
+
+#: store\models.py:136
+msgid "Full description & properties (English)"
+msgstr "توضیحات کامل و خواص (انگلیسی)"
+
+#: store\templates\store\product_list.html
+msgid "Gallery Collection"
+msgstr "کلکسیون آثار گالری"
+
+#: store\models.py:217
+msgid "Gallery image"
+msgstr "تصویر گالری"
+
+#: store\templates\store\home.html
+msgid "Gemstone & Silver Authenticity"
+msgstr "ضمانت اصالت سنگ و نقره"
+
+#: store\templates\store\home.html
+msgid "Guaranteed authenticity of natural gemstones, 925 silver & scribal compliance"
+msgstr "تضمین اصالت سنگ معدنی، نقره ۹۲۵ و نگارش شرعی"
+
+#: store\templates\store\product_list.html
+msgid "Hand-Written Hirz & Leather Armlets"
+msgstr "حرز و بازوبندهای دست‌نویس"
+
+#: store\templates\store\home.html
+msgid "Hand-scribed on tanned deerskin during auspicious lunar hours"
+msgstr "تحریر روی پوست آهوی دباغی‌شده با رعایت کامل ساعات سعد"
+
+#: store\cart.py:15
+msgid "Hand-stitched leather armlet"
+msgstr "بازوبند چرمی دست‌دوز"
+
+#: store\templates\store\home.html
+msgid "Handcrafted Silver Settings"
+msgstr "کلکسیون رکاب‌های دست‌ساز"
+
+#: store\templates\store\product_list.html
+msgid "Highest price"
+msgstr "گران‌ترین"
+
+#: store\templates\store\product_list.html
+msgid "Hirz"
+msgstr "حرز"
+
+#: store\templates\store\partials\_product_card.html
+msgid "Hirz & Armlet"
+msgstr "حرز و بازوبند"
+
+#: store\templates\store\home.html
+msgid "Hirz Calligraphy & Ritual Certificate"
+msgstr "گواهی اصالت نگارش و آداب حرز"
+
+#: store\templates\store\base.html
+msgid "Hirz Collection"
+msgstr "کلکسیون حرز"
+
+#: store\templates\store\base.html
+#: store\templates\store\product_detail.html
+#: store\templates\store\product_list.html
+msgid "Home"
+msgstr "خانه"
+
+#: store\templates\store\base.html
+msgid "Home Page"
+msgstr "صفحه اصلی"
+
+#: store\templates\store\base.html
+msgid "Hours: Saturday – Thursday, 9:00 AM – 6:00 PM"
+msgstr "پاسخگویی: شنبه تا پنج‌شنبه ۹ الی ۱۸"
+
+#: store\models.py:104
+#: store\models.py:47
+msgid "If left blank, automatically generated from the title."
+msgstr "در صورت خالی بودن، به‌صورت خودکار از عنوان ساخته می‌شود."
+
+#: store\admin.py:131
+#: store\admin.py:55
+msgid "Image"
+msgstr "تصویر"
+
+#: store\models.py:239
+#, python-format
+msgid "Image of %(title)s"
+msgstr "تصویر %(title)s"
+
+#: store\templates\store\product_detail.html
+#, python-format
+msgid "In stock (%(count)s available)"
+msgstr "موجود در گالری (%(count)s عدد)"
+
+#: store\templates\store\product_list.html
+msgid "In stock only"
+msgstr "فقط کالاهای موجود"
+
+#: store\templates\store\product_detail.html
+msgid "Includes Asil Gallery authenticity certificate"
+msgstr "همراه با گواهی اصالت گالری جواهرات و حرز اصیل"
+
+#: store\templates\store\product_detail.html
+msgid "Increase quantity"
+msgstr "افزایش تعداد"
+
+#: store\templates\store\product_detail.html
+msgid "Inner Circumference (mm)"
+msgstr "محیط داخلی (میلی‌متر)"
+
+#: store\templates\store\product_detail.html
+msgid "Inner Diameter (mm)"
+msgstr "قطر داخلی (میلی‌متر)"
+
+#: store\templates\store\home.html
+msgid "Insured Nationwide Shipping"
+msgstr "ارسال بیمه‌شده به سراسر کشور"
+
+#: store\templates\store\base.html
+msgid "Insured nationwide shipping"
+msgstr "ارسال بیمه‌شده به سراسر کشور"
+
+#: store\views.py:310
+msgid "Invalid product ID."
+msgstr "شناسه محصول نامعتبر است."
+
+#: store\views.py:303
+msgid "Invalid request."
+msgstr "درخواست نامعتبر است."
+
+#: store\templates\store\product_detail.html
+msgid "Iranian Size"
+msgstr "سایز ایران"
+
+#: store\templates\store\product_detail.html
+msgid "Iranian standard silver ring sizing (Sizes 56 to 66)"
+msgstr "استاندارد سایزبندی رکاب نقره در ایران (سایز ۵۶ تا ۶۶)"
+
+#: store\views.py:65
+msgid "Isfahan"
+msgstr "اصفهان"
+
+#: store\views.py:411
+msgid "Item not found in cart."
+msgstr "آیتم مورد نظر یافت نشد."
+
+#: store\templates\store\product_list.html
+msgid "Keyword Search"
+msgstr "جستجو با کلیدواژه"
+
+#: store\templates\store\base.html
+msgid "Lifetime authenticity guarantee for 925 silver, natural gemstones, and authentic scribal Hirz"
+msgstr "ضمانت اصالت مادام‌العمر نقره ۹۲۵، سنگ‌های معدنی و نگارش شرعی احراز"
+
+#: store\templates\store\product_list.html
+msgid "Lowest price"
+msgstr "ارزان‌ترین"
+
+#: store\views.py:58
+msgid "Luxury packaging and fast insured shipping made the purchase completely worry-free. The color and clarity of the gemstone in natural daylight are extraordinary."
+msgstr "بسته‌بندی نفیس و ارسال سریع با بیمه مرسوله باعث شد با خیال راحت خرید کنم. رنگ و شفافیت نگین در نور طبیعی فوق‌العاده است."
+
+#: store\models.py:138
+msgid "Main image"
+msgstr "تصویر اصلی"
+
+#: store\views.py:55
+msgid "Mashhad"
+msgstr "مشهد"
+
+#: store\templates\store\product_list.html
+msgid "Max Price"
+msgstr "حداکثر قیمت"
+
+#: store\templates\store\product_detail.html
+msgid "Measure the inner diameter of a well-fitting ring (excluding the thickness of the silver band) with a ruler and match it to the \"Inner Diameter\" column."
+msgstr "قطر داخلی یکی از انگشترهای خود را که دقیقاً اندازه است (بدون احتساب ضخامت رکاب) با خط‌کش اندازه‌گیری کرده و با ستون «قطر داخلی» تطبیق دهید."
+
+#: store\views.py:54
+msgid "Mehdi Karimi"
+msgstr "مهدی کریمی"
+
+#: store\templates\store\product_detail.html
+msgid "Method 1: Measure Your Finger"
+msgstr "روش اول: اندازه‌گیری دور انگشت"
+
+#: store\templates\store\product_detail.html
+msgid "Method 2: Measure an Existing Ring"
+msgstr "روش دوم: استفاده از انگشتر قبلی"
+
+#: store\templates\store\product_list.html
+msgid "Min Price"
+msgstr "حداقل قیمت"
+
+#: store\templates\store\product_list.html
+msgid "Newest"
+msgstr "جدیدترین"
+
+#: store\templates\store\product_list.html
+msgid "Next"
+msgstr "صفحه بعد"
+
+#: store\templates\store\product_detail.html
+msgid "No additional technical specifications have been recorded for this piece."
+msgstr "مشخصات فنی تکمیلی برای این محصول ثبت نشده است."
+
+#: store\templates\store\product_list.html
+msgid "No pieces matched your selected filters"
+msgstr "اثری با فیلترهای انتخاب‌شده یافت نشد"
+
+#: store\templates\store\base.html
+msgid "No. 12, Saray-e Javaher-e Asil, Goldsmiths' Row, Grand Bazaar, Tehran"
+msgstr "تهران، بازار بزرگ، راسته زرگرها، سرای جواهر اصیل، حجره ۱۲"
+
+#: store\templates\store\partials\_product_card.html
+#, python-format
+msgid "Only %(stock)s left"
+msgstr "تنها %(stock)s عدد"
+
+#: store\templates\store\base.html
+msgid "Open navigation menu"
+msgstr "باز کردن منو"
+
+#: store\views.py:68
+msgid "Ordered as a gift; the silver weight feels very balanced and the finishing of the band is truly artisanal."
+msgstr "برای هدیه تهیه کردم؛ وزن نقره بسیار استاندارد و پرداخت رکاب کاملاً حرفه‌ای انجام شده است."
+
+#: store\admin.py:140
+msgid "Original price"
+msgstr "قیمت اصلی"
+
+#: store\models.py:119
+msgid "Original price (Toman)"
+msgstr "قیمت اصلی (تومان)"
+
+#: store\templates\store\partials\_product_card.html
+#: store\templates\store\product_detail.html
+msgid "Out of stock"
+msgstr "ناموجود"
+
+#: config\settings.py:114
+msgid "Persian"
+msgstr "فارسی"
+
+#: store\admin.py:42
+msgid "Persian Content"
+msgstr "محتوای فارسی"
+
+#: store\templates\store\product_list.html
+msgid "Please adjust the price range or search keyword, or reset all filters."
+msgstr "لطفاً محدوده قیمت یا کلیدواژه جستجو را تغییر دهید یا تمام فیلترها را بازنشانی کنید."
+
+#: store\admin.py:19
+msgid "Preview"
+msgstr "پیش‌نمایش"
+
+#: store\templates\store\product_list.html
+msgid "Previous"
+msgstr "صفحه قبل"
+
+#: store\templates\store\product_list.html
+msgid "Price Range (Toman)"
+msgstr "محدوده قیمت (تومان)"
+
+#: store\admin.py:106
+msgid "Pricing & Inventory"
+msgstr "قیمت‌گذاری و موجودی"
+
+#: store\models.py:143
+#: store\models.py:215
+#: store\models.py:249
+msgid "Product"
+msgstr "محصول"
+
+#: store\templates\store\product_list.html
+msgid "Product Collection | Asil Jewelry & Hirz Gallery"
+msgstr "کلکسیون محصولات | گالری جواهرات و حرز اصیل"
+
+#: store\models.py:118
+msgid "Product SKU"
+msgstr "شناسه کالا (SKU)"
+
+#: store\templates\store\product_list.html
+msgid "Product Type"
+msgstr "نوع محصول"
+
+#: store\admin.py:64
+msgid "Product count"
+msgstr "تعداد محصولات"
+
+#: store\models.py:227
+msgid "Product gallery image"
+msgstr "تصویر گالری محصول"
+
+#: store\models.py:228
+msgid "Product gallery images"
+msgstr "تصاویر گالری محصول"
+
+#: store\templates\store\product_list.html
+msgid "Product pagination"
+msgstr "صفحه‌بندی محصولات"
+
+#: store\models.py:91
+msgid "Product title"
+msgstr "عنوان محصول"
+
+#: store\models.py:96
+msgid "Product title (English)"
+msgstr "عنوان محصول (انگلیسی)"
+
+#: store\models.py:116
+msgid "Product type"
+msgstr "نوع محصول"
+
+#: store\models.py:144
+msgid "Products"
+msgstr "محصولات"
+
+#: store\admin.py:10
+msgid "Products & Categories Management Dashboard"
+msgstr "داشبورد مدیریت محصولات و دسته‌بندی‌ها"
+
+#: store\views.py:76
+msgid "Qom"
+msgstr "قم"
+
+#: store\templates\store\base.html
+msgid "Quick Links"
+msgstr "دسترسی سریع"
+
+#: store\templates\store\product_detail.html
+msgid "Quick Select"
+msgstr "انتخاب سریع"
+
+#: store\templates\store\product_detail.html
+msgid "Rating"
+msgstr "امتیاز"
+
+#: store\templates\store\product_detail.html
+msgid "Related Pieces"
+msgstr "آثار مرتبط"
+
+#: store\templates\store\base.html
+msgid "Remove from cart"
+msgstr "حذف از سبد"
+
+#: store\templates\store\product_detail.html
+msgid "Reviews submitted by previous buyers"
+msgstr "نظرات ثبت‌شده از خریداران پیشین"
+
+#: store\templates\store\product_list.html
+msgid "Ring"
+msgstr "انگشتر"
+
+#: store\templates\store\base.html
+msgid "Ring Collection"
+msgstr "کلکسیون انگشتر"
+
+#: store\templates\store\product_detail.html
+msgid "Ring Size Guide"
+msgstr "راهنمای تعیین سایز انگشتر"
+
+#: store\templates\store\home.html
+msgid "Ring Sizing Guide"
+msgstr "راهنمای تعیین سایز"
+
+#: store\templates\store\product_detail.html
+msgid "SKU:"
+msgstr "کد اثر:"
+
+#: store\templates\store\home.html
+msgid "Sacred Hirz Scrolls & Leather Armlets"
+msgstr "حرزهای معتبر و بازوبندهای چرمی"
+
+#: store\templates\store\base.html
+msgid "Search"
+msgstr "جستجو"
+
+#: store\templates\store\base.html
+msgid "Search by title, gemstone, or SKU..."
+msgstr "جستجو در نام اثر، سنگ یا شناسه..."
+
+#: store\templates\store\base.html
+msgid "Search rings, agate, Hirz..."
+msgstr "جستجوی انگشتر، عقیق، حرز..."
+
+#: store\templates\store\home.html
+msgid "Secure nationwide delivery"
+msgstr "ارسال امن به سراسر کشور"
+
+#: store\templates\store\product_detail.html
+msgid "Select"
+msgstr "انتخاب"
+
+#: store\templates\store\product_detail.html
+msgid "Select Hirz Enclosure & Packaging:"
+msgstr "انتخاب محفظه و نوع بسته‌بندی حرز:"
+
+#: store\templates\store\product_detail.html
+msgid "Select Ring Size:"
+msgstr "انتخاب سایز انگشتر:"
+
+#: store\views.py:75
+msgid "Seyed Mohammad Hosseini"
+msgstr "سید محمد حسینی"
+
+#: store\templates\store\product_detail.html
+msgid "Ships in velvet presentation box with full insurance"
+msgstr "ارسال با بسته‌بندی مخملی و بیمه کامل مرسوله"
+
+#: store\views.py:86
+msgid "Shiraz"
+msgstr "شیراز"
+
+#: store\templates\store\home.html
+msgid "Shockproof presentation box with full transit insurance coverage"
+msgstr "بسته‌بندی نفیس ضدضربه همراه با بیمه کامل مرسولات"
+
+#: store\templates\store\base.html
+msgid "Shopping cart"
+msgstr "سبد خرید"
+
+#: store\models.py:126
+msgid "Short description"
+msgstr "معرفی کوتاه"
+
+#: store\models.py:130
+msgid "Short description (English)"
+msgstr "معرفی کوتاه (انگلیسی)"
+
+#: store\templates\store\product_list.html
+#, python-format
+msgid "Showing <strong class=\"text-emerald-deep font-extrabold\">%(count)s</strong> matching pieces"
+msgstr "نمایش <strong class=\"text-emerald-deep font-extrabold\">%(count)s</strong> اثر منطبق با انتخاب شما"
+
+#: store\templates\store\home.html
+msgid "Signature Collector Editions"
+msgstr "آثار شاخص و کلکسیونی"
+
+#: store\templates\store\partials\_product_card.html
+msgid "Silver Ring"
+msgstr "انگشتر نقره"
+
+#: store\templates\store\base.html
+msgid "Silver Rings & Gemstones"
+msgstr "انگشترهای نقره و سنگ قیمتی"
+
+#: store\templates\store\home.html
+#: store\templates\store\product_list.html
+msgid "Silver Rings & Precious Gemstones"
+msgstr "انگشترهای نقره و سنگ‌های قیمتی"
+
+#: store\models.py:88
+msgid "Silver ring & gemstone"
+msgstr "انگشتر نقره و سنگ قیمتی"
+
+#: store\templates\store\base.html
+msgid "Silversmiths Guild License"
+msgstr "جواز اتحادیه نقره‌فروشان"
+
+#: store\templates\store\product_detail.html
+msgid "Similar Suggestions in This Category"
+msgstr "پیشنهاد مشابه در این دسته"
+
+#: store\cart.py:36
+#, python-format
+msgid "Size %(size)s"
+msgstr "سایز %(size)s"
+
+#: store\models.py:103
+#: store\models.py:46
+msgid "Slug (URL)"
+msgstr "نامک (URL)"
+
+#: store\templates\store\product_list.html
+msgid "Sort by:"
+msgstr "مرتب‌سازی:"
+
+#: store\templates\store\base.html
+msgid "Specialist demo storefront for silver rings & traditional Hirz"
+msgstr "نسخه نمایشی تخصصی فروشگاه انگشتر نقره و حرز سنتی"
+
+#: store\templates\store\base.html
+msgid "Specialist gallery of 925 sterling silver rings, natural mineral gemstones, and authentic hand-written Hirz & armlets with certificate and insured delivery."
+msgstr "گالری تخصصی انگشتر نقره ۹۲۵، سنگ‌های قیمتی معدنی و حرز و بازوبندهای دست‌نویس اصیل با شناسنامه و ارسال بیمه‌شده."
+
+#: store\templates\store\base.html
+msgid "Specialist support:"
+msgstr "پشتیبانی تخصصی:"
+
+#: store\models.py:251
+msgid "Specification name"
+msgstr "عنوان مشخصه"
+
+#: store\models.py:256
+msgid "Specification name (English)"
+msgstr "عنوان مشخصه (انگلیسی)"
+
+#: store\models.py:258
+msgid "Specification value"
+msgstr "مقدار مشخصه"
+
+#: store\models.py:263
+msgid "Specification value (English)"
+msgstr "مقدار مشخصه (انگلیسی)"
+
+#: store\models.py:125
+msgid "Stock quantity"
+msgstr "موجودی انبار"
+
+#: store\admin.py:9
+msgid "Store Administration"
+msgstr "مدیریت فروشگاه"
+
+#: store\views.py:95
+msgid "Tabriz"
+msgstr "تبریز"
+
+#: store\templates\store\product_detail.html
+msgid "Technical Specifications"
+msgstr "مشخصات فنی"
+
+#: store\templates\store\product_detail.html
+msgid "Technical Specifications Table"
+msgstr "جدول مشخصات فنی اثر"
+
+#: store\models.py:267
+msgid "Technical specification"
+msgstr "مشخصه فنی"
+
+#: store\models.py:268
+msgid "Technical specifications"
+msgstr "مشخصات فنی"
+
+#: store\views.py:45
+msgid "Tehran"
+msgstr "تهران"
+
+#: store\templates\store\home.html
+msgid "The Splendor of <span class=\"text-gold-warm\">Authentic Silvercraft</span> &amp; Blessing of <span class=\"text-gold-light\">Hand-Written Hirz</span>"
+msgstr "شکوه هنر <span class=\"text-gold-warm\">نقره‌سازی اصیل</span> و برکت <span class=\"text-gold-light\">احراز دست‌نویس</span>"
+
+#: store\views.py:79
+msgid "The fine legible calligraphy on deerskin parchment together with the verified ritual compliance certificate was truly reassuring. The cylindrical silver case seals tightly."
+msgstr "کیفیت نگارش روی پوست آهو با خط ریز و خوانا به‌همراه گواهی معتبر رعایت آداب شرعی واقعاً اطمینان‌بخش بود. قاب نقره استوانه‌ای آب‌بندی بسیار خوبی دارد."
+
+#: store\views.py:48
+msgid "The gemstone cut and hand-engraving on the silver band were remarkably refined and clean. The sizing matched the site guide accurately, and the authenticity certificate arrived with the package."
+msgstr "تراش سنگ و ظرافت قلم‌زنی رکاب نقره بسیار چشم‌نواز و تمیز بود. سایز طبق راهنمای سایت کاملاً اندازه شد و شناسنامه اصالت هم همراه بسته ارسال گردید."
+
+#: store\views.py:89
+msgid "The hand-stitched leather armlet is very soft, neatly sewn, and sturdy, feeling comfortable and light on the arm."
+msgstr "بازوبند چرمی دست‌دوز بسیار نرم، خوش‌دوخت و محکم است و اصلاً روی بازو احساس سنگینی یا اذیت نمی‌کند."
+
+#: store\views.py:98
+msgid "The respectful presentation, thorough care instructions, and quality of the silver and leather are exemplary."
+msgstr "دقت در بسته‌بندی محترمانه، راهنمای کامل نحوه نگهداری و کیفیت متریال نقره و چرم مثال‌زدنی است."
+
+#: store\templates\store\product_list.html
+msgid "Title, gemstone, SKU..."
+msgstr "نام اثر، سنگ، شناسه کالا..."
+
+#: store\templates\store\base.html
+#: store\templatetags\store_filters.py:48
+msgid "Toman"
+msgstr "تومان"
+
+#: store\templates\store\base.html
+#: store\templates\store\home.html
+msgid "Traditional Hirz & Armlets"
+msgstr "حرز و بازوبندهای سنتی"
+
+#: store\models.py:89
+msgid "Traditional Hirz & armlet"
+msgstr "حرز و بازوبند سنتی"
+
+#: store\templates\store\home.html
+msgid "Traditional scribal adherence"
+msgstr "نگارش سنتی با رعایت آداب"
+
+#: store\templates\store\base.html
+msgid "Trust Badges"
+msgstr "نمادهای اعتماد"
+
+#: store\views.py:315
+msgid "Unfortunately, this item is currently out of stock."
+msgstr "متأسفانه این اثر در حال حاضر ناموجود است."
+
+#: store\cart.py:16
+msgid "Unframed / rolled scroll"
+msgstr "بدون قاب / لول‌شده"
+
+#: store\templates\store\product_detail.html
+msgid "Verified Buyer"
+msgstr "خریدار تأییدشده"
+
+#: store\templates\store\product_detail.html
+msgid "Verified Buyer Experiences"
+msgstr "تجربه و دیدگاه خریداران"
+
+#: store\templates\store\home.html
+msgid "View All Pieces"
+msgstr "مشاهده همه آثار"
+
+#: store\templates\store\product_list.html
+msgid "View All Products"
+msgstr "مشاهده همه محصولات"
+
+#: store\templates\store\partials\_product_card.html
+msgid "View Details"
+msgstr "مشاهده جزئیات"
+
+#: store\templates\store\home.html
+msgid "View Hirz & Armlets"
+msgstr "مشاهده حرز و بازوبندها"
+
+#: store\templates\store\product_detail.html
+msgid "View More"
+msgstr "مشاهده بیشتر"
+
+#: store\templates\store\home.html
+msgid "View Silver Rings"
+msgstr "مشاهده انگشترها"
+
+#: store\templates\store\product_detail.html
+msgid "Wrap a narrow strip of paper snugly (neither too tight nor loose) around the base of your finger, mark the overlap, and measure the length in millimeters with a ruler (corresponding to \"Inner Circumference\")."
+msgstr "یک نوار کاغذی باریک را به‌صورت کاملاً کیپ (نه خیلی سفت و نه آزاد) دور بند انگشت مورد نظر بپیچید، محل تقاطع را علامت زده و طول آن را بر حسب میلی‌متر با خط‌کش بخوانید (معادل ستون «محیط داخلی»)."
+
+#: store\templates\store\base.html
+msgid "Your Selection"
+msgstr "سبد انتخاب شما"
+
+#: store\views.py:401
+msgid "Your cart has been cleared."
+msgstr "سبد خرید خالی شد."
+
+#: store\templates\store\base.html
+msgid "Your shopping cart is currently empty."
+msgstr "سبد خرید شما در حال حاضر خالی است."
+
+#: store\views.py:64
+msgid "Zahra Sharifi"
+msgstr "زهرا شریفی"
+
+#: store\templates\store\product_list.html
+msgid "e.g. 1,000,000"
+msgstr "مثلاً ۱,۰۰۰,۰۰۰"
+
+#: store\templates\store\product_list.html
+msgid "e.g. 5,000,000"
+msgstr "مثلاً ۵,۰۰۰,۰۰۰"
+
+#: store\templates\store\base.html
+msgid "items"
+msgstr "کالا"
+
+#: store\admin.py:148
+msgid "off"
+msgstr "تخفیف"
+
+#: store\templates\store\base.html
+msgid "© 2025–2026 Asil Jewelry & Hirz Gallery. All rights reserved."
+msgstr "© ۱۴۰۴ تمامی حقوق مادی و معنوی متعلق به گالری جواهرات و حرز اصیل است."
